@@ -94,8 +94,8 @@ namespace Game.Bullet
             if (!other.TryGetComponent(out ShipController ship)) 
                 return;
 
-            if (bullet.team == TeamType.Player && ship is Enemy.Enemy ||
-                bullet.team == TeamType.Enemy && ship is PlayerShip)
+            if (bullet.team == TeamType.Player && ship.Team == TeamType.Enemy ||
+                bullet.team == TeamType.Enemy && ship.Team == TeamType.Player)
             {
                 // Deal damage to target:
                 if (bullet.damage > 0)

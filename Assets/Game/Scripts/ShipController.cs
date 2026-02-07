@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public abstract class ShipController : MonoBehaviour
+    public class ShipController : MonoBehaviour
     {
         public event Action<int> OnHealthChanged;
         public event Action OnDead;
@@ -23,10 +23,6 @@ namespace Game
         public int bulletDamage;
         private float _fireTime;
 
-        [Header("Movement")]
-        [SerializeField]
-        protected Motor _motor;
-        
         protected Vector3 moveDirection;
 
         [Header("Visual")]
@@ -51,6 +47,8 @@ namespace Game
         [SerializeField]
         private AudioClip _damageSFX;
 
+        [field: SerializeField] public TeamType Team { get; private set; }
+
         private Material _material;
         private Tweener _damageAnimation;
 
@@ -58,13 +56,10 @@ namespace Game
         private void Awake()
         {
             this.currentHealth = config.Health;
-            _motor.SetSpeed(config.MoveSpeed);
 
             _material = new Material(_viewConfig.MaterialPrefab);
             _renderer.material = _material;
         }
-
-        protected virtual void FixedUpdate() => _motor.FixedUpdate();
 
         protected void Fire()
         {

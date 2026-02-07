@@ -1,3 +1,4 @@
+using Game.Common;
 using UnityEngine;
 
 namespace Game.Enemy
@@ -14,6 +15,9 @@ namespace Game.Enemy
         [SerializeField]
         private float _stoppingDistance = 0.25f;
 
+        [SerializeField]
+        private MovementComponent _movementComponent;
+        
         private float _fireTime;
 
         private IEnemyDespawner _despawner;
@@ -26,21 +30,20 @@ namespace Game.Enemy
 
         private void OnCharacterDead() => _despawner.Despawn(this);
 
-        protected override void FixedUpdate()
+        protected void FixedUpdate()
         {
-            base.FixedUpdate();
-
             if (this.currentHealth <= 0 || this.target == null || this.target.currentHealth <= 0)
                 return;
 
             Vector2 distance = destination - (Vector2) this.transform.position;
+            Vector2 direction = distance.normalized;
             bool isNotReached = distance.sqrMagnitude > _stoppingDistance * _stoppingDistance;
-            
-            moveDirection = isNotReached ? distance.normalized : Vector3.zero;
+
+            moveDirection = isNotReached ? direction : Vector3.zero;
 
             if (isNotReached)
             {
-                _motor.MoveStep(distance.normalized);
+                _movementComponent.Move(direction);
             }
             else
             {
