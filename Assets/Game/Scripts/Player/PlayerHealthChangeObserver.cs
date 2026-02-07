@@ -16,14 +16,11 @@ namespace Game.Player
             _health = health;
             _cameraShaker = cameraShaker;
             _healthView = healthView;
-        }
-        
-        private void OnEnable()
-        {
+            
             _health.OnHealthChanged += OnHealthChanged;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _health.OnHealthChanged -= OnHealthChanged;
         }

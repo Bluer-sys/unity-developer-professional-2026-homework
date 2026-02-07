@@ -15,4 +15,4 @@ MonoBehaviour:
   <Health>k__BackingField: 10
   <MoveSpeed>k__BackingField: 7
   <FireCooldown>k__BackingField: 0.25
-  <StoppingDistance>k__BackingField: 0.25
+  <StoppingDistance>k__BackingField: 0

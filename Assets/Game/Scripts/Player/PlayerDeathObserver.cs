@@ -13,14 +13,11 @@ namespace Game.Player
         {
             _health = health;
             _gameOverView = gameOverView;
+            
+            _health.OnDead += OnDead;
         }   
         
-        private void OnEnable()
-        {
-            _health.OnDead += OnDead;
-        }
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             _health.OnDead -= OnDead;
         }

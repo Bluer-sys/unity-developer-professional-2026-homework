@@ -960,7 +960,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 562298204}
+  - component: {fileID: 562298207}
   - component: {fileID: 562298205}
+  - component: {fileID: 562298206}
   m_Layer: 0
   m_Name: <EnemySystem>
   m_TagString: Untagged
@@ -997,7 +999,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dae85f8264479bac19d85418d92392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyFactory: {fileID: 0}
+  _enemyFactory: {fileID: 562298207}
+--- !u!114 &562298206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562298203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9537803171314173a4b774066f27ec3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Enemy.EnemySpawner
+  _enemyPool: {fileID: 562298205}
+  _scoreView: {fileID: 895558708}
+  _spawnPositions:
+  - {fileID: 5098186055898699330}
+  - {fileID: 3822857799868723767}
+  - {fileID: 6359635304368030436}
+  - {fileID: 2272249728968689581}
+  - {fileID: 5689270860486713316}
+  _attackPositions:
+  - {fileID: 8569045085939387605}
+  - {fileID: 9088267052445128325}
+  - {fileID: 713232402740842374}
+  - {fileID: 8300918414904818790}
+  - {fileID: 1536551911}
+  - {fileID: 196756141}
+  - {fileID: 1049219808}
+  - {fileID: 1549378007}
+  - {fileID: 78117031}
+  - {fileID: 883274640}
+  _minSpawnCooldown: 2
+  _maxSpawnCooldown: 3
+  _player: {fileID: 4414282821800802437}
+--- !u!114 &562298207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562298203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06aa9196b3844254882666b5515e276a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Enemy.EnemyFactory
+  _prefab: {fileID: 6970176693926724973, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
+  _container: {fileID: 1052031097}
+  _bulletWorldGo: {fileID: 363245577}
 --- !u!1 &574514311
 GameObject:
   m_ObjectHideFlags: 0
@@ -3231,6 +3282,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5706750963508843440, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
   m_PrefabInstance: {fileID: 3559832809919233303}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4414282821800802437 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8119156664578240041, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
+  m_PrefabInstance: {fileID: 3559832809919233303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1f729607bf43c9b65e7e6ea3a04d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Player.PlayerFacade
 --- !u!1 &4788406047096451828
 GameObject:
   m_ObjectHideFlags: 0

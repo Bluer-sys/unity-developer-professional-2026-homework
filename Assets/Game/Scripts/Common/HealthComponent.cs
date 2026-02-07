@@ -13,14 +13,11 @@ namespace Game.Common
         public int MaxHealth { get; private set; }
         public bool IsDead { get; private set; }
 
-        public void OnEnable()
-        {
-            ResetHealth();
-        }
-
         public void Construct(int maxHealth)
         {
             MaxHealth = maxHealth;
+            
+            ResetHealth();
         }
         
         public void Decrease(int value)

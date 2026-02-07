@@ -14,14 +14,11 @@ namespace Game.Common
         {
             _health = health;
             _viewConfig = viewConfig;
-        }
-        
-        private void OnEnable()
-        {
+
             _health.OnDead += OnDead;
         }
-
-        private void OnDisable()
+        
+        private void OnDestroy()
         {
             _health.OnDead -= OnDead;
         }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4575139502811685103}
   - component: {fileID: 4075764219798992963}
   - component: {fileID: 8141832910989862937}
-  - component: {fileID: 7046343677111750469}
   - component: {fileID: 4570218069988575630}
   - component: {fileID: 3608840802599314035}
   - component: {fileID: 408085048260849618}
@@ -25,6 +24,7 @@ GameObject:
   - component: {fileID: 2289310892942315150}
   - component: {fileID: 6029328622759878192}
   - component: {fileID: 6410466588293435954}
+  - component: {fileID: 7046343677111750469}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -209,40 +209,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7046343677111750469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4109394316656653739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb9017fb8474d1c9368608bde26fba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::Game.Installers.PlayerInstaller
-  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
-  _config: {fileID: 11400000, guid: 0b9a4576e5f0a4babb44b3c82e6480d0, type: 2}
-  _bulletConfig: {fileID: 11400000, guid: 8643ff95bd3c54682ba5279a0b0f4691, type: 2}
-  _rigidbody: {fileID: 4575139502811685103}
-  _movement: {fileID: 4570218069988575630}
-  _health: {fileID: 3608840802599314035}
-  _weapon: {fileID: 157700667267948966}
-  _bulletWorld: {fileID: 0}
-  _cameraShaker: {fileID: 0}
-  _healthView: {fileID: 0}
-  _gameOverView: {fileID: 0}
-  _bounds: {fileID: 0}
-  _shipMaterial: {fileID: 6410466588293435954}
-  _audioSource: {fileID: 8141832910989862937}
-  _deathEffectsController: {fileID: 6029328622759878192}
-  _takeDamageEffectController: {fileID: 2289310892942315150}
-  _movementAnimator: {fileID: 3255243003491038610}
-  _playerFacade: {fileID: 8119156664578240041}
-  _fireController: {fileID: 2272248323050634134}
-  _healthChangeObserver: {fileID: 817486128707071859}
-  _deathObserver: {fileID: 4224078365526055862}
-  _movementController: {fileID: 408085048260849618}
 --- !u!114 &4570218069988575630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +357,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.ShipMaterial
   _renderer: {fileID: 795037679980988590}
+--- !u!114 &7046343677111750469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109394316656653739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb9017fb8474d1c9368608bde26fba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Installers.PlayerInstaller
+  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
+  _config: {fileID: 11400000, guid: 0b9a4576e5f0a4babb44b3c82e6480d0, type: 2}
+  _bulletConfig: {fileID: 11400000, guid: 8643ff95bd3c54682ba5279a0b0f4691, type: 2}
+  _rigidbody: {fileID: 4575139502811685103}
+  _movement: {fileID: 4570218069988575630}
+  _health: {fileID: 3608840802599314035}
+  _weapon: {fileID: 157700667267948966}
+  _bulletWorld: {fileID: 0}
+  _cameraShaker: {fileID: 0}
+  _healthView: {fileID: 0}
+  _gameOverView: {fileID: 0}
+  _bounds: {fileID: 0}
+  _shipMaterial: {fileID: 6410466588293435954}
+  _audioSource: {fileID: 8141832910989862937}
+  _deathEffectsController: {fileID: 6029328622759878192}
+  _takeDamageEffectController: {fileID: 2289310892942315150}
+  _movementAnimator: {fileID: 3255243003491038610}
+  _playerFacade: {fileID: 8119156664578240041}
+  _fireController: {fileID: 2272248323050634134}
+  _healthChangeObserver: {fileID: 817486128707071859}
+  _deathObserver: {fileID: 4224078365526055862}
+  _movementController: {fileID: 408085048260849618}
 --- !u!1 &7932017922939402051
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,14 +25,11 @@ namespace Game.Common
             _damageSfx = damageSfx;
             _audioSource = audioSource;
             _shipMaterial = shipMaterial;
-        }
-
-        private void OnEnable()
-        {
+            
             _health.OnHealthChanged += OnHealthChanged;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _health.OnHealthChanged -= OnHealthChanged;
         }

@@ -22,14 +22,11 @@ namespace Game.Enemy
             _health = health;
             _movement = movement;
             _behaviour = behaviour;
-        }
-
-        private void OnEnable()
-        {
+            
             _health.OnDead += OnDeadHandler;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _health.OnDead -= OnDeadHandler;
         }
