@@ -1,12 +1,12 @@
+using Game.Data;
 using UnityEngine;
 
-namespace Game
+namespace Game.Bullet
 {
-    // +
     public sealed class PlayerBulletInstantiator : MonoBehaviour
     {
         [SerializeField]
-        private BulletWorldGO _bulletWorld;
+        private BulletWorldGo _bulletWorld;
 
         [SerializeField]
         private PlayerShip _player;
@@ -24,12 +24,12 @@ namespace Game
         private void OnFire(ShipController _)
         {
             _bulletWorld.Spawn(
-                _player.firePoint.position,
-                _player.firePoint.up,
-                _player.bulletSpeed,
-                _player.bulletDamage,
-                TeamType.Player
-            );
+                    _player.firePoint.position,
+                    _player.firePoint.up,
+                    _player.bulletSpeed,
+                    _player.bulletDamage,
+                    TeamType.Player
+                );
         }
     }
 }

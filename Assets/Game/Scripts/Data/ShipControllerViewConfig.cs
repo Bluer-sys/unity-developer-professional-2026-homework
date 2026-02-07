@@ -1,9 +1,8 @@
 using UnityEngine;
 
-namespace Game
+namespace Game.Data
 {
-    // +
-    [CreateAssetMenu(menuName = "Game/ShipControllerViewConfig", order = 0)]
+    [CreateAssetMenu(menuName = "Game/ShipControllerViewConfig", fileName = "ShipControllerViewConfig")]
     public sealed class ShipControllerViewConfig : ScriptableObject
     {
         [field: SerializeField]

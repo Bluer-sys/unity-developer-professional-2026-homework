@@ -1,12 +1,11 @@
 using UnityEngine;
 
-namespace Game
+namespace Game.Data
 {
-    // +
-    [CreateAssetMenu(menuName = "Game/ShipControllerInfo", order = 0)]
-    public sealed class ShipControllerSO : ScriptableObject
+    [CreateAssetMenu(menuName = "Game/ShipControllerInfo", fileName = "ShipControllerInfo")]
+    public sealed class ShipControllerSo : ScriptableObject
     {
-        [Header("Core")]
+        [field: Header("Core")]
         [field: SerializeField]
         public int Health { get; private set; } = 5;
 

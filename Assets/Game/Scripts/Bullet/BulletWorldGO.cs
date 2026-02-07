@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Game.Data;
 using Modules.Utils;
 using UnityEngine;
 
-namespace Game
+namespace Game.Bullet
 {
-    // +
-    public sealed class BulletWorldGO : MonoBehaviour
+    public sealed class BulletWorldGo : MonoBehaviour
     {
         [SerializeField]
         private BulletData _prefab;
@@ -94,7 +94,7 @@ namespace Game
             if (!other.TryGetComponent(out ShipController ship)) 
                 return;
 
-            if (bullet.team == TeamType.Player && ship is Enemy ||
+            if (bullet.team == TeamType.Player && ship is Enemy.Enemy ||
                 bullet.team == TeamType.Enemy && ship is PlayerShip)
             {
                 // Deal damage to target:

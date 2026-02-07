@@ -1,10 +1,10 @@
 using System;
 using DG.Tweening;
+using Game.Data;
 using UnityEngine;
 
 namespace Game
 {
-    // +
     public abstract class ShipController : MonoBehaviour
     {
         public event Action<int> OnHealthChanged;
@@ -12,7 +12,7 @@ namespace Game
 
         public event Action<ShipController> OnFire;
 
-        public ShipControllerSO config;
+        public ShipControllerSo config;
 
         [Header("Health")]
         public int currentHealth;

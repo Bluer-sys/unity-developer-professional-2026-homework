@@ -1,9 +1,9 @@
 using System;
+using Game.Data;
 using UnityEngine;
 
-namespace Game
+namespace Game.Bullet
 {
-    // +
     public sealed class BulletData : MonoBehaviour
     {
         public event Action<BulletData, Collider2D> OnTriggerEntered;

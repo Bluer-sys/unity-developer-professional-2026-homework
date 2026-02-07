@@ -1,7 +1,6 @@
-﻿namespace Game
+﻿namespace Game.Data
 {
-    // +
-    public enum TeamType
+    public enum TeamType : byte
     {
         None = 0,
         Player = 1,

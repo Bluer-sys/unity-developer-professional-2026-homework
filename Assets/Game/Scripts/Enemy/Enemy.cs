@@ -1,8 +1,7 @@
 using UnityEngine;
 
-namespace Game
+namespace Game.Enemy
 {
-    // +
     public sealed class Enemy : ShipController
     {
         [Header("Enemy")]

@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Game
 {
-    // +
     [Serializable]
     public sealed class Motor
     {

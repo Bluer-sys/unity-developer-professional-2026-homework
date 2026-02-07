@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Bullet;
+using Game.Data;
 using Modules.UI;
 using Modules.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Game
+namespace Game.Enemy
 {
     // +
     public sealed class EnemyOrchestrator : MonoBehaviour, IEnemyDespawner
@@ -45,7 +47,7 @@ namespace Game
         
         [Header("Bullets")]
         [SerializeField]
-        private BulletWorldGO _bulletWorld;
+        private BulletWorldGo _bulletWorld;
         
         [Header("UI")]
         [SerializeField]

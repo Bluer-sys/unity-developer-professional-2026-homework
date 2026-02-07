@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Game
 {
-    // +
     public sealed class PlayerShip : ShipController
     {
         [SerializeField]
