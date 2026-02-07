@@ -1,15 +1,13 @@
 using Game.Bullet;
 using Game.Common;
 using Game.Data;
-using Game.Player;
+using Game.Enemy;
 using Game.Weapon;
-using Modules.UI;
-using Modules.Utils;
 using UnityEngine;
 
 namespace Game.Installers
 {
-    public class PlayerInstaller : MonoBehaviour
+    public class EnemyInstaller : MonoBehaviour
     {
         [SerializeField] private ShipViewConfig _viewConfig;
         [SerializeField] private ShipConfig _config;
@@ -19,44 +17,36 @@ namespace Game.Installers
         [SerializeField] private MovementComponent _movement;
         [SerializeField] private HealthComponent _health;
         [SerializeField] private CooldownWeapon _weapon;
-        [SerializeField] private BulletWorldGo _bulletWorld;
-        [SerializeField] private CameraShaker _cameraShaker;
-        [SerializeField] private HealthView _healthView;
-        [SerializeField] private GameOverView _gameOverView;
-        [SerializeField] private TransformBounds _bounds;
         [SerializeField] private ShipMaterial _shipMaterial;
         [SerializeField] private AudioSource _audioSource;
-        
+
         [SerializeField] private DeathEffectsController _deathEffectsController;
         [SerializeField] private TakeDamageEffectController _takeDamageEffectController;
         [SerializeField] private MovementAnimator _movementAnimator;
-        
-        [SerializeField] private PlayerFacade _playerFacade;
-        [SerializeField] private PlayerFireController _fireController;
-        [SerializeField] private PlayerHealthChangeObserver _healthChangeObserver;
-        [SerializeField] private PlayerDeathObserver _deathObserver;
-        [SerializeField] private PlayerMovementController _movementController;
 
-        private TeamType Team => TeamType.Player;
+        [SerializeField] private EnemyFacade _enemyFacade;
+        [SerializeField] private EnemyBehaviour _enemyBehaviour;
         
-        private void Awake()
+        private TeamType Team => TeamType.Enemy;
+        
+        
+        public EnemyFacade Install(BulletWorldGo bulletWorldGo)
         {
             _shipMaterial.SetMaterial(_viewConfig.MaterialPrefab);
             
-            _weapon.Construct(Team, _bulletWorld, _config.FireCooldown, _bulletConfig);
-            
+            _weapon.Construct(Team, bulletWorldGo, _config.FireCooldown, _bulletConfig);
+
             _health.Construct(_config.Health);
-            _movement.Construct(_rigidbody, _bounds, _config.MoveSpeed);
+            _movement.Construct(_rigidbody, null, _config.MoveSpeed);
             
             _takeDamageEffectController.Construct(_health, _viewConfig, _viewConfig.DamageSfx, _audioSource, _shipMaterial);
             _movementAnimator.Construct(_movement, _viewConfig.MoveRotationAngle, _viewConfig.MoveSpeed);
             _deathEffectsController.Construct(_health, _viewConfig);
             
-            _playerFacade.Construct(_health);
-            _fireController.Construct(_weapon);
-            _healthChangeObserver.Construct(_health, _cameraShaker, _healthView);
-            _movementController.Construct(_movement);
-            _deathObserver.Construct(_health, _gameOverView);
+            _enemyBehaviour.Construct(_movement, _weapon, _config.StoppingDistance);
+            _enemyFacade.Construct(_health, _movement, _enemyBehaviour);
+            
+            return _enemyFacade;
         }
     }
 }

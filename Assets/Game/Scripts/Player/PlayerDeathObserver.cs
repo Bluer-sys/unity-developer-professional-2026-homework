@@ -6,9 +6,15 @@ namespace Game.Player
 {
     public class PlayerDeathObserver : MonoBehaviour
     {
-        [SerializeField] private HealthComponent _health;
-        [SerializeField] private GameOverView _gameOverView;
+        private HealthComponent _health;
+        private GameOverView _gameOverView;
 
+        public void Construct(HealthComponent health, GameOverView gameOverView)
+        {
+            _health = health;
+            _gameOverView = gameOverView;
+        }   
+        
         private void OnEnable()
         {
             _health.OnDead += OnDead;

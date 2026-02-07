@@ -5,7 +5,12 @@ namespace Game.Player
 {
     public class PlayerMovementController : MonoBehaviour
     {
-        [SerializeField] private MovementComponent _movement;
+        private MovementComponent _movement;
+        
+        public void Construct(MovementComponent movement)
+        {
+            _movement = movement;
+        }
         
         public void Update()
         {

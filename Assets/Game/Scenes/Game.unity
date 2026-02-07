@@ -997,30 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dae85f8264479bac19d85418d92392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minSpawnCooldown: 2
-  _maxSpawnCooldown: 3
-  _prefab: {fileID: 102605417607457000, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
-  _container: {fileID: 1052031097}
-  _player: {fileID: 4414282821800802421}
-  _spawnPositions:
-  - {fileID: 5098186055898699330}
-  - {fileID: 3822857799868723767}
-  - {fileID: 6359635304368030436}
-  - {fileID: 2272249728968689581}
-  - {fileID: 5689270860486713316}
-  _attackPositions:
-  - {fileID: 8569045085939387605}
-  - {fileID: 9088267052445128325}
-  - {fileID: 713232402740842374}
-  - {fileID: 8300918414904818790}
-  - {fileID: 1536551911}
-  - {fileID: 196756141}
-  - {fileID: 1049219808}
-  - {fileID: 1549378007}
-  - {fileID: 78117031}
-  - {fileID: 883274640}
-  _bulletWorld: {fileID: 363245577}
-  _scoreView: {fileID: 895558708}
+  _enemyFactory: {fileID: 0}
 --- !u!1 &574514311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,8 +2529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d8a2134b32408a9ccae5fde8a74223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.PlayerBulletInstantiator
-  _bulletWorld: {fileID: 363245577}
-  _player: {fileID: 0}
 --- !u!1 &1954893900
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,26 +3110,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 739865810}
     m_Modifications:
-    - target: {fileID: 817486128707071859, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-      propertyPath: _healthView
-      value: 
-      objectReference: {fileID: 1243470931}
-    - target: {fileID: 817486128707071859, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-      propertyPath: _cameraShaker
-      value: 
-      objectReference: {fileID: 519420034}
     - target: {fileID: 4109394316656653739, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
       propertyPath: m_Name
       value: <Player>
       objectReference: {fileID: 0}
-    - target: {fileID: 4224078365526055862, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-      propertyPath: _gameOverView
-      value: 
-      objectReference: {fileID: 1375492023}
-    - target: {fileID: 4570218069988575630, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-      propertyPath: _bounds
-      value: 
-      objectReference: {fileID: 1498479408}
     - target: {fileID: 5706750963508843440, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3196,9 +3155,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
+      propertyPath: _bounds
+      value: 
+      objectReference: {fileID: 1498479408}
+    - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
+      propertyPath: _healthView
+      value: 
+      objectReference: {fileID: 1243470931}
+    - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
       propertyPath: _bulletWorld
       value: 
       objectReference: {fileID: 363245577}
+    - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
+      propertyPath: _cameraShaker
+      value: 
+      objectReference: {fileID: 519420034}
+    - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
+      propertyPath: _gameOverView
+      value: 
+      objectReference: {fileID: 1375492023}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3256,17 +3231,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5706750963508843440, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
   m_PrefabInstance: {fileID: 3559832809919233303}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4414282821800802421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7633004624288157351, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-  m_PrefabInstance: {fileID: 3559832809919233303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558b312fd53c491ab69f3e55255aae3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::Game.ShipController
 --- !u!1 &4788406047096451828
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Game.Data;
+using Game.Interfaces;
 using Modules.Utils;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ namespace Game.Bullet
                 {
                     _bullets.RemoveAt(i);
 
-                    bullet.OnTriggerEntered -= this.OnTriggerEntered;
+                    bullet.OnTriggerEntered -= OnTriggerEntered;
                     bullet.gameObject.SetActive(false);
                     _pool.Push(bullet);
                 }
@@ -85,32 +86,25 @@ namespace Game.Bullet
                 bullet.redVFX.SetActive(true);
             }
 
-            bullet.OnTriggerEntered += this.OnTriggerEntered;
+            bullet.OnTriggerEntered += OnTriggerEntered;
             _bullets.Add(bullet);
         }
 
         private void OnTriggerEntered(BulletData bullet, Collider2D other)
         {
-            if (!other.TryGetComponent(out ShipController ship)) 
+            if (!other.TryGetComponent(out IDamageable damageable)) 
                 return;
 
-            if (bullet.team == TeamType.Player && ship.Team == TeamType.Enemy ||
-                bullet.team == TeamType.Enemy && ship.Team == TeamType.Player)
+            if (bullet.team == TeamType.Player && damageable.Team == TeamType.Enemy ||
+                bullet.team == TeamType.Enemy && damageable.Team == TeamType.Player)
             {
                 // Deal damage to target:
                 if (bullet.damage > 0)
                 {
-                    ship.currentHealth = Mathf.Clamp(ship.currentHealth - bullet.damage, 0, ship.config.Health);
-                    ship.NotifyAboutHealthChanged(ship.currentHealth);
- 
-                    if (ship.currentHealth <= 0)
-                    {
-                        ship.NotifyAboutDead();
-                        ship.gameObject.SetActive(false);
-                    }
+                    damageable.TakeDamage(bullet.damage);
                 }
 
-                bullet.OnTriggerEntered -= this.OnTriggerEntered;
+                bullet.OnTriggerEntered -= OnTriggerEntered;
 
                 _bullets.Remove(bullet);
 

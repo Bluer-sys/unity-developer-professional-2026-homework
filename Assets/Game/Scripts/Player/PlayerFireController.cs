@@ -1,16 +1,22 @@
-using Game.Common;
+using Game.Interfaces;
+using Game.Weapon;
 using UnityEngine;
 
 namespace Game.Player
 {
     public class PlayerFireController : MonoBehaviour
     {
-        [SerializeField] private AttackComponent _attack;
+        private IWeapon _weapon;
+
+        public void Construct(IWeapon weapon)
+        {
+            _weapon = weapon;
+        }
         
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
-                _attack.Fire();
+                _weapon.TryFire(Vector2.up);
         }
     }
 }

@@ -5,36 +5,43 @@ namespace Game.Common
 {
     public class HealthComponent : MonoBehaviour
     {
-        [SerializeField] private int _baseHealth;
-
         private int _currentHealth;
-        private bool _isDead;
 
         public event Action<int> OnHealthChanged;
         public event Action OnDead;
-        
-        public int MaxHealth => _baseHealth;
 
-        public void Awake()
+        public int MaxHealth { get; private set; }
+        public bool IsDead { get; private set; }
+
+        public void OnEnable()
         {
-            _currentHealth = _baseHealth;
+            ResetHealth();
         }
 
+        public void Construct(int maxHealth)
+        {
+            MaxHealth = maxHealth;
+        }
+        
         public void Decrease(int value)
         {
-            if(_isDead)
+            if(IsDead)
                 return;
             
-            _currentHealth = Mathf.Clamp(_currentHealth - value, 0, _baseHealth);
+            _currentHealth = Mathf.Clamp(_currentHealth - value, 0, MaxHealth);
 
             OnHealthChanged?.Invoke(_currentHealth);
             
             if(_currentHealth == 0)
             {
-                _isDead = true;
+                IsDead = true;
                 OnDead?.Invoke();
             }
         }
 
+        private void ResetHealth()
+        {
+            _currentHealth = MaxHealth;
+        }
     }
 }

@@ -7,10 +7,17 @@ namespace Game.Player
 {
     public class PlayerHealthChangeObserver : MonoBehaviour
     {
-        [SerializeField] private HealthComponent _health;
-        [SerializeField] private CameraShaker _cameraShaker;
-        [SerializeField] private HealthView _healthView;
+        private HealthComponent _health;
+        private CameraShaker _cameraShaker;
+        private HealthView _healthView;
 
+        public void Construct(HealthComponent health, CameraShaker cameraShaker, HealthView healthView)
+        {
+            _health = health;
+            _cameraShaker = cameraShaker;
+            _healthView = healthView;
+        }
+        
         private void OnEnable()
         {
             _health.OnHealthChanged += OnHealthChanged;
