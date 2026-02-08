@@ -1,5 +1,4 @@
 using System;
-using Game.Bullet;
 using Game.Common;
 using Game.Data;
 using Game.Interfaces;
@@ -10,17 +9,17 @@ namespace Game.Enemy
     public sealed class EnemyFacade : MonoBehaviour, IDamageable
     {
         private HealthComponent _health;
-        private MovementComponent _movement;
         private EnemyBehaviour _behaviour;
         
         public event Action<EnemyFacade> OnDead;
+
+        public TeamType Team { get; private set; }
+
         
-        public TeamType Team => TeamType.Enemy;
-        
-        public void Construct(HealthComponent health, MovementComponent movement, EnemyBehaviour behaviour)
+        public void Construct(TeamType team, HealthComponent health, EnemyBehaviour behaviour)
         {
+            Team = team;
             _health = health;
-            _movement = movement;
             _behaviour = behaviour;
             
             _health.OnDead += OnDeadHandler;
@@ -49,6 +48,11 @@ namespace Game.Enemy
         public void TakeDamage(int damage)
         {
             _health.Decrease(damage);
+        }
+
+        public void ResetHealth()
+        {
+            _health.ResetHealth();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Game.Installers
             _deathEffectsController.Construct(_health, _viewConfig);
             
             _enemyBehaviour.Construct(_movement, _weapon, _config.StoppingDistance);
-            _enemyFacade.Construct(_health, _movement, _enemyBehaviour);
+            _enemyFacade.Construct(Team, _health, _enemyBehaviour);
             
             return _enemyFacade;
         }

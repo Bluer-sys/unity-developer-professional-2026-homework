@@ -1,4 +1,3 @@
-using Game.Bullet;
 using Game.Common;
 using Game.Data;
 using Game.Interfaces;
@@ -12,11 +11,12 @@ namespace Game.Player
 
         public Transform Transform => transform;
         public bool IsDead => _health.IsDead;
-        public TeamType Team => TeamType.Player;
+        public TeamType Team { get; private set; }
 
-        public void Construct(HealthComponent health)
+        public void Construct(TeamType team, HealthComponent health)
         {
             _health = health;
+            Team = team;
         }
 
         public void TakeDamage(int damage)

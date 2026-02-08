@@ -17,15 +17,28 @@ namespace Game.Common
             _bounds = bounds;
             _speed = speed;
         }
-        
-        public void Move(Vector2 direction)
+
+        private void FixedUpdate()
         {
-            Vector2 delta = direction * (_speed * Time.fixedDeltaTime);
+            Move(Time.fixedDeltaTime);
+        }
+
+        public void SetDirection(Vector2 direction)
+        {
+            CurrentMoveDirection = direction;
+        }
+
+        public void ResetDirection()
+        {
+            CurrentMoveDirection = Vector2.zero;
+        }
+
+        private void Move(float deltaTime)
+        {
+            Vector2 delta = CurrentMoveDirection * (_speed * deltaTime);
             Vector2 newPosition = _rigidbody.position + delta;
 
             _rigidbody.MovePosition(newPosition);
-            
-            CurrentMoveDirection = direction;
             
             if(_bounds != null)
                 transform.position = _bounds.ClampInBounds(transform.position);

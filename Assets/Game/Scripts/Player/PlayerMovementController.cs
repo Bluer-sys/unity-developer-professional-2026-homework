@@ -18,7 +18,7 @@ namespace Game.Player
             float dy = Input.GetAxisRaw("Vertical");
             var direction = new Vector2(dx, dy);
 
-            _movement.Move(direction);
+            _movement.SetDirection(direction);
         }
     }
 }

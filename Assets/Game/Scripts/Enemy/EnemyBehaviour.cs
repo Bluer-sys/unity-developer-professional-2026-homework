@@ -27,16 +27,18 @@ namespace Game.Enemy
                 return;
 
             Vector2 distance = _destination - (Vector2)transform.position;
-            Vector2 direction = distance.normalized;
+            Vector2 moveDirection = distance.normalized;
+            Vector2 fireDirection = (_target.Transform.position - transform.position).normalized;
             bool isNotReached = distance.sqrMagnitude > _stoppingDistance * _stoppingDistance;
 
             if (isNotReached)
             {
-                _movement.Move(direction);
+                _movement.SetDirection(moveDirection);
             }
             else
             {
-                _weapon.TryFire(_target.Transform.position);
+                _movement.ResetDirection();
+                _weapon.TryFire(fireDirection);
             }
         }
 

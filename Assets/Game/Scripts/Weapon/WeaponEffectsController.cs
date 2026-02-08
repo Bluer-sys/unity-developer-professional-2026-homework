@@ -4,7 +4,7 @@ namespace Game.Weapon
 {
     public class WeaponEffectsController : MonoBehaviour
     {
-        [SerializeField] private CooldownWeapon _commonWeapon;
+        [SerializeField] private CooldownWeapon _weapon;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private ParticleSystem _fireVFX;
         [SerializeField] private AudioClip _fireSFX;
@@ -12,12 +12,12 @@ namespace Game.Weapon
         
         private void OnEnable()
         {
-            _commonWeapon.OnFired += OnFired;
+            _weapon.OnFired += OnFired;
         }
 
         private void OnDisable()
         {
-            _commonWeapon.OnFired -= OnFired;
+            _weapon.OnFired -= OnFired;
         }
 
         private void OnFired()

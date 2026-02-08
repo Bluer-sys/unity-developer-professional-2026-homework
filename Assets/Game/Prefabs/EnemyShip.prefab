@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 791639387435919093}
   - component: {fileID: 8326241624895250536}
   - component: {fileID: 6087741390660280860}
+  - component: {fileID: 2577216997494839082}
   m_Layer: 11
   m_Name: EnemyShip
   m_TagString: Untagged
@@ -344,6 +345,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Weapon.CooldownWeapon
   _firePoint: {fileID: 3195880656587174614}
+--- !u!114 &2577216997494839082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559606060570185700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16e43199aa24372a2d02cbf29398ea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Weapon.WeaponEffectsController
+  _weapon: {fileID: 6087741390660280860}
+  _audioSource: {fileID: 0}
+  _fireVFX: {fileID: 1792961037914348205}
+  _fireSFX: {fileID: 0}
 --- !u!1 &1074127585690423075
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +557,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afb15b2c47760da419d51e3b253b9a97, type: 3}
+--- !u!198 &1792961037914348205 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198032251219402368, guid: afb15b2c47760da419d51e3b253b9a97, type: 3}
+  m_PrefabInstance: {fileID: 1900076867361227821}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1896272799918682171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4089945042170902, guid: afb15b2c47760da419d51e3b253b9a97, type: 3}

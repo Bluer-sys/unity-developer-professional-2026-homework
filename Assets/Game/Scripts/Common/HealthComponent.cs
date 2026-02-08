@@ -36,9 +36,10 @@ namespace Game.Common
             }
         }
 
-        private void ResetHealth()
+        public void ResetHealth()
         {
             _currentHealth = MaxHealth;
+            IsDead = false;
         }
     }
 }

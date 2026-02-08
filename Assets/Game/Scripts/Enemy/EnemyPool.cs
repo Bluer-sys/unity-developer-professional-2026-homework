@@ -13,9 +13,14 @@ namespace Game.Enemy
         public EnemyFacade Spawn(Vector3 spawnPosition)
         {
             if (_pool.TryDequeue(out EnemyFacade enemy))
+            {
                 enemy.gameObject.SetActive(true);
+                enemy.transform.position = spawnPosition;
+            }
             else
+            {
                 enemy = _enemyFactory.Create(spawnPosition);
+            }
 
             return enemy;
         }

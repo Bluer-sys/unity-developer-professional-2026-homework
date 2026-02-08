@@ -3,7 +3,6 @@ using Game.Common;
 using Game.Data;
 using Game.Player;
 using Game.Weapon;
-using Modules.UI;
 using Modules.Utils;
 using UnityEngine;
 
@@ -21,8 +20,6 @@ namespace Game.Installers
         [SerializeField] private CooldownWeapon _weapon;
         [SerializeField] private BulletWorldGo _bulletWorld;
         [SerializeField] private CameraShaker _cameraShaker;
-        [SerializeField] private HealthView _healthView;
-        [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private TransformBounds _bounds;
         [SerializeField] private ShipMaterial _shipMaterial;
         [SerializeField] private AudioSource _audioSource;
@@ -33,9 +30,8 @@ namespace Game.Installers
         
         [SerializeField] private PlayerFacade _playerFacade;
         [SerializeField] private PlayerFireController _fireController;
-        [SerializeField] private PlayerHealthChangeObserver _healthChangeObserver;
-        [SerializeField] private PlayerDeathObserver _deathObserver;
         [SerializeField] private PlayerMovementController _movementController;
+        [SerializeField] private PlayerDeathObserver _playerDeathObserver;
 
         private TeamType Team => TeamType.Player;
         
@@ -52,11 +48,10 @@ namespace Game.Installers
             _movementAnimator.Construct(_movement, _viewConfig.MoveRotationAngle, _viewConfig.MoveSpeed);
             _deathEffectsController.Construct(_health, _viewConfig);
             
-            _playerFacade.Construct(_health);
+            _playerFacade.Construct(Team, _health);
             _fireController.Construct(_weapon);
-            _healthChangeObserver.Construct(_health, _cameraShaker, _healthView);
             _movementController.Construct(_movement);
-            _deathObserver.Construct(_health, _gameOverView);
+            _playerDeathObserver.Construct(_health);
         }
     }
 }

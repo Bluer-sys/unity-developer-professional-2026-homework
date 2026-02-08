@@ -7,16 +7,14 @@ namespace Game.Player
     public class PlayerDeathObserver : MonoBehaviour
     {
         private HealthComponent _health;
-        private GameOverView _gameOverView;
 
-        public void Construct(HealthComponent health, GameOverView gameOverView)
+        public void Construct(HealthComponent health)
         {
             _health = health;
-            _gameOverView = gameOverView;
-            
+
             _health.OnDead += OnDead;
-        }   
-        
+        }
+
         private void OnDestroy()
         {
             _health.OnDead -= OnDead;
@@ -24,7 +22,7 @@ namespace Game.Player
 
         private void OnDead()
         {
-            _gameOverView.Show();
+            gameObject.SetActive(false);
         }
     }
 }

@@ -55,6 +55,7 @@ namespace Game.Enemy
             
             EnemyFacade enemy = _enemyPool.Spawn(spawnPosition);
 
+            enemy.ResetHealth();
             enemy.SetDestination(destination);
             enemy.SetTarget(_player);
             
@@ -64,6 +65,8 @@ namespace Game.Enemy
         private void OnEnemyDead(EnemyFacade enemy) 
         {
             enemy.OnDead -= OnEnemyDead;
+            
+            enemy.SetTarget(null);
             
             _destroyedEnemies++;
             _scoreView.SetValue(_destroyedEnemies);
