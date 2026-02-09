@@ -27,24 +27,21 @@ namespace Game.Installers
         [SerializeField] private EnemyFacade _enemyFacade;
         [SerializeField] private EnemyBehaviour _enemyBehaviour;
         
-        private TeamType Team => TeamType.Enemy;
-        
-        
-        public EnemyFacade Install(BulletWorldGo bulletWorldGo)
+        public EnemyFacade Install(BulletSpawner bulletSpawner)
         {
             _shipMaterial.SetMaterial(_viewConfig.MaterialPrefab);
             
-            _weapon.Construct(Team, bulletWorldGo, _config.FireCooldown, _bulletConfig);
+            _weapon.Construct(bulletSpawner, _config.FireCooldown, _bulletConfig);
 
             _health.Construct(_config.Health);
-            _movement.Construct(_rigidbody, null, _config.MoveSpeed);
+            _movement.Construct(_rigidbody, _config.MoveSpeed);
             
             _takeDamageEffectController.Construct(_health, _viewConfig, _viewConfig.DamageSfx, _audioSource, _shipMaterial);
             _movementAnimator.Construct(_movement, _viewConfig.MoveRotationAngle, _viewConfig.MoveSpeed);
             _deathEffectsController.Construct(_health, _viewConfig);
             
             _enemyBehaviour.Construct(_movement, _weapon, _config.StoppingDistance);
-            _enemyFacade.Construct(Team, _health, _enemyBehaviour);
+            _enemyFacade.Construct(_health, _enemyBehaviour);
             
             return _enemyFacade;
         }

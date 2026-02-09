@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4dfe4a19efe44e786939e9e2ebb6645, type: 3}
   m_Name: BulletConfig (Player)
   m_EditorClassIdentifier: Game::Game.Bullet.BulletConfig
+  <LayerName>k__BackingField: PlayerBullet
   <Speed>k__BackingField: 7
   <Damage>k__BackingField: 1
+  <IsRedVfx>k__BackingField: 0

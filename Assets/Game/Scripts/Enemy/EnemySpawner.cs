@@ -1,4 +1,5 @@
 using Game.Player;
+using Game.Pool;
 using Modules.UI;
 using Modules.Utils;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Game.Enemy
         
         [SerializeField] private Transform[] _spawnPositions;
         [SerializeField] private Transform[] _attackPositions;
+        [SerializeField] private Transform _container;
 
         [SerializeField] private float _minSpawnCooldown;
         [SerializeField] private float _maxSpawnCooldown;
@@ -53,9 +55,8 @@ namespace Game.Enemy
             var spawnPosition = NextSpawnPosition();
             var destination = NextDestination();
             
-            EnemyFacade enemy = _enemyPool.Spawn(spawnPosition);
+            EnemyFacade enemy = _enemyPool.Spawn(spawnPosition, Quaternion.identity, _container);
 
-            enemy.ResetHealth();
             enemy.SetDestination(destination);
             enemy.SetTarget(_player);
             

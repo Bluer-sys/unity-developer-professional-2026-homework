@@ -1,6 +1,5 @@
 using System;
 using Game.Common;
-using Game.Data;
 using Game.Interfaces;
 using UnityEngine;
 
@@ -12,13 +11,9 @@ namespace Game.Enemy
         private EnemyBehaviour _behaviour;
         
         public event Action<EnemyFacade> OnDead;
-
-        public TeamType Team { get; private set; }
-
         
-        public void Construct(TeamType team, HealthComponent health, EnemyBehaviour behaviour)
+        public void Construct(HealthComponent health, EnemyBehaviour behaviour)
         {
-            Team = team;
             _health = health;
             _behaviour = behaviour;
             

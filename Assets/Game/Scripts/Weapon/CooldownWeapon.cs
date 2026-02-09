@@ -10,9 +10,8 @@ namespace Game.Weapon
     {
         [SerializeField] private Transform _firePoint;
         
-        private TeamType _team;
         private float _fireCooldown;
-        private BulletWorldGo _bulletWorld;
+        private BulletSpawner _bulletWorld;
         private BulletConfig _bulletConfig;
 
         private float _lastFireTime;
@@ -20,14 +19,12 @@ namespace Game.Weapon
         public event Action OnFired;
         
 
-        public void Construct(TeamType team, 
-                              BulletWorldGo bulletWorldGo, 
+        public void Construct(BulletSpawner bulletSpawner, 
                               float cooldown, 
                               BulletConfig bulletConfig)
         {
-            _team = team;
             _fireCooldown = cooldown;
-            _bulletWorld = bulletWorldGo;
+            _bulletWorld = bulletSpawner;
             _bulletConfig = bulletConfig;
         }
         
@@ -44,11 +41,7 @@ namespace Game.Weapon
 
         private void Fire(Vector2 direction)
         {
-            _bulletWorld.Spawn(_firePoint.position,
-                direction,
-                _bulletConfig.Speed,
-                _bulletConfig.Damage,
-                _team);
+            _bulletWorld.Spawn(_firePoint.position, direction, _bulletConfig);
             
             OnFired?.Invoke();
         }

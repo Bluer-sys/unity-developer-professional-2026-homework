@@ -562,6 +562,8 @@ GameObject:
   m_Component:
   - component: {fileID: 363245576}
   - component: {fileID: 363245577}
+  - component: {fileID: 363245579}
+  - component: {fileID: 363245578}
   m_Layer: 0
   m_Name: <BulletSystem>
   m_TagString: Untagged
@@ -596,10 +598,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bd15923a144ffbab0333dc6e74e641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
+  _bulletPool: {fileID: 363245579}
   _container: {fileID: 363245576}
-  _configView: {fileID: 11400000, guid: f2107b212e6a245009f8ae9313cc81bb, type: 2}
-  _levelBounds: {fileID: 2572952653776768186}
+--- !u!114 &363245578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363245575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ba172e6aa74dab8a0e83f30335e04d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Bullet.BulletFactory
+  _prefab: {fileID: 2290669693540782488, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
+  _container: {fileID: 363245576}
+  _bounds: {fileID: 2572952653776768186}
+--- !u!114 &363245579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363245575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ba3ebdec73432e9b7ad8c4041886d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Game.Bullet.BulletPool
+  _initialSize: 10
+  _factory: {fileID: 363245578}
 --- !u!1 &404085825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,10 +1043,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 562298203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dae85f8264479bac19d85418d92392, type: 3}
+  m_Script: {fileID: 11500000, guid: 10cbc82899c742ac838cce7abad1275f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyFactory: {fileID: 562298207}
+  _initialSize: 0
+  _factory: {fileID: 562298207}
 --- !u!114 &562298206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,6 +1079,7 @@ MonoBehaviour:
   - {fileID: 1549378007}
   - {fileID: 78117031}
   - {fileID: 883274640}
+  _container: {fileID: 1052031097}
   _minSpawnCooldown: 2
   _maxSpawnCooldown: 3
   _player: {fileID: 4414282821800802437}
@@ -1066,7 +1097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.Enemy.EnemyFactory
   _prefab: {fileID: 6970176693926724973, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
   _container: {fileID: 1052031097}
-  _bulletWorldGo: {fileID: 363245577}
+  _bulletSpawner: {fileID: 363245577}
 --- !u!1 &574514311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2562,7 +2593,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1879759789}
-  - component: {fileID: 1879759790}
   m_Layer: 0
   m_Name: <PlayerSystem>
   m_TagString: Untagged
@@ -2586,18 +2616,6 @@ Transform:
   - {fileID: 1498479407}
   m_Father: {fileID: 739865810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1879759790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879759788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0d8a2134b32408a9ccae5fde8a74223, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::Game.PlayerBulletInstantiator
 --- !u!1 &1954893900
 GameObject:
   m_ObjectHideFlags: 0
@@ -3228,10 +3246,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1498479408}
     - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-      propertyPath: _healthView
-      value: 
-      objectReference: {fileID: 1243470931}
-    - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
       propertyPath: _bulletWorld
       value: 
       objectReference: {fileID: 363245577}
@@ -3239,12 +3253,7 @@ PrefabInstance:
       propertyPath: _cameraShaker
       value: 
       objectReference: {fileID: 519420034}
-    - target: {fileID: 7046343677111750469, guid: 0446acb84a7c9424d841676cef3b1d04, type: 3}
-      propertyPath: _gameOverView
-      value: 
-      objectReference: {fileID: 1375492023}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

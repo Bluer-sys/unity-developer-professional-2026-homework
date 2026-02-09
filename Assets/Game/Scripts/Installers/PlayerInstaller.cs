@@ -18,7 +18,7 @@ namespace Game.Installers
         [SerializeField] private MovementComponent _movement;
         [SerializeField] private HealthComponent _health;
         [SerializeField] private CooldownWeapon _weapon;
-        [SerializeField] private BulletWorldGo _bulletWorld;
+        [SerializeField] private BulletSpawner _bulletWorld;
         [SerializeField] private CameraShaker _cameraShaker;
         [SerializeField] private TransformBounds _bounds;
         [SerializeField] private ShipMaterial _shipMaterial;
@@ -33,24 +33,22 @@ namespace Game.Installers
         [SerializeField] private PlayerMovementController _movementController;
         [SerializeField] private PlayerDeathObserver _playerDeathObserver;
 
-        private TeamType Team => TeamType.Player;
-        
         private void Awake()
         {
             _shipMaterial.SetMaterial(_viewConfig.MaterialPrefab);
             
-            _weapon.Construct(Team, _bulletWorld, _config.FireCooldown, _bulletConfig);
+            _weapon.Construct(_bulletWorld, _config.FireCooldown, _bulletConfig);
             
             _health.Construct(_config.Health);
-            _movement.Construct(_rigidbody, _bounds, _config.MoveSpeed);
+            _movement.Construct(_rigidbody, _config.MoveSpeed);
             
             _takeDamageEffectController.Construct(_health, _viewConfig, _viewConfig.DamageSfx, _audioSource, _shipMaterial);
             _movementAnimator.Construct(_movement, _viewConfig.MoveRotationAngle, _viewConfig.MoveSpeed);
             _deathEffectsController.Construct(_health, _viewConfig);
             
-            _playerFacade.Construct(Team, _health);
+            _playerFacade.Construct(_health);
             _fireController.Construct(_weapon);
-            _movementController.Construct(_movement);
+            _movementController.Construct(_movement, _bounds);
             _playerDeathObserver.Construct(_health);
         }
     }

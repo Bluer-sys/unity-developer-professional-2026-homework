@@ -11,12 +11,10 @@ namespace Game.Player
 
         public Transform Transform => transform;
         public bool IsDead => _health.IsDead;
-        public TeamType Team { get; private set; }
 
-        public void Construct(TeamType team, HealthComponent health)
+        public void Construct(HealthComponent health)
         {
             _health = health;
-            Team = team;
         }
 
         public void TakeDamage(int damage)

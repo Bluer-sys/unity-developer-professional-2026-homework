@@ -1,15 +1,19 @@
+using System;
 using Game.Common;
+using Modules.Utils;
 using UnityEngine;
 
 namespace Game.Player
 {
     public class PlayerMovementController : MonoBehaviour
     {
+        private TransformBounds _bounds;
         private MovementComponent _movement;
         
-        public void Construct(MovementComponent movement)
+        public void Construct(MovementComponent movement, TransformBounds bounds)
         {
             _movement = movement;
+            _bounds = bounds;
         }
         
         public void Update()
@@ -19,6 +23,11 @@ namespace Game.Player
             var direction = new Vector2(dx, dy);
 
             _movement.SetDirection(direction);
+        }
+
+        public void LateUpdate()
+        {
+            transform.position = _bounds.ClampInBounds(transform.position);
         }
     }
 }
