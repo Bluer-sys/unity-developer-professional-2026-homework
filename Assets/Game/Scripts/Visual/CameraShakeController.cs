@@ -2,7 +2,7 @@ using Game.Common;
 using Modules.Utils;
 using UnityEngine;
 
-namespace Game
+namespace Game.Visual
 {
     public class CameraShakeController : MonoBehaviour
     {

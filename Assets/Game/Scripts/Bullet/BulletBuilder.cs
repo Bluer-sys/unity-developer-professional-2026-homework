@@ -14,67 +14,74 @@ namespace Game.Bullet
         [SerializeField] private GameObject _blueVFX;
         [SerializeField] private GameObject _redVFX;
         
+        private Vector2 _direction;
+        private float _speed;
+        private int _layer;
+        private bool _isRedVfx;
+        private int _damage;
         private Action<BulletBuilder> _onDead;
 
-
-        public BulletBuilder SetDirection(Vector2 direction)
+        public BulletBuilder WithDirection(Vector2 direction)
         {
-            _movement.SetDirection(direction);
-            
+            _direction = direction;
             return this;
         }
 
-        public BulletBuilder SetSpeed(float speed)
+        public BulletBuilder WithSpeed(float speed)
         {
-            _movement.SetSpeed(speed);
-            
+            _speed = speed;
             return this;
         }
 
-        public BulletBuilder SetLayer(int layer)
+        public BulletBuilder WithLayer(int layer)
         {
-            gameObject.layer = layer;
-            
+            _layer = layer;
             return this;
         }
 
-        public BulletBuilder SetVfx(bool isRedVfx)
+        public BulletBuilder WithVfx(bool isRedVfx)
         {
-            _blueVFX.SetActive(!isRedVfx);
-            _redVFX.SetActive(isRedVfx);
-            
+            _isRedVfx = isRedVfx;
             return this;
         }
 
-        public BulletBuilder SetDamage(int damage)
+        public BulletBuilder WithDamage(int damage)
         {
-            _collisionDamageReceiver.SetDamage(damage);
-            
+            _damage = damage;
             return this;
         }
 
         public BulletBuilder OnDead(Action<BulletBuilder> onDead)
         {
             _onDead = onDead;
-
-            _bulletFacade.OnDead -= OnDeadHandler;
-            _bulletFacade.OnDead += OnDeadHandler;
-            
             return this;
         }
 
-        public BulletFacade GetFacade()
+        public BulletFacade Build()
         {
+            _movement.SetDirection(_direction);
+            _movement.SetSpeed(_speed);
+            _collisionDamageReceiver.SetDamage(_damage);
+
+            gameObject.layer = _layer;
+
+            _blueVFX.SetActive(!_isRedVfx);
+            _redVFX.SetActive(_isRedVfx);
+            
+            _bulletFacade.OnDead -= OnDeadHandler;
+            _bulletFacade.OnDead += OnDeadHandler;
+            
             return _bulletFacade;
         }
 
         public void SetToDefault()
         {
-            SetDirection(Vector2.up);
-            SetLayer(0);
-            SetVfx(false);
-            SetDamage(1);
-            OnDead(null);
+            WithDirection(default);
+            WithSpeed(default);
+            WithDamage(default);
+            WithLayer(default);
+            WithVfx(default);
+            OnDead(default);
         }
 
         private void OnDeadHandler(BulletFacade bullet)

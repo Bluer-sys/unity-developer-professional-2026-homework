@@ -1,6 +1,7 @@
+using Game.Common;
 using UnityEngine;
 
-namespace Game.Common
+namespace Game.Visual
 {
     public class MovementAnimator : MonoBehaviour
     {

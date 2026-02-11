@@ -11,12 +11,12 @@ namespace Game.Collision
 
         private void OnEnable()
         {
-            _collisionHandler.OnTriggerEntered += OnTriggerEnter2D;
+            _collisionHandler.OnTriggerEntered += OnTriggerEntered;
         }
 
         private void OnDisable()
         {
-            _collisionHandler.OnTriggerEntered -= OnTriggerEnter2D;
+            _collisionHandler.OnTriggerEntered -= OnTriggerEntered;
         }
 
         public void SetDamage(int damage)
@@ -24,7 +24,7 @@ namespace Game.Collision
             _damage = damage;
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEntered(Collider2D other)
         {
             if (!other.TryGetComponent(out IDamageable damageable))
                 return;

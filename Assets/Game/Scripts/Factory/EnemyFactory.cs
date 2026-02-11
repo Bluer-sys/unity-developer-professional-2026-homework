@@ -8,13 +8,12 @@ namespace Game.Factory
     public class EnemyFactory : MonoBehaviour, IFactory<EnemyFacade>
     {
         [SerializeField] private EnemyInstaller _prefab;
-        [SerializeField] private Transform _container;
         [SerializeField] private BulletSpawner _bulletSpawner;
         
-        public EnemyFacade Create(Vector3 position, Quaternion rotation)
+        public EnemyFacade Create(Vector3 position, Quaternion rotation, Transform parent)
         {
-            EnemyInstaller installer = Instantiate(_prefab, position, rotation, _container);
-            EnemyFacade enemy = installer.Install(_bulletSpawner);
+            var installer = Instantiate(_prefab, position, rotation, parent);
+            var enemy = installer.Install(_bulletSpawner);
             
             return enemy;
         }

@@ -1,6 +1,5 @@
 using System;
 using Game.Bullet;
-using Game.Data;
 using Game.Interfaces;
 using UnityEngine;
 
@@ -9,10 +8,10 @@ namespace Game.Weapon
     public class CooldownWeapon : MonoBehaviour, IWeapon
     {
         [SerializeField] private Transform _firePoint;
-        
-        private float _fireCooldown;
-        private BulletSpawner _bulletWorld;
+
+        private BulletSpawner _bulletSpawner;
         private BulletConfig _bulletConfig;
+        private float _fireCooldown;
 
         private float _lastFireTime;
 
@@ -20,12 +19,12 @@ namespace Game.Weapon
         
 
         public void Construct(BulletSpawner bulletSpawner, 
-                              float cooldown, 
-                              BulletConfig bulletConfig)
+                              BulletConfig bulletConfig, 
+                              float cooldown)
         {
-            _fireCooldown = cooldown;
-            _bulletWorld = bulletSpawner;
+            _bulletSpawner = bulletSpawner;
             _bulletConfig = bulletConfig;
+            _fireCooldown = cooldown;
         }
         
         public bool TryFire(Vector2 direction)
@@ -41,7 +40,7 @@ namespace Game.Weapon
 
         private void Fire(Vector2 direction)
         {
-            _bulletWorld.Spawn(_firePoint.position, direction, _bulletConfig);
+            _bulletSpawner.Spawn(_firePoint.position, direction, _bulletConfig);
             
             OnFired?.Invoke();
         }

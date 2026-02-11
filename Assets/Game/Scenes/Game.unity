@@ -518,9 +518,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c47f103d5706412fb1a09d1d2203b076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.UI.UiController
-  _health: {fileID: 3559832809919233304}
+  _scoreView: {fileID: 895558708}
   _gameOverView: {fileID: 1375492023}
   _healthView: {fileID: 1243470931}
+  _health: {fileID: 3559832809919233304}
+  _enemySpawner: {fileID: 562298206}
 --- !u!1 &196756140
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +601,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPool: {fileID: 363245579}
-  _container: {fileID: 363245576}
 --- !u!114 &363245578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,7 +614,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Bullet.BulletFactory
   _prefab: {fileID: 2290669693540782488, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
-  _container: {fileID: 363245576}
   _bounds: {fileID: 2572952653776768186}
 --- !u!114 &363245579
 MonoBehaviour:
@@ -629,6 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.Bullet.BulletPool
   _initialSize: 10
   _factory: {fileID: 363245578}
+  _container: {fileID: 363245576}
 --- !u!1 &404085825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initialSize: 0
   _factory: {fileID: 562298207}
+  _container: {fileID: 1052031097}
 --- !u!114 &562298206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,7 +1063,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Enemy.EnemySpawner
   _enemyPool: {fileID: 562298205}
-  _scoreView: {fileID: 895558708}
   _spawnPositions:
   - {fileID: 5098186055898699330}
   - {fileID: 3822857799868723767}
@@ -1079,7 +1080,6 @@ MonoBehaviour:
   - {fileID: 1549378007}
   - {fileID: 78117031}
   - {fileID: 883274640}
-  _container: {fileID: 1052031097}
   _minSpawnCooldown: 2
   _maxSpawnCooldown: 3
   _player: {fileID: 4414282821800802437}
@@ -1096,7 +1096,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Enemy.EnemyFactory
   _prefab: {fileID: 6970176693926724973, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
-  _container: {fileID: 1052031097}
   _bulletSpawner: {fileID: 363245577}
 --- !u!1 &574514311
 GameObject:

@@ -1,7 +1,7 @@
 using Game.Collision;
 using UnityEngine;
 
-namespace Game.Bullet
+namespace Game.Visual
 {
     public class BulletCollideEffectController : MonoBehaviour
     {

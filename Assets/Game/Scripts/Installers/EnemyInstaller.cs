@@ -2,6 +2,7 @@ using Game.Bullet;
 using Game.Common;
 using Game.Data;
 using Game.Enemy;
+using Game.Visual;
 using Game.Weapon;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace Game.Installers
         {
             _shipMaterial.SetMaterial(_viewConfig.MaterialPrefab);
             
-            _weapon.Construct(bulletSpawner, _config.FireCooldown, _bulletConfig);
+            _weapon.Construct(bulletSpawner, _bulletConfig, _config.FireCooldown);
 
             _health.Construct(_config.Health);
             _movement.Construct(_rigidbody, _config.MoveSpeed);

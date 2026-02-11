@@ -1,6 +1,6 @@
+using System;
 using Game.Player;
 using Game.Pool;
-using Modules.UI;
 using Modules.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,11 +10,9 @@ namespace Game.Enemy
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private EnemyPool _enemyPool;
-        [SerializeField] private ScoreView _scoreView;
         
         [SerializeField] private Transform[] _spawnPositions;
         [SerializeField] private Transform[] _attackPositions;
-        [SerializeField] private Transform _container;
 
         [SerializeField] private float _minSpawnCooldown;
         [SerializeField] private float _maxSpawnCooldown;
@@ -22,16 +20,18 @@ namespace Game.Enemy
         [SerializeField] private PlayerFacade _player;
         
         private float _spawnCooldown;
-        private int _destroyedEnemies;
         private float _lastSpawnTime;
         private int _spawnIndex;
         private int _attackIndex;
+
+        public event Action OnEnemyDead;
         
+        public int DestroyedEnemies { get; private set; }
+
         private void Awake()
         {
             _spawnPositions.Shuffle();
             _attackPositions.Shuffle();
-            _scoreView.SetValue(_destroyedEnemies);
         }
         
         private void Start()
@@ -55,23 +55,24 @@ namespace Game.Enemy
             var spawnPosition = NextSpawnPosition();
             var destination = NextDestination();
             
-            EnemyFacade enemy = _enemyPool.Spawn(spawnPosition, Quaternion.identity, _container);
+            var enemy = _enemyPool.Spawn(spawnPosition, Quaternion.identity);
 
             enemy.SetDestination(destination);
             enemy.SetTarget(_player);
             
-            enemy.OnDead += OnEnemyDead;
+            enemy.OnDead += OnEnemyDeadHandler;
         }
 
-        private void OnEnemyDead(EnemyFacade enemy) 
+        private void OnEnemyDeadHandler(EnemyFacade enemy) 
         {
-            enemy.OnDead -= OnEnemyDead;
+            enemy.OnDead -= OnEnemyDeadHandler;
             
             enemy.SetTarget(null);
             
-            _destroyedEnemies++;
-            _scoreView.SetValue(_destroyedEnemies);
+            DestroyedEnemies++;
             _enemyPool.Despawn(enemy);
+
+            OnEnemyDead?.Invoke();
         }
 
         private void ResetSpawnCooldown()

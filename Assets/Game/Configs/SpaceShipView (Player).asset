@@ -48,6 +48,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   <HitPropertyName>k__BackingField: _HitBlend
   <HitDuration>k__BackingField: 0.2
+  <DamageSfx>k__BackingField: {fileID: 8300000, guid: 9d2f129290cb1a6489928f3dde8dbb39, type: 3}
   <MoveRotationAngle>k__BackingField: 15
   <MoveSpeed>k__BackingField: 5
   <DestroyEffectPrefab>k__BackingField: {fileID: 198423008863891152, guid: 91acdbd2820f9ce418996a0a24d91079, type: 3}

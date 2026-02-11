@@ -1,5 +1,3 @@
-using Game.Data;
-
 namespace Game.Interfaces
 {
     internal interface IDamageable

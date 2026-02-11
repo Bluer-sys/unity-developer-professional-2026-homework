@@ -1,6 +1,7 @@
+using Game.Weapon;
 using UnityEngine;
 
-namespace Game.Weapon
+namespace Game.Visual
 {
     public class WeaponEffectsController : MonoBehaviour
     {

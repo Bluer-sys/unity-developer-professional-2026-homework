@@ -8,6 +8,7 @@ namespace Game.Pool
         protected override void Reinitialize(BulletBuilder builder)
         {
             builder.SetToDefault();
+            builder.OnDead(Despawn);
         }
     }
 }

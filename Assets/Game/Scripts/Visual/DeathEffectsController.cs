@@ -1,7 +1,8 @@
+using Game.Common;
 using Game.Data;
 using UnityEngine;
 
-namespace Game.Common
+namespace Game.Visual
 {
     public class DeathEffectsController : MonoBehaviour
     {

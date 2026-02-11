@@ -8,12 +8,11 @@ namespace Game.Factory
     public class BulletFactory : MonoBehaviour, IFactory<BulletBuilder>
     {
         [SerializeField] private BulletInstaller _prefab;
-        [SerializeField] private Transform _container;
         [SerializeField] private TransformBounds _bounds;
 
-        public BulletBuilder Create(Vector3 position, Quaternion rotation)
+        public BulletBuilder Create(Vector3 position, Quaternion rotation, Transform parent)
         {
-            var installer = Instantiate(_prefab, position, rotation, _container);
+            var installer = Instantiate(_prefab, position, rotation, parent);
             var builder = installer.Install(_bounds);
 
             return builder;
