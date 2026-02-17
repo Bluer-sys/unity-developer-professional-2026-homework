@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.GameObjects.Weapon
 {
-    public class Weapon : MonoBehaviour, IWeapon
+    public class CooldownWeapon : MonoBehaviour, IWeapon
     {
         [SerializeField] private Transform _firePoint;
 

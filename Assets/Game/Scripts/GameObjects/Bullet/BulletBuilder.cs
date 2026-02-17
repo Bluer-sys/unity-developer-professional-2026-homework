@@ -6,47 +6,32 @@ namespace Game.GameObjects.Bullet
 {
     public class BulletBuilder : MonoBehaviour
     {
-        [SerializeField] private BulletFacade _bulletFacade;
-        [SerializeField] private MovementComponent _movement;
-        [SerializeField] private CollisionDamageReceiver _collisionDamageReceiver;
-
-        [SerializeField] private GameObject _blueVFX;
-        [SerializeField] private GameObject _redVFX;
+        private Bullet _bullet;
+        private BulletView _bulletView;
+        private MovementComponent _movement;
         
         private Vector2 _direction;
-        private float _speed;
-        private int _layer;
-        private bool _isRedVfx;
-        private int _damage;
+        private BulletConfig _config;
         private Action<BulletBuilder> _onDead;
+
+        public void Construct(Bullet bullet,
+                              BulletView bulletView, 
+                              MovementComponent movement)
+        {
+            _bullet = bullet;
+            _bulletView = bulletView;
+            _movement = movement;
+        }
+
+        public BulletBuilder WithConfig(BulletConfig config)
+        {
+            _config = config;
+            return this;
+        }
 
         public BulletBuilder WithDirection(Vector2 direction)
         {
             _direction = direction;
-            return this;
-        }
-
-        public BulletBuilder WithSpeed(float speed)
-        {
-            _speed = speed;
-            return this;
-        }
-
-        public BulletBuilder WithLayer(int layer)
-        {
-            _layer = layer;
-            return this;
-        }
-
-        public BulletBuilder WithVfx(bool isRedVfx)
-        {
-            _isRedVfx = isRedVfx;
-            return this;
-        }
-
-        public BulletBuilder WithDamage(int damage)
-        {
-            _damage = damage;
             return this;
         }
 
@@ -56,39 +41,40 @@ namespace Game.GameObjects.Bullet
             return this;
         }
 
-        public BulletFacade Build()
+        public Bullet Build()
         {
+            if(_config == null)
+                throw new InvalidOperationException("Config is not set!");
+            
             _movement.SetDirection(_direction);
-            _movement.SetSpeed(_speed);
-            _collisionDamageReceiver.SetDamage(_damage);
+            _movement.SetSpeed(_config.Speed);
 
-            gameObject.layer = _layer;
+            gameObject.layer = _config.GetLayer();
 
-            _blueVFX.SetActive(!_isRedVfx);
-            _redVFX.SetActive(_isRedVfx);
+            _bulletView.SetVfx(_config.IsRedVfx);
+            _bulletView.SetExplosionPrefab(_config.ExplosionPrefab);
             
-            _bulletFacade.OnDead -= OnDeadHandler;
-            _bulletFacade.OnDead += OnDeadHandler;
+            _bullet.SetDamage(_config.Damage);
             
-            return _bulletFacade;
+            _bullet.OnDead -= OnDeadHandler;
+            _bullet.OnDead += OnDeadHandler;
+            
+            return _bullet;
         }
 
         public void SetToDefault()
         {
             WithDirection(default);
-            WithSpeed(default);
-            WithDamage(default);
-            WithLayer(default);
-            WithVfx(default);
+            WithConfig(default);
             OnDead(default);
         }
 
-        private void OnDeadHandler(BulletFacade bullet)
+        private void OnDeadHandler()
         {
             _onDead?.Invoke(this);
             _onDead = null;
             
-            _bulletFacade.OnDead -= OnDeadHandler;
+            _bullet.OnDead -= OnDeadHandler;
         }
     }
 }

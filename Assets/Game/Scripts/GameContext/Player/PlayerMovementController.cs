@@ -6,14 +6,9 @@ namespace Game.GameContext.Player
 {
     public class PlayerMovementController : MonoBehaviour
     {
-        private TransformBounds _bounds;
-        private MovementComponent _movement;
-        
-        public void Construct(MovementComponent movement, TransformBounds bounds)
-        {
-            _movement = movement;
-            _bounds = bounds;
-        }
+        [SerializeField] private TransformBounds _bounds;
+        [SerializeField] private MovementComponent _movement;
+        [SerializeField] private Transform _playerTransform;
         
         public void Update()
         {
@@ -26,7 +21,7 @@ namespace Game.GameContext.Player
 
         public void LateUpdate()
         {
-            transform.position = _bounds.ClampInBounds(transform.position);
+            _playerTransform.position = _bounds.ClampInBounds(_playerTransform.position);
         }
     }
 }

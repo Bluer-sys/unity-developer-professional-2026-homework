@@ -5,12 +5,7 @@ namespace Game.GameContext.Player
 {
     public class PlayerFireController : MonoBehaviour
     {
-        private IWeapon _weapon;
-
-        public void Construct(IWeapon weapon)
-        {
-            _weapon = weapon;
-        }
+        [SerializeField] private CooldownWeapon _weapon;
         
         public void Update()
         {

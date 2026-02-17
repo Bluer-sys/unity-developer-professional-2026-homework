@@ -16,7 +16,7 @@ namespace Game.GameObjects.Ship
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private MovementComponent _movement;
         [SerializeField] private HealthComponent _health;
-        [SerializeField] private Weapon.Weapon _weapon;
+        [SerializeField] private Weapon.CooldownWeapon _weapon;
         [SerializeField] private BulletSpawner _bulletWorld;
         [SerializeField] private CameraShaker _cameraShaker;
         [SerializeField] private TransformBounds _bounds;
@@ -28,9 +28,6 @@ namespace Game.GameObjects.Ship
         [SerializeField] private MovementViewComponent _movementViewComponent;
         
         [SerializeField] private PlayerFacade _playerFacade;
-        [SerializeField] private PlayerFireController _fireController;
-        [SerializeField] private PlayerMovementController _movementController;
-        [SerializeField] private PlayerDeathObserver _playerDeathObserver;
 
         private void Awake()
         {
@@ -46,9 +43,6 @@ namespace Game.GameObjects.Ship
             _deathViewComponent.Construct(_health, _viewConfig);
             
             _playerFacade.Construct(_health);
-            _fireController.Construct(_weapon);
-            _movementController.Construct(_movement, _bounds);
-            _playerDeathObserver.Construct(_health);
         }
     }
 }

@@ -228,9 +228,9 @@ MonoBehaviour:
   _weapon: {fileID: 6087741390660280860}
   _shipMaterial: {fileID: 8326241624895250536}
   _audioSource: {fileID: 4560017961611896118}
-  _deathEffectsController: {fileID: 791639387435919093}
-  _takeDamageEffectController: {fileID: 7830853832354156734}
-  _movementAnimator: {fileID: 4612936253531206157}
+  _deathViewComponent: {fileID: 791639387435919093}
+  _takeDamageViewComponent: {fileID: 7830853832354156734}
+  _movementViewComponent: {fileID: 4612936253531206157}
   _enemyFacade: {fileID: 102605417607457000}
   _enemyBehaviour: {fileID: 2787246726140618426}
 --- !u!114 &102605417607457000

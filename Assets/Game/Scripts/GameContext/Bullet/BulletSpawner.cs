@@ -12,11 +12,8 @@ namespace Game.GameContext.Bullet
             var rotation = Quaternion.LookRotation(direction, Vector3.forward);
 
             _bulletPool.Spawn(position, rotation)
+                       .WithConfig(bulletConfig)
                        .WithDirection(direction)
-                       .WithSpeed(bulletConfig.Speed)
-                       .WithLayer(bulletConfig.GetLayer())
-                       .WithVfx(bulletConfig.IsRedVfx)
-                       .WithDamage(bulletConfig.Damage)
                        .Build();
         }
     }

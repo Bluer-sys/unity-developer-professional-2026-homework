@@ -14,7 +14,7 @@ namespace Game.GameObjects.Ship
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private MovementComponent _movement;
         [SerializeField] private HealthComponent _health;
-        [SerializeField] private Weapon.Weapon _weapon;
+        [SerializeField] private Weapon.CooldownWeapon _weapon;
         [SerializeField] private ShipMaterial _shipMaterial;
         [SerializeField] private AudioSource _audioSource;
 

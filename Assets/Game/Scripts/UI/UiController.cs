@@ -11,13 +11,17 @@ namespace Game.UI
         [SerializeField] private GameOverView _gameOverView;
         [SerializeField] private HealthView _healthView;
         
-        [SerializeField] private HealthComponent _health;
+        [SerializeField] private GameObject _player;
         [SerializeField] private EnemySpawner _enemySpawner;
+
+        private HealthComponent _playerHealth;
         
         private void Awake()
         {
-            _health.OnHealthChanged += OnHealthChanged;
-            _health.OnDead += _gameOverView.Show;
+            _playerHealth = _player.GetComponent<HealthComponent>();
+
+            _playerHealth.OnHealthChanged += OnHealthChanged;
+            _playerHealth.OnDead += _gameOverView.Show;
             _enemySpawner.OnEnemyDead += OnEnemyDead;
             
             _scoreView.SetValue(0);
@@ -25,14 +29,14 @@ namespace Game.UI
 
         private void OnDestroy()
         {
-            _health.OnHealthChanged -= OnHealthChanged;
-            _health.OnDead -= _gameOverView.Show;
+            _playerHealth.OnHealthChanged -= OnHealthChanged;
+            _playerHealth.OnDead -= _gameOverView.Show;
             _enemySpawner.OnEnemyDead -= OnEnemyDead;
         }
 
         private void OnHealthChanged(int current)
         {
-            _healthView.SetHealth(current, _health.MaxHealth);
+            _healthView.SetHealth(current, _playerHealth.MaxHealth);
         }
 
         private void OnEnemyDead()
