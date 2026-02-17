@@ -1,5 +1,5 @@
-using Game.Common;
-using Game.Enemy;
+using Game.GameContext.Enemy;
+using Game.GameObjects.Core;
 using Modules.UI;
 using UnityEngine;
 
