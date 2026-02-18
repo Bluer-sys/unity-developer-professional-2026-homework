@@ -233,7 +233,7 @@ MonoBehaviour:
   _deathViewComponent: {fileID: 6029328622759878192}
   _takeDamageViewComponent: {fileID: 2289310892942315150}
   _movementViewComponent: {fileID: 3255243003491038610}
-  _playerFacade: {fileID: 8119156664578240041}
+  _player: {fileID: 8119156664578240041}
 --- !u!114 &4570218069988575630
 MonoBehaviour:
   m_ObjectHideFlags: 0

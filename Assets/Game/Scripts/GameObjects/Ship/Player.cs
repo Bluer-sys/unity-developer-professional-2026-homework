@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.GameObjects.Ship
 {
-    public class PlayerFacade : MonoBehaviour, IAttackTarget, IDamageable
+    public class Player : MonoBehaviour, IAttackTarget
     {
         private HealthComponent _health;
 
@@ -13,11 +13,6 @@ namespace Game.GameObjects.Ship
         public void Construct(HealthComponent health)
         {
             _health = health;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            _health.Decrease(damage);
         }
     }
 }

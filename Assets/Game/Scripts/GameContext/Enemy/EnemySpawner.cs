@@ -1,5 +1,4 @@
 using System;
-using Game.GameObjects.Ship;
 using Game.Utils;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace Game.GameContext.Enemy
     {
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemyPositionsProvider _positionsProvider;
-        [SerializeField] private PlayerFacade _player;
+        [SerializeField] private GameObjects.Ship.Player _player;
 
         [SerializeField] private float _minSpawnCooldown;
         [SerializeField] private float _maxSpawnCooldown;
@@ -47,7 +46,7 @@ namespace Game.GameContext.Enemy
             enemy.OnDead += OnEnemyDeadHandler;
         }
 
-        private void OnEnemyDeadHandler(EnemyFacade enemy) 
+        private void OnEnemyDeadHandler(GameObjects.Ship.Enemy enemy) 
         {
             enemy.OnDead -= OnEnemyDeadHandler;
             

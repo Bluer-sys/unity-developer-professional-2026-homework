@@ -22,10 +22,10 @@ namespace Game.GameObjects.Ship
         [SerializeField] private TakeDamageViewComponent _takeDamageViewComponent;
         [SerializeField] private MovementViewComponent _movementViewComponent;
 
-        [SerializeField] private EnemyFacade _enemyFacade;
+        [SerializeField] private Enemy _enemy;
         [SerializeField] private EnemyBehaviour _enemyBehaviour;
         
-        public EnemyFacade Install(BulletSpawner bulletSpawner)
+        public Enemy Install(BulletSpawner bulletSpawner)
         {
             _shipMaterial.SetMaterial(_viewConfig.MaterialPrefab);
             
@@ -39,9 +39,9 @@ namespace Game.GameObjects.Ship
             _deathViewComponent.Construct(_health, _viewConfig);
             
             _enemyBehaviour.Construct(_movement, _weapon, _config.StoppingDistance);
-            _enemyFacade.Construct(_health, _enemyBehaviour);
+            _enemy.Construct(_health, _enemyBehaviour);
             
-            return _enemyFacade;
+            return _enemy;
         }
     }
 }

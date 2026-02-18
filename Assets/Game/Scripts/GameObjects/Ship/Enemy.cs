@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Game.GameObjects.Ship
 {
-    public sealed class EnemyFacade : MonoBehaviour, IDamageable
+    public sealed class Enemy : MonoBehaviour
     {
         private HealthComponent _health;
         private EnemyBehaviour _behaviour;
         
-        public event Action<EnemyFacade> OnDead;
+        public event Action<Enemy> OnDead;
         
         public void Construct(HealthComponent health, EnemyBehaviour behaviour)
         {
@@ -37,11 +37,6 @@ namespace Game.GameObjects.Ship
         public void SetTarget(IAttackTarget target)
         {
             _behaviour.SetTarget(target);
-        }
-
-        public void TakeDamage(int damage)
-        {
-            _health.Decrease(damage);
         }
 
         public void ResetHealth()

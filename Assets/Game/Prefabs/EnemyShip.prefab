@@ -231,7 +231,7 @@ MonoBehaviour:
   _deathViewComponent: {fileID: 791639387435919093}
   _takeDamageViewComponent: {fileID: 7830853832354156734}
   _movementViewComponent: {fileID: 4612936253531206157}
-  _enemyFacade: {fileID: 102605417607457000}
+  _enemy: {fileID: 102605417607457000}
   _enemyBehaviour: {fileID: 2787246726140618426}
 --- !u!114 &102605417607457000
 MonoBehaviour:

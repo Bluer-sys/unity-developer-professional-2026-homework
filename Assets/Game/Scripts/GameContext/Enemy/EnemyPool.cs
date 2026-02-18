@@ -1,11 +1,10 @@
 using Game.GameContext.Core;
-using Game.GameObjects.Ship;
 
 namespace Game.GameContext.Enemy
 {
-    public class EnemyPool : ObjectPool<EnemyFacade, EnemyFactory>
+    public class EnemyPool : ObjectPool<GameObjects.Ship.Enemy, EnemyFactory>
     {
-        protected override void Reinitialize(EnemyFacade enemy)
+        protected override void Reinitialize(GameObjects.Ship.Enemy enemy)
         {
             enemy.ResetHealth();
         }

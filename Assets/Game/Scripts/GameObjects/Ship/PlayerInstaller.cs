@@ -27,7 +27,7 @@ namespace Game.GameObjects.Ship
         [SerializeField] private TakeDamageViewComponent _takeDamageViewComponent;
         [SerializeField] private MovementViewComponent _movementViewComponent;
         
-        [SerializeField] private PlayerFacade _playerFacade;
+        [SerializeField] private Player _player;
 
         private void Awake()
         {
@@ -42,7 +42,7 @@ namespace Game.GameObjects.Ship
             _movementViewComponent.Construct(_movement, _viewConfig.MoveRotationAngle, _viewConfig.MoveSpeed);
             _deathViewComponent.Construct(_health, _viewConfig);
             
-            _playerFacade.Construct(_health);
+            _player.Construct(_health);
         }
     }
 }

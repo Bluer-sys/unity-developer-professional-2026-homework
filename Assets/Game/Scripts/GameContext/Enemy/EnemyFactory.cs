@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Game.GameContext.Enemy
 {
-    public class EnemyFactory : MonoBehaviour, IFactory<EnemyFacade>
+    public class EnemyFactory : MonoBehaviour, IFactory<GameObjects.Ship.Enemy>
     {
         [SerializeField] private EnemyInstaller _prefab;
         [SerializeField] private BulletSpawner _bulletSpawner;
         
-        public EnemyFacade Create(Vector3 position, Quaternion rotation, Transform parent)
+        public GameObjects.Ship.Enemy Create(Vector3 position, Quaternion rotation, Transform parent)
         {
             var installer = Instantiate(_prefab, position, rotation, parent);
             var enemy = installer.Install(_bulletSpawner);

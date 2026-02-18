@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.GameObjects.Core
 {
-    public class HealthComponent : MonoBehaviour
+    public class HealthComponent : MonoBehaviour, IDamageable
     {
         private int _currentHealth;
 
@@ -40,6 +40,11 @@ namespace Game.GameObjects.Core
         {
             _currentHealth = MaxHealth;
             IsDead = false;
+        }
+
+        void IDamageable.TakeDamage(int damage)
+        {
+            Decrease(damage);
         }
     }
 }
