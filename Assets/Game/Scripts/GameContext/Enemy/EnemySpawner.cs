@@ -1,48 +1,33 @@
 using System;
 using Game.GameObjects.Ship;
-using Modules.Utils;
+using Game.Utils;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Game.GameContext.Enemy
 {
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private EnemyPool _enemyPool;
-        
-        [SerializeField] private Transform[] _spawnPositions;
-        [SerializeField] private Transform[] _attackPositions;
+        [SerializeField] private EnemyPositionsProvider _positionsProvider;
+        [SerializeField] private PlayerFacade _player;
 
         [SerializeField] private float _minSpawnCooldown;
         [SerializeField] private float _maxSpawnCooldown;
-        
-        [SerializeField] private PlayerFacade _player;
-        
-        private float _spawnCooldown;
-        private float _lastSpawnTime;
-        private int _spawnIndex;
-        private int _attackIndex;
 
+        private readonly UnityTimer _timer = new();
+        
         public event Action OnEnemyDead;
         
         public int DestroyedEnemies { get; private set; }
 
-        private void Awake()
-        {
-            _spawnPositions.Shuffle();
-            _attackPositions.Shuffle();
-        }
-        
         private void Start()
         {
             ResetSpawnCooldown();
         }
-        
+
         private void FixedUpdate()
         {
-            float time = Time.fixedTime;
-
-            if (time - _lastSpawnTime < _spawnCooldown)
+            if (!_timer.IsExpired())
                 return;
 
             Spawn();
@@ -51,8 +36,8 @@ namespace Game.GameContext.Enemy
 
         private void Spawn()
         {
-            var spawnPosition = NextSpawnPosition();
-            var destination = NextDestination();
+            var spawnPosition = _positionsProvider.NextSpawnPosition();
+            var destination = _positionsProvider.NextDestination();
             
             var enemy = _enemyPool.Spawn(spawnPosition, Quaternion.identity);
 
@@ -76,30 +61,7 @@ namespace Game.GameContext.Enemy
 
         private void ResetSpawnCooldown()
         {
-            _spawnCooldown = Random.Range(_minSpawnCooldown, _maxSpawnCooldown);
-            _lastSpawnTime = Time.fixedTime;
-        }
-
-        private Vector3 NextSpawnPosition()
-        {
-            if (_spawnIndex >= _spawnPositions.Length)
-            {
-                _spawnPositions.Shuffle();
-                _spawnIndex = 0;
-            }
-
-            return _spawnPositions[_spawnIndex++].position;
-        }
-
-        private Vector3 NextDestination()
-        {
-            if (_attackIndex >= _attackPositions.Length)
-            {
-                _attackPositions.Shuffle();
-                _attackIndex = 0;
-            }
-
-            return _attackPositions[_attackIndex++].position;
+            _timer.SetRandom(_minSpawnCooldown, _maxSpawnCooldown);
         }
     }
 }

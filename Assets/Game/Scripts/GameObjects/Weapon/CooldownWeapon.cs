@@ -1,6 +1,7 @@
 using System;
 using Game.GameContext.Bullet;
 using Game.GameObjects.Bullet;
+using Game.Utils;
 using UnityEngine;
 
 namespace Game.GameObjects.Weapon
@@ -13,7 +14,7 @@ namespace Game.GameObjects.Weapon
         private BulletConfig _bulletConfig;
         private float _fireCooldown;
 
-        private float _lastFireTime;
+        private UnityTimer _timer;
 
         public event Action OnFired;
         
@@ -25,16 +26,18 @@ namespace Game.GameObjects.Weapon
             _bulletSpawner = bulletSpawner;
             _bulletConfig = bulletConfig;
             _fireCooldown = cooldown;
+
+            _timer = new UnityTimer(_fireCooldown);
         }
-        
+
         public bool TryFire(Vector2 direction)
         {
-            if (Time.time - _lastFireTime < _fireCooldown)
+            if (!_timer.IsExpired())
                 return false;
 
             Fire(direction);
 
-            _lastFireTime = Time.time;
+            _timer.Reset();
             return true;
         }
 
