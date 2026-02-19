@@ -1,39 +1,20 @@
 using System;
-using Game.Utils;
+using Game.GameObjects;
 using UnityEngine;
 
-namespace Game.GameContext.Enemy
+namespace Game.GameContext
 {
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private EnemyPositionsProvider _positionsProvider;
-        [SerializeField] private GameObjects.Ship.Player _player;
+        [SerializeField] private Player _player;
 
-        [SerializeField] private float _minSpawnCooldown;
-        [SerializeField] private float _maxSpawnCooldown;
-
-        private readonly UnityTimer _timer = new();
-        
         public event Action OnEnemyDead;
         
         public int DestroyedEnemies { get; private set; }
 
-        private void Start()
-        {
-            ResetSpawnCooldown();
-        }
-
-        private void FixedUpdate()
-        {
-            if (!_timer.IsExpired())
-                return;
-
-            Spawn();
-            ResetSpawnCooldown();
-        }
-
-        private void Spawn()
+        public void Spawn()
         {
             var spawnPosition = _positionsProvider.NextSpawnPosition();
             var destination = _positionsProvider.NextDestination();
@@ -46,7 +27,7 @@ namespace Game.GameContext.Enemy
             enemy.OnDead += OnEnemyDeadHandler;
         }
 
-        private void OnEnemyDeadHandler(GameObjects.Ship.Enemy enemy) 
+        private void OnEnemyDeadHandler(Enemy enemy) 
         {
             enemy.OnDead -= OnEnemyDeadHandler;
             
@@ -56,11 +37,6 @@ namespace Game.GameContext.Enemy
             _enemyPool.Despawn(enemy);
 
             OnEnemyDead?.Invoke();
-        }
-
-        private void ResetSpawnCooldown()
-        {
-            _timer.SetRandom(_minSpawnCooldown, _maxSpawnCooldown);
         }
     }
 }

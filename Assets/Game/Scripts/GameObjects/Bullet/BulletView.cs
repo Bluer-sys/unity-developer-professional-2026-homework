@@ -1,27 +1,23 @@
 using UnityEngine;
 
-namespace Game.GameObjects.Bullet
+namespace Game.GameObjects
 {
     public class BulletView : MonoBehaviour
     {
         [SerializeField] private GameObject _blueVFX;
         [SerializeField] private GameObject _redVFX;
-
-        private Bullet _bullet;
-        private BulletConfig _config;
+        [SerializeField] private Bullet _bullet;
 
         private GameObject _explosionPrefab;
 
-        public void Construct(Bullet bullet)
+        private void OnEnable()
         {
-            _bullet = bullet;
-            
             _bullet.OnDead += OnDead;
         }
-        
-        private void OnDestroy()
+
+        private void OnDisable()
         {
-            _bullet.OnDead += OnDead;
+            _bullet.OnDead -= OnDead;
         }
 
         public void SetVfx(bool isRedVfx)
@@ -35,7 +31,7 @@ namespace Game.GameObjects.Bullet
             _explosionPrefab = explosionPrefab;
         }
         
-        private void OnDead()
+        private void OnDead(Bullet bullet)
         {
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         }

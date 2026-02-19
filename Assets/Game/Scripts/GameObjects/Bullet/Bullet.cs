@@ -1,24 +1,21 @@
 using System;
-using Game.GameObjects.Core;
 using Modules.Utils;
 using UnityEngine;
 
-namespace Game.GameObjects.Bullet
+namespace Game.GameObjects
 {
     public sealed class Bullet : MonoBehaviour
     {
-        private CollisionHandler _collisionHandler;
-        private TransformBounds _bounds;
+        [SerializeField] private CollisionHandler _collisionHandler;
         
+        private TransformBounds _bounds;
         private int _damage;
         
-        public event Action OnDead;
+        public event Action<Bullet> OnDead;
 
-        public void Construct(TransformBounds bounds, 
-                              CollisionHandler collisionHandler)
+        public void Construct(TransformBounds bounds)
         {
             _bounds = bounds;
-            _collisionHandler = collisionHandler;
             
             _collisionHandler.OnTriggerEntered += OnTriggerEntered;
         }
@@ -49,7 +46,7 @@ namespace Game.GameObjects.Bullet
 
         private void Dead()
         {
-            OnDead?.Invoke();
+            OnDead?.Invoke(this);
         }
     }
 }

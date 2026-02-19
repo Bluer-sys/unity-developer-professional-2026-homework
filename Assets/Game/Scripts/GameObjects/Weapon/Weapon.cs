@@ -1,35 +1,32 @@
 using System;
-using Game.GameContext.Bullet;
-using Game.GameObjects.Bullet;
+using Game.GameContext;
 using Game.Utils;
 using UnityEngine;
 
-namespace Game.GameObjects.Weapon
+namespace Game.GameObjects
 {
-    public class CooldownWeapon : MonoBehaviour, IWeapon
+    public class Weapon : MonoBehaviour, IWeapon
     {
+        [SerializeField] private BulletConfig _bulletConfig;
         [SerializeField] private Transform _firePoint;
-
-        private BulletSpawner _bulletSpawner;
-        private BulletConfig _bulletConfig;
+        [SerializeField] private BulletSpawner _bulletSpawner;
+        
         private float _fireCooldown;
-
         private UnityTimer _timer;
 
         public event Action OnFired;
-        
 
-        public void Construct(BulletSpawner bulletSpawner, 
-                              BulletConfig bulletConfig, 
-                              float cooldown)
+        public void Construct(BulletSpawner bulletSpawner)
         {
             _bulletSpawner = bulletSpawner;
-            _bulletConfig = bulletConfig;
-            _fireCooldown = cooldown;
-
-            _timer = new UnityTimer(_fireCooldown);
         }
 
+        public void ResetCooldown(float cooldown)
+        {
+            _fireCooldown = cooldown;
+            _timer = new UnityTimer(_fireCooldown);
+        }
+        
         public bool TryFire(Vector2 direction)
         {
             if (!_timer.IsExpired())

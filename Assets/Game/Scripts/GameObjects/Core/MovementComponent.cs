@@ -1,19 +1,14 @@
 using UnityEngine;
 
-namespace Game.GameObjects.Core
+namespace Game.GameObjects
 {
     public class MovementComponent : MonoBehaviour
     {
-        private Rigidbody2D _rigidbody;
+        [SerializeField] private Rigidbody2D _rigidbody;
+        
         private float _speed;
         
         public Vector2 CurrentMoveDirection { get; private set; }
-
-        public void Construct(Rigidbody2D rigidbody, float speed)
-        {
-            _rigidbody = rigidbody;
-            _speed = speed;
-        }
 
         private void FixedUpdate()
         {

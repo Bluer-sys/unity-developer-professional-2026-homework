@@ -1,7 +1,7 @@
-using Game.GameObjects.Core;
+using Game.GameObjects;
 using UnityEngine;
 
-namespace Game.GameContext.Player
+namespace Game.GameContext
 {
     public class PlayerDeathObserver : MonoBehaviour
     {

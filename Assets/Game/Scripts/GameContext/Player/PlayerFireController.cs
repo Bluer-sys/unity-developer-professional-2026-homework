@@ -1,11 +1,11 @@
-using Game.GameObjects.Weapon;
+using Game.GameObjects;
 using UnityEngine;
 
-namespace Game.GameContext.Player
+namespace Game.GameContext
 {
     public class PlayerFireController : MonoBehaviour
     {
-        [SerializeField] private CooldownWeapon _weapon;
+        [SerializeField] private Weapon _weapon;
         
         public void Update()
         {

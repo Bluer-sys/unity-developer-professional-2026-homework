@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2743036428890533593}
   - component: {fileID: 3555983760417175357}
   - component: {fileID: 3951101991959698325}
-  - component: {fileID: 2290669693540782488}
   - component: {fileID: 201757604187811891}
   - component: {fileID: 8874128893944657804}
   - component: {fileID: 1808894461726173028}
@@ -102,23 +101,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.1
---- !u!114 &2290669693540782488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2743036428890533592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1be165c2c4774a1ea5662bc1041ed8a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::Game.Installers.BulletInstaller
-  _rigidbody: {fileID: 3555983760417175357}
-  _collisionHandler: {fileID: 1808894461726173028}
-  _bullet: {fileID: 201757604187811891}
-  _bulletView: {fileID: 8874128893944657804}
-  _movement: {fileID: 1218490860629494798}
 --- !u!114 &201757604187811891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f04ddcf68e44c1b95a5d6ea04d1a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collisionHandler: {fileID: 1808894461726173028}
 --- !u!114 &8874128893944657804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.Bullet.BulletCollideEffectController
   _blueVFX: {fileID: 2619809868877078830}
   _redVFX: {fileID: 1820983718236820478}
+  _bullet: {fileID: 201757604187811891}
 --- !u!114 &1808894461726173028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f129a9105a48428a7d74524e8fea9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Common.MovementComponent
+  _rigidbody: {fileID: 3555983760417175357}
 --- !u!1 &3276060438849189846
 GameObject:
   m_ObjectHideFlags: 0

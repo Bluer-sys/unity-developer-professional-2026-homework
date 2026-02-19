@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.GameObjects.Core
+namespace Game.GameObjects
 {
     public class HealthComponent : MonoBehaviour, IDamageable
     {
@@ -13,13 +13,6 @@ namespace Game.GameObjects.Core
         public int MaxHealth { get; private set; }
         public bool IsDead { get; private set; }
 
-        public void Construct(int maxHealth)
-        {
-            MaxHealth = maxHealth;
-            
-            ResetHealth();
-        }
-        
         public void Decrease(int value)
         {
             if(IsDead)
@@ -36,6 +29,12 @@ namespace Game.GameObjects.Core
             }
         }
 
+        public void ResetHealth(int maxHealth)
+        {
+            MaxHealth = maxHealth;
+            ResetHealth();
+        }
+        
         public void ResetHealth()
         {
             _currentHealth = MaxHealth;

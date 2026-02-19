@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.GameContext.Core
+namespace Game.GameContext
 {
     public interface IFactory<out TObject>
     {

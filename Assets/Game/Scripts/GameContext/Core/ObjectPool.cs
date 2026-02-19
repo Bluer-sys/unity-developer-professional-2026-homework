@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameObjects;
 using UnityEngine;
 
-namespace Game.GameContext.Core
+namespace Game.GameContext
 {
     public abstract class ObjectPool<TObject, TFactory> : MonoBehaviour
         where TObject : Component
@@ -53,13 +54,18 @@ namespace Game.GameContext.Core
 
             obj.gameObject.SetActive(false);
             _pool.Push(obj);
+            
+            OnDespawned(obj);
         }
 
         protected abstract void Reinitialize(TObject obj);
+
+        protected virtual void OnDespawned(TObject obj) {}
 
         private TObject Create(Vector3 position, Quaternion rotation)
         {
             return _factory.Create(position, rotation, _container);
         }
+
     }
 }

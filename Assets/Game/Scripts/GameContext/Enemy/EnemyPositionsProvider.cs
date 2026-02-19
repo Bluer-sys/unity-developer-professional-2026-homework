@@ -1,7 +1,7 @@
 using Modules.Utils;
 using UnityEngine;
 
-namespace Game.GameContext.Enemy
+namespace Game.GameContext
 {
     public class EnemyPositionsProvider : MonoBehaviour
     {

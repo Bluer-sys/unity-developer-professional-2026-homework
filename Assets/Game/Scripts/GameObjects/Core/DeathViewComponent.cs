@@ -1,24 +1,19 @@
-using Game.GameObjects.Ship;
 using UnityEngine;
 
-namespace Game.GameObjects.Core
+namespace Game.GameObjects
 {
     public class DeathViewComponent : MonoBehaviour
     {
+        [SerializeField] private ShipViewConfig _viewConfig;
         [SerializeField] private Transform _viewTransform;
-        
-        private HealthComponent _health;
-        private ShipViewConfig _viewConfig;
+        [SerializeField] private HealthComponent _health;
 
-        public void Construct(HealthComponent health, ShipViewConfig viewConfig)
+        private void OnEnable()
         {
-            _health = health;
-            _viewConfig = viewConfig;
-
             _health.OnDead += OnDead;
         }
-        
-        private void OnDestroy()
+
+        private void OnDisable()
         {
             _health.OnDead -= OnDead;
         }

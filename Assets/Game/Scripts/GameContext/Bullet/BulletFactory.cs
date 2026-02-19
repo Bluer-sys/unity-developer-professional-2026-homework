@@ -1,21 +1,20 @@
-using Game.GameContext.Core;
-using Game.GameObjects.Bullet;
+using Game.GameObjects;
 using Modules.Utils;
 using UnityEngine;
 
-namespace Game.GameContext.Bullet
+namespace Game.GameContext
 {
-    public class BulletFactory : MonoBehaviour, IFactory<BulletBuilder>
+    public class BulletFactory : MonoBehaviour, IFactory<Bullet>
     {
-        [SerializeField] private BulletBuilder _prefab;
+        [SerializeField] private Bullet _prefab;
         [SerializeField] private TransformBounds _bounds;
 
-        public BulletBuilder Create(Vector3 position, Quaternion rotation, Transform parent)
+        public Bullet Create(Vector3 position, Quaternion rotation, Transform parent)
         {
-            var builder = Instantiate(_prefab, position, rotation, parent)
-                .Construct(_bounds);
+            var bullet = Instantiate(_prefab, position, rotation, parent);
+            bullet.Construct(_bounds);
 
-            return builder;
+            return bullet;
         }
     }
 }

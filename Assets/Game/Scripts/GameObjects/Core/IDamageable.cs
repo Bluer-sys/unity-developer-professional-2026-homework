@@ -1,4 +1,4 @@
-namespace Game.GameObjects.Core
+namespace Game.GameObjects
 {
     internal interface IDamageable
     {

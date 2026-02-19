@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4575139502811685103}
   - component: {fileID: 4075764219798992963}
   - component: {fileID: 8141832910989862937}
-  - component: {fileID: 7046343677111750469}
   - component: {fileID: 4570218069988575630}
   - component: {fileID: 3608840802599314035}
   - component: {fileID: 8119156664578240041}
@@ -206,34 +205,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7046343677111750469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4109394316656653739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb9017fb8474d1c9368608bde26fba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::Game.Installers.PlayerInstaller
-  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
-  _config: {fileID: 11400000, guid: 0b9a4576e5f0a4babb44b3c82e6480d0, type: 2}
-  _bulletConfig: {fileID: 11400000, guid: 8643ff95bd3c54682ba5279a0b0f4691, type: 2}
-  _rigidbody: {fileID: 4575139502811685103}
-  _movement: {fileID: 4570218069988575630}
-  _health: {fileID: 3608840802599314035}
-  _weapon: {fileID: 157700667267948966}
-  _bulletWorld: {fileID: 0}
-  _cameraShaker: {fileID: 0}
-  _bounds: {fileID: 0}
-  _shipMaterial: {fileID: 6410466588293435954}
-  _audioSource: {fileID: 8141832910989862937}
-  _deathViewComponent: {fileID: 6029328622759878192}
-  _takeDamageViewComponent: {fileID: 2289310892942315150}
-  _movementViewComponent: {fileID: 3255243003491038610}
-  _player: {fileID: 8119156664578240041}
 --- !u!114 &4570218069988575630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f129a9105a48428a7d74524e8fea9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Common.MovementComponent
+  _rigidbody: {fileID: 4575139502811685103}
 --- !u!114 &3608840802599314035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +242,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1f729607bf43c9b65e7e6ea3a04d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Player.PlayerFacade
+  _config: {fileID: 11400000, guid: 0b9a4576e5f0a4babb44b3c82e6480d0, type: 2}
+  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
+  _weapon: {fileID: 157700667267948966}
+  _health: {fileID: 3608840802599314035}
+  _movement: {fileID: 4570218069988575630}
+  _shipMaterial: {fileID: 6410466588293435954}
 --- !u!114 &3255243003491038610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1395b70a6cda463291e6b2f0e8f70aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Common.MovementAnimator
+  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
   _viewTransform: {fileID: 5706750963508843440}
+  _movement: {fileID: 4570218069988575630}
 --- !u!114 &2289310892942315150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0585d32ef76f46c6b32e47719b720983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Common.TakeDamageEffectController
+  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
+  _health: {fileID: 3608840802599314035}
+  _audioSource: {fileID: 8141832910989862937}
+  _shipMaterial: {fileID: 6410466588293435954}
 --- !u!114 &6029328622759878192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f740428eeb1f40dc8cee579adf6e52b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Common.DeathEffectsController
+  _viewConfig: {fileID: 11400000, guid: 9298f762411724a389beae656b1dfcaa, type: 2}
   _viewTransform: {fileID: 5706750963508843440}
+  _health: {fileID: 3608840802599314035}
 --- !u!114 &6410466588293435954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0dd363396a47faa75dc273d79b033d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Game.Weapon.CooldownWeapon
+  _bulletConfig: {fileID: 11400000, guid: 8643ff95bd3c54682ba5279a0b0f4691, type: 2}
   _firePoint: {fileID: 8503432944885784460}
+  _bulletSpawner: {fileID: 0}
 --- !u!114 &7519218989297794995
 MonoBehaviour:
   m_ObjectHideFlags: 0

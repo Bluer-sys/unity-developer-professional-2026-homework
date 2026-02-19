@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.GameObjects.Core
+namespace Game.GameObjects
 {
     public class CollisionHandler : MonoBehaviour
     {

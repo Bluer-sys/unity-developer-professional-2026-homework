@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace Game.GameObjects.Weapon
+namespace Game.GameObjects
 {
     public class WeaponView : MonoBehaviour
     {
-        [SerializeField] private CooldownWeapon _weapon;
+        [SerializeField] private Weapon _weapon;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private ParticleSystem _fireVFX;
         [SerializeField] private AudioClip _fireSFX;

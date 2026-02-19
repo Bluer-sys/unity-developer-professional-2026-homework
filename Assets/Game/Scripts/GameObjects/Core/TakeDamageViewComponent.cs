@@ -1,35 +1,24 @@
 using DG.Tweening;
-using Game.GameObjects.Ship;
 using UnityEngine;
 
-namespace Game.GameObjects.Core
+namespace Game.GameObjects
 {
     public class TakeDamageViewComponent : MonoBehaviour
     {
-        private HealthComponent _health;
-        private ShipViewConfig _viewConfig;
-        private AudioClip _damageSfx;
-        private AudioSource _audioSource;
-        private ShipMaterial _shipMaterial;
+        [SerializeField] private ShipViewConfig _viewConfig;
+        [SerializeField] private HealthComponent _health;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private ShipMaterial _shipMaterial;
 
         private Tweener _damageAnimation;
 
-        public void Construct(HealthComponent health,
-                              ShipViewConfig viewConfig,
-                              AudioClip damageSfx, 
-                              AudioSource audioSource, 
-                              ShipMaterial shipMaterial)
+
+        private void OnEnable()
         {
-            _health = health;
-            _viewConfig = viewConfig;
-            _damageSfx = damageSfx;
-            _audioSource = audioSource;
-            _shipMaterial = shipMaterial;
-            
             _health.OnHealthChanged += OnHealthChanged;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _health.OnHealthChanged -= OnHealthChanged;
         }
@@ -47,8 +36,8 @@ namespace Game.GameObjects.Core
                                .SetLink(_shipMaterial.Renderer.gameObject)
                                .OnComplete(() => _damageAnimation = null);
 
-            if (_damageSfx)
-                _audioSource.PlayOneShot(_damageSfx);
+            if (_viewConfig.DamageSfx)
+                _audioSource.PlayOneShot(_viewConfig.DamageSfx);
         }
 
         private void SetHitProperty(float progress)

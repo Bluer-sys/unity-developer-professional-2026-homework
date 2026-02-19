@@ -1,8 +1,8 @@
-using Game.GameObjects.Core;
+using Game.GameObjects;
 using Modules.Utils;
 using UnityEngine;
 
-namespace Game.GameContext.Player
+namespace Game.GameContext
 {
     public class PlayerMovementController : MonoBehaviour
     {
