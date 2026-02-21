@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace Modules.Inventories
@@ -16,11 +17,12 @@ namespace Modules.Inventories
         private readonly Dictionary<Item, Vector2Int> _items;
         private readonly int _width;
         private readonly int _height;
+        private StringBuilder _sb;
 
         public int Width => _width;
         public int Height => _height;
         public int Count => _items.Count;
-
+        
         public Inventory(int width, int height)
         {
             ThrowIfInvalidSize(width, height);
@@ -29,6 +31,7 @@ namespace Modules.Inventories
             _height = height;
             _grid = new Item[width, height];
             _items = new Dictionary<Item, Vector2Int>();
+            _sb = new StringBuilder((_width + 1) * _height); 
         }
 
         public Inventory(
@@ -351,7 +354,7 @@ namespace Modules.Inventories
         /// </summary>
         public void OptimizeSpace()
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
@@ -385,7 +388,19 @@ namespace Modules.Inventories
         /// </summary>
         public override string ToString()
         {
-            return string.Empty;
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    var item = _grid[x, y];
+                    _sb.Append(item != null ? item.Name : ".");
+                }
+
+                if (y < _height - 1)
+                    _sb.Append('\n');
+            }
+
+            return _sb.ToString();
         }
 
         private bool AddItemInternal(Item item, Vector2Int position)
@@ -458,12 +473,12 @@ namespace Modules.Inventories
             return x >= _width || y >= _height || x < 0 || y < 0;
         }
 
-        private static void ThrowIfInvalidSize(Item item)
+        private void ThrowIfInvalidSize(Item item)
         {
             ThrowIfInvalidSize(item.Size.x, item.Size.y);
         }
 
-        private static void ThrowIfInvalidSize(int width, int height)
+        private void ThrowIfInvalidSize(int width, int height)
         {
             if (width <= 0 || height <= 0)
                 throw new ArgumentException($"Item size width = {width}, height = {height} is invalid!");
