@@ -17,7 +17,6 @@ namespace Modules.Inventories
         private readonly Dictionary<Item, Vector2Int> _items;
         private readonly int _width;
         private readonly int _height;
-        private StringBuilder _sb;
 
         public int Width => _width;
         public int Height => _height;
@@ -338,13 +337,16 @@ namespace Modules.Inventories
         public bool MoveItem(Item item, Vector2Int position)
         {
             ThrowIfArgumentNull(item);
-            
-            if (!RemoveItemInternal(item, out _))
+
+            if (!RemoveItemInternal(item, out Vector2Int oldPosition))
                 return false;
 
             if (!AddItemInternal(item, position))
+            {
+                AddItemInternal(item, oldPosition);
                 return false;
-            
+            }
+
             OnMoved?.Invoke(item, position);
             return true;
         }
@@ -427,9 +429,7 @@ namespace Modules.Inventories
         {
             for (int i = 0; i < _width; i++)
                 for (int j = 0; j < _height; j++)
-                {
                     matrix[i, j] = _grid[i, j];
-                }
         }
 
         /// <summary>
@@ -437,19 +437,21 @@ namespace Modules.Inventories
         /// </summary>
         public override string ToString()
         {
+            var sb = new StringBuilder((_width + 1) * _height);
+
             for (int y = 0; y < _height; y++)
             {
                 for (int x = 0; x < _width; x++)
                 {
                     var item = _grid[x, y];
-                    _sb.Append(item != null ? item.Name : ".");
+                    sb.Append(item != null ? item.Name : ".");
                 }
 
                 if (y < _height - 1)
-                    _sb.Append('\n');
+                    sb.Append('\n');
             }
 
-            return _sb.ToString();
+            return sb.ToString();
         }
 
         private bool AddItemInternal(Item item, Vector2Int position)
