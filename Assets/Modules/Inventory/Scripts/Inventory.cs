@@ -320,9 +320,9 @@ namespace Modules.Inventories
         {
             int count = 0;
             
-            foreach (var pair in _items)
+            foreach (var key in _items.Keys)
             {
-                if (string.Equals(pair.Key.Name, name))
+                if (string.Equals(key.Name, name))
                     count++;
             }
 
@@ -333,15 +333,31 @@ namespace Modules.Inventories
         {
             ThrowIfArgumentNull(item);
 
-            if (!RemoveItemInternal(item, out Vector2Int oldPosition))
+            if (!_items.TryGetValue(item, out Vector2Int oldPosition))
                 return false;
 
-            if (!AddItemInternal(item, position))
-            {
-                AddItemInternal(item, oldPosition);
-                return false;
-            }
+            int sizeX = item.Size.x;
+            int sizeY = item.Size.y;
+            int endX = position.x + sizeX;
+            int endY = position.y + sizeY;
 
+            if (position.x < 0 || position.y < 0 || endX > _width || endY > _height)
+                return false;
+
+            for (int x = position.x; x < endX; x++)
+                for (int y = position.y; y < endY; y++)
+                    if (_grid[x, y] != null && !Equals(_grid[x, y], item))
+                        return false;
+
+            for (int x = oldPosition.x; x < oldPosition.x + sizeX; x++)
+                for (int y = oldPosition.y; y < oldPosition.y + sizeY; y++)
+                    _grid[x, y] = null;
+
+            for (int x = position.x; x < endX; x++)
+                for (int y = position.y; y < endY; y++)
+                    _grid[x, y] = item;
+
+            _items[item] = position;
             OnMoved?.Invoke(item, position);
             return true;
         }
