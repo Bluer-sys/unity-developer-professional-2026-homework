@@ -177,20 +177,7 @@ namespace Modules.Inventories
         public bool FindFreePosition(int sizeX, int sizeY, out Vector2Int position)
         {
             ThrowIfInvalidSize(sizeX, sizeY);
-            
-            position = Vector2Int.zero;
-            
-            for (int y = 0, endY = _height - sizeY; y <= endY ; y++)
-                for (int x = 0, endX = _width - sizeX; x <= endX; x++)
-                {
-                    if (!IsFreeSpace(x, y, x + sizeX, y + sizeY))
-                        continue;
-
-                    position = new Vector2Int(x, y);
-                    return true;
-                }
-
-            return false;
+            return FindFreePositionInternal(sizeX, sizeY, out position);
         }
 
         /// <summary>
@@ -378,11 +365,14 @@ namespace Modules.Inventories
         {
             ClearGrid();
 
-            var itemsArray = new Item[_items.Count];
-            
+            int count = _items.Count;
+            var itemsArray = new Item[count];
             _items.Keys.CopyTo(itemsArray, 0);
 
-            Array.Sort(itemsArray, ComparerBySize);
+            var areas = new int[count];
+            for (int i = 0; i < count; i++)
+                areas[i] = -(itemsArray[i].Size.x * itemsArray[i].Size.y);
+            Array.Sort(areas, itemsArray);
 
             _items.Clear();
 
@@ -391,7 +381,7 @@ namespace Modules.Inventories
                 int sizeX = item.Size.x;
                 int sizeY = item.Size.y;
 
-                if (!FindFreePosition(sizeX, sizeY, out Vector2Int pos))
+                if (!FindFreePositionInternal(sizeX, sizeY, out Vector2Int pos))
                     continue;
 
                 for (int x = pos.x, endX = pos.x + sizeX; x < endX; x++)
@@ -399,21 +389,6 @@ namespace Modules.Inventories
                         _grid[x, y] = item;
 
                 _items.Add(item, pos);
-            }
-            return;
-
-            int ComparerBySize(Item a, Item b)
-            {
-                int sizeA = a.Size.x * a.Size.y;
-                int sizeB = b.Size.x * b.Size.y;
-
-                if (sizeA < sizeB)
-                    return 1;
-
-                if (sizeA == sizeB)
-                    return 0;
-
-                return -1;
             }
         }
 
@@ -529,6 +504,41 @@ namespace Modules.Inventories
             return true;
         }
         
+        private bool FindFreePositionInternal(int sizeX, int sizeY, out Vector2Int position)
+        {
+            position = Vector2Int.zero;
+            int maxY = _height - sizeY;
+            int maxX = _width - sizeX;
+
+            for (int y = 0; y <= maxY; y++)
+            {
+                int x = 0;
+                while (x <= maxX)
+                {
+                    int blockerX = FindBlockerColumn(x, y, x + sizeX, y + sizeY);
+                    if (blockerX < 0)
+                    {
+                        position = new Vector2Int(x, y);
+                        return true;
+                    }
+
+                    x = blockerX + 1;
+                }
+            }
+
+            return false;
+        }
+
+        private int FindBlockerColumn(int startX, int startY, int endX, int endY)
+        {
+            for (int x = startX; x < endX; x++)
+                for (int y = startY; y < endY; y++)
+                    if (_grid[x, y] != null)
+                        return x;
+
+            return -1;
+        }
+
         private bool IsFreeSpace(int startX, int startY, int endX, int endY)
         {
             if (startX < 0 || startY < 0 || endX > _width || endY > _height)
