@@ -150,10 +150,13 @@ namespace Modules.Inventories
             if (_items.ContainsKey(item))
                 return false;
 
-            if (!FindFreePosition(item, out Vector2Int position))
+            int sizeX = item.Size.x;
+            int sizeY = item.Size.y;
+
+            if (!FindFreePosition(sizeX, sizeY, out Vector2Int position))
                 return false;
 
-            PlaceItem(item, item.Size.x, item.Size.y, position);
+            PlaceItem(item, sizeX, sizeY, position);
             OnAdded?.Invoke(item, position);
             return true;
         }
@@ -546,11 +549,6 @@ namespace Modules.Inventories
         private bool IsPositionOutOfRange(int x, int y)
         {
             return x >= _width || y >= _height || x < 0 || y < 0;
-        }
-
-        private void ThrowIfInvalidSize(Item item)
-        {
-            ThrowIfInvalidSize(item.Size.x, item.Size.y);
         }
 
         private void ThrowIfInvalidSize(int width, int height)
