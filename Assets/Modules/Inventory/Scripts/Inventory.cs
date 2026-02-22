@@ -345,8 +345,11 @@ namespace Modules.Inventories
 
             for (int x = position.x; x < endX; x++)
                 for (int y = position.y; y < endY; y++)
-                    if (_grid[x, y] != null && _grid[x, y] != item)
+                {
+                    var cell = _grid[x, y];
+                    if (cell != null && cell != item)
                         return false;
+                }
 
             for (int x = oldPosition.x, oldEndX = oldPosition.x + sizeX; x < oldEndX; x++)
                 for (int y = oldPosition.y, oldEndY = oldPosition.y + sizeY; y < oldEndY; y++)
