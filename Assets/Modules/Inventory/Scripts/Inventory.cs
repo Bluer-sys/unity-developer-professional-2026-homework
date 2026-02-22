@@ -384,17 +384,17 @@ namespace Modules.Inventories
 
             foreach (Item item in itemsArray)
             {
-                if (!FindFreePosition(item, out Vector2Int pos))
-                    continue;
-
                 int sizeX = item.Size.x;
                 int sizeY = item.Size.y;
+
+                if (!FindFreePosition(sizeX, sizeY, out Vector2Int pos))
+                    continue;
 
                 for (int x = pos.x, endX = pos.x + sizeX; x < endX; x++)
                     for (int y = pos.y, endY = pos.y + sizeY; y < endY; y++)
                         _grid[x, y] = item;
 
-                _items[item] = pos;
+                _items.Add(item, pos);
             }
             return;
 
