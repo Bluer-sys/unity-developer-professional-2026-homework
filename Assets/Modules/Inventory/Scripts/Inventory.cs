@@ -150,7 +150,11 @@ namespace Modules.Inventories
             if (!FindFreePosition(item, out Vector2Int position))
                 return false;
 
-            return AddItem(item, position);
+            if (!AddItemInternal(item, position))
+                return false;
+
+            OnAdded?.Invoke(item, position);
+            return true;
         }
 
         /// <summary>
@@ -346,7 +350,7 @@ namespace Modules.Inventories
 
             for (int x = position.x; x < endX; x++)
                 for (int y = position.y; y < endY; y++)
-                    if (_grid[x, y] != null && !Equals(_grid[x, y], item))
+                    if (_grid[x, y] != null && _grid[x, y] != item)
                         return false;
 
             for (int x = oldPosition.x; x < oldPosition.x + sizeX; x++)
@@ -379,32 +383,17 @@ namespace Modules.Inventories
 
             foreach (Item item in itemsArray)
             {
-                int curX = 0;
-                int curY = 0;
+                if (!FindFreePosition(item, out Vector2Int pos))
+                    continue;
+
                 int sizeX = item.Size.x;
                 int sizeY = item.Size.y;
-                int endX = curX + sizeX;
-                int endY = curY + sizeY;
 
-                while (!IsFreeSpace(curX, curY, endX, endY) && curX < _width && curY < _height)
-                {
-                    curX++;
-
-                    if (curX >= _width)
-                    {
-                        curX = 0;
-                        curY++;
-                    }
-
-                    endX = curX + sizeX;
-                    endY = curY + sizeY;
-                }
-
-                for (int x = curX; x < endX; x++)
-                    for (int y = curY; y < endY; y++)
+                for (int x = pos.x, endX = pos.x + sizeX; x < endX; x++)
+                    for (int y = pos.y, endY = pos.y + sizeY; y < endY; y++)
                         _grid[x, y] = item;
 
-                _items[item] = new Vector2Int(curX, curY);
+                _items[item] = pos;
             }
             return;
 
@@ -471,16 +460,19 @@ namespace Modules.Inventories
             if (item == null)
                 return false;
 
-            ThrowIfInvalidSize(item);
+            int sizeX = item.Size.x;
+            int sizeY = item.Size.y;
+
+            ThrowIfInvalidSize(sizeX, sizeY);
 
             if (_items.ContainsKey(item))
                 return false;
 
-            if (!IsFreeSpace(position.x, position.y, position.x + item.Size.x, position.y + item.Size.y))
+            if (!IsFreeSpace(position.x, position.y, position.x + sizeX, position.y + sizeY))
                 return false;
 
-            for (int i = position.x, endX = position.x + item.Size.x; i < endX; i++)
-                for (int j = position.y, endY = position.y + item.Size.y; j < endY; j++)
+            for (int i = position.x, endX = position.x + sizeX; i < endX; i++)
+                for (int j = position.y, endY = position.y + sizeY; j < endY; j++)
                     _grid[i, j] = item;
 
             _items.Add(item, position);
@@ -513,8 +505,11 @@ namespace Modules.Inventories
             if (!_items.TryGetValue(item, out position))
                 return false;
 
-            for (int i = position.x; i < position.x + item.Size.x; i++)
-                for (int j = position.y; j < position.y + item.Size.y; j++)
+            int sizeX = item.Size.x;
+            int sizeY = item.Size.y;
+
+            for (int i = position.x, endX = position.x + sizeX; i < endX; i++)
+                for (int j = position.y, endY = position.y + sizeY; j < endY; j++)
                     _grid[i, j] = null;
 
             _items.Remove(item);
