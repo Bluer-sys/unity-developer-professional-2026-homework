@@ -30,7 +30,6 @@ namespace Modules.Inventories
             _height = height;
             _grid = new Item[width, height];
             _items = new Dictionary<Item, Vector2Int>();
-            _sb = new StringBuilder((_width + 1) * _height); 
         }
 
         public Inventory(
@@ -90,7 +89,7 @@ namespace Modules.Inventories
         /// </summary>
         public bool CanAddItem(Item item, Vector2Int position)
         {
-           return CanAddItem(item, position.x, position.y);
+            return CanAddItem(item, position.x, position.y);
         }
 
         public bool CanAddItem(Item item, int startX, int startY)
@@ -252,14 +251,7 @@ namespace Modules.Inventories
 
         public bool TryGetItem(Vector2Int position, out Item item)
         {
-            if(IsPositionOutOfRange(position.x, position.y))
-            {
-                item = null;
-                return false;
-            }
-            
-            item = GetItem(position);
-            return item != null;
+            return TryGetItem(position.x, position.y, out item);
         }
         
         public bool TryGetItem(int x, int y, out Item item)
@@ -461,10 +453,10 @@ namespace Modules.Inventories
 
             ThrowIfInvalidSize(item);
 
-            if (IsPositionOutOfRange(position.x, position.y))
+            if (_items.ContainsKey(item))
                 return false;
 
-            if (!CanAddItem(item, position.x, position.y))
+            if (!IsFreeSpace(position.x, position.y, position.x + item.Size.x, position.y + item.Size.y))
                 return false;
 
             for (int i = position.x, endX = position.x + item.Size.x; i < endX; i++)
@@ -478,13 +470,13 @@ namespace Modules.Inventories
         private static Vector2Int[] GetPositionsInternal(Item item, Vector2Int position)
         {
             var positions = new Vector2Int[item.Size.x * item.Size.y];
-            int iterator = 0;
+            int curPositionIndex = 0;
 
-            for (int i = position.x; i < position.x + item.Size.x; i++)
+            for (int i = position.x, countX = position.x + item.Size.x; i < countX; i++)
                 for (int j = position.y, countY = position.y + item.Size.y; j < countY; j++)
                 {
-                    positions[iterator] = new Vector2Int(i, j);
-                    iterator++;
+                    positions[curPositionIndex] = new Vector2Int(i, j);
+                    curPositionIndex++;
                 }
 
             return positions;
@@ -511,9 +503,12 @@ namespace Modules.Inventories
         
         private bool IsFreeSpace(int startX, int startY, int endX, int endY)
         {
+            if (startX < 0 || startY < 0 || endX > _width || endY > _height)
+                return false;
+
             for (int x = startX; x < endX; x++)
                 for (int y = startY; y < endY; y++)
-                    if (IsPositionOutOfRange(x, y) || _grid[x, y] != null)
+                    if (_grid[x, y] != null)
                         return false;
 
             return true;
