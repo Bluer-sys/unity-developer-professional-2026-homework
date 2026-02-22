@@ -359,6 +359,8 @@ namespace Modules.Inventories
 
             Array.Sort(itemsArray, ComparerBySize);
 
+            _items.Clear();
+
             foreach (Item item in itemsArray)
             {
                 int curX = 0;
@@ -377,14 +379,16 @@ namespace Modules.Inventories
                         curX = 0;
                         curY++;
                     }
-                    
+
                     endX = curX + sizeX;
                     endY = curY + sizeY;
                 }
-                
+
                 for (int x = curX; x < endX; x++)
                     for (int y = curY; y < endY; y++)
                         _grid[x, y] = item;
+
+                _items[item] = new Vector2Int(curX, curY);
             }
             return;
 
