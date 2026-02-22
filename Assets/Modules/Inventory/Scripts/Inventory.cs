@@ -340,7 +340,7 @@ namespace Modules.Inventories
             int endX = position.x + sizeX;
             int endY = position.y + sizeY;
 
-            if (position.x < 0 || position.y < 0 || endX > _width || endY > _height)
+            if (IsBoundsOutOfRange(position.x, position.y, endX, endY))
                 return false;
 
             for (int x = position.x; x < endX; x++)
@@ -489,7 +489,7 @@ namespace Modules.Inventories
 
             return positions;
         }
-        
+
         private bool RemoveItemInternal(Item item, out Vector2Int position)
         {
             if (item == null)
@@ -511,7 +511,7 @@ namespace Modules.Inventories
             _items.Remove(item);
             return true;
         }
-        
+
         private bool FindFreePositionInternal(int sizeX, int sizeY, out Vector2Int position)
         {
             position = Vector2Int.zero;
@@ -550,7 +550,7 @@ namespace Modules.Inventories
 
         private bool IsFreeSpace(int startX, int startY, int endX, int endY)
         {
-            if (startX < 0 || startY < 0 || endX > _width || endY > _height)
+            if (IsBoundsOutOfRange(startX, startY, endX, endY))
                 return false;
 
             for (int x = startX; x < endX; x++)
@@ -569,6 +569,11 @@ namespace Modules.Inventories
         private bool IsPositionOutOfRange(int x, int y)
         {
             return x >= _width || y >= _height || x < 0 || y < 0;
+        }
+
+        private bool IsBoundsOutOfRange(int startX, int startY, int endX, int endY)
+        {
+            return startX < 0 || startY < 0 || endX > _width || endY > _height;
         }
 
         private void ThrowIfInvalidSize(int width, int height)
