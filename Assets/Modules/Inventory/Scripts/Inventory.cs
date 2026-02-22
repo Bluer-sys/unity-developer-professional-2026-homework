@@ -315,7 +315,7 @@ namespace Modules.Inventories
                 return;
             
             _items.Clear();
-            Array.Clear(_grid, 0, _grid.Length);
+            ClearGrid();
             OnCleared?.Invoke();
         }
 
@@ -354,7 +354,56 @@ namespace Modules.Inventories
         /// </summary>
         public void OptimizeSpace()
         {
+            ClearGrid();
+
+            var itemsArray = new Item[_items.Count];
             
+            _items.Keys.CopyTo(itemsArray, 0);
+
+            Array.Sort(itemsArray, ComparerBySize);
+
+            foreach (Item item in itemsArray)
+            {
+                int curX = 0;
+                int curY = 0;
+                int sizeX = item.Size.x;
+                int sizeY = item.Size.y;
+                int endX = curX + sizeX;
+                int endY = curY + sizeY;
+
+                while (!IsFreeSpace(curX, curY, endX, endY) && curX < _width && curY < _height)
+                {
+                    curX++;
+
+                    if (curX >= _width)
+                    {
+                        curX = 0;
+                        curY++;
+                    }
+                    
+                    endX = curX + sizeX;
+                    endY = curY + sizeY;
+                }
+                
+                for (int x = curX; x < endX; x++)
+                    for (int y = curY; y < endY; y++)
+                        _grid[x, y] = item;
+            }
+            return;
+
+            int ComparerBySize(Item a, Item b)
+            {
+                int sizeA = a.Size.x * a.Size.y;
+                int sizeB = b.Size.x * b.Size.y;
+
+                if (sizeA < sizeB)
+                    return 1;
+
+                if (sizeA == sizeB)
+                    return 0;
+
+                return -1;
+            }
         }
 
         /// <summary>
@@ -466,6 +515,11 @@ namespace Modules.Inventories
                         return false;
 
             return true;
+        }
+
+        private void ClearGrid()
+        {
+            Array.Clear(_grid, 0, _grid.Length);
         }
 
         private bool IsPositionOutOfRange(int x, int y)
