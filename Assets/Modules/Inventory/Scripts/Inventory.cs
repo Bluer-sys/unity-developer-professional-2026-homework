@@ -29,7 +29,7 @@ namespace Modules.Inventories
             _width = width;
             _height = height;
             _grid = new Item[width, height];
-            _items = new Dictionary<Item, Vector2Int>(width * height);
+            _items = new Dictionary<Item, Vector2Int>(16);
         }
 
         public Inventory(
@@ -297,7 +297,7 @@ namespace Modules.Inventories
             }
 
             positions = GetPositionsInternal(item, position);
-            return positions != null;
+            return true;
         }
 
         /// <summary>
