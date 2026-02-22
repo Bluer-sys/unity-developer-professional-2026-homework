@@ -97,12 +97,15 @@ namespace Modules.Inventories
             if (item == null)
                 return false;
 
-            ThrowIfInvalidSize(item);
-            
+            int sizeX = item.Size.x;
+            int sizeY = item.Size.y;
+
+            ThrowIfInvalidSize(sizeX, sizeY);
+
             if (_items.ContainsKey(item))
                 return false;
-            
-            return IsFreeSpace(startX, startY, startX + item.Size.x, startY + item.Size.y);
+
+            return IsFreeSpace(startX, startY, startX + sizeX, startY + sizeY);
         }
 
         /// <summary>
@@ -150,9 +153,7 @@ namespace Modules.Inventories
             if (!FindFreePosition(item, out Vector2Int position))
                 return false;
 
-            if (!AddItemInternal(item, position))
-                return false;
-
+            PlaceItem(item, item.Size.x, item.Size.y, position);
             OnAdded?.Invoke(item, position);
             return true;
         }
@@ -471,21 +472,29 @@ namespace Modules.Inventories
             if (!IsFreeSpace(position.x, position.y, position.x + sizeX, position.y + sizeY))
                 return false;
 
+            PlaceItem(item, sizeX, sizeY, position);
+            return true;
+        }
+
+        private void PlaceItem(Item item, int sizeX, int sizeY, Vector2Int position)
+        {
             for (int i = position.x, endX = position.x + sizeX; i < endX; i++)
                 for (int j = position.y, endY = position.y + sizeY; j < endY; j++)
                     _grid[i, j] = item;
 
             _items.Add(item, position);
-            return true;
         }
 
         private static Vector2Int[] GetPositionsInternal(Item item, Vector2Int position)
         {
-            var positions = new Vector2Int[item.Size.x * item.Size.y];
+            int sizeX = item.Size.x;
+            int sizeY = item.Size.y;
+
+            var positions = new Vector2Int[sizeX * sizeY];
             int curPositionIndex = 0;
 
-            for (int i = position.x, countX = position.x + item.Size.x; i < countX; i++)
-                for (int j = position.y, countY = position.y + item.Size.y; j < countY; j++)
+            for (int i = position.x, countX = position.x + sizeX; i < countX; i++)
+                for (int j = position.y, countY = position.y + sizeY; j < countY; j++)
                 {
                     positions[curPositionIndex] = new Vector2Int(i, j);
                     curPositionIndex++;
