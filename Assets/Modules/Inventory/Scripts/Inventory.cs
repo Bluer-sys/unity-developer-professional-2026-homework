@@ -367,11 +367,13 @@ namespace Modules.Inventories
 
             int count = _items.Count;
             var itemsArray = new Item[count];
+            var areas = new int[count];
+            
             _items.Keys.CopyTo(itemsArray, 0);
 
-            var areas = new int[count];
             for (int i = 0; i < count; i++)
                 areas[i] = -(itemsArray[i].Size.x * itemsArray[i].Size.y);
+            
             Array.Sort(areas, itemsArray);
 
             _items.Clear();
