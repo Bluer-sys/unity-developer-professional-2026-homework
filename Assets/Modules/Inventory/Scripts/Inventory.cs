@@ -332,6 +332,9 @@ namespace Modules.Inventories
             if (!_items.TryGetValue(item, out Vector2Int oldPosition))
                 return false;
 
+            if (position == oldPosition)
+                return true;
+
             int sizeX = item.Size.x;
             int sizeY = item.Size.y;
             int endX = position.x + sizeX;
@@ -514,10 +517,11 @@ namespace Modules.Inventories
 
             for (int y = 0; y <= maxY; y++)
             {
+                int endY = y + sizeY;
                 int x = 0;
                 while (x <= maxX)
                 {
-                    int blockerX = FindBlockerColumn(x, y, x + sizeX, y + sizeY);
+                    int blockerX = FindBlockerColumn(x, y, x + sizeX, endY);
                     if (blockerX < 0)
                     {
                         position = new Vector2Int(x, y);
