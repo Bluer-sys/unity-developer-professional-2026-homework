@@ -29,7 +29,7 @@ namespace Modules.Inventories
             _width = width;
             _height = height;
             _grid = new Item[width, height];
-            _items = new Dictionary<Item, Vector2Int>();
+            _items = new Dictionary<Item, Vector2Int>(width * height);
         }
 
         public Inventory(
@@ -143,10 +143,13 @@ namespace Modules.Inventories
         {
             if (item == null)
                 return false;
-            
+
+            if (_items.ContainsKey(item))
+                return false;
+
             if (!FindFreePosition(item, out Vector2Int position))
                 return false;
-            
+
             return AddItem(item, position);
         }
 
@@ -198,7 +201,7 @@ namespace Modules.Inventories
         /// </summary>
         public bool IsOccupied(Vector2Int position)
         {
-            return !IsFreeSpace(position.x, position.y, position.x, position.y);
+            return _grid[position.x, position.y] != null;
         }
 
         public bool IsOccupied(int x, int y)
@@ -211,12 +214,12 @@ namespace Modules.Inventories
         /// </summary>
         public bool IsFree(Vector2Int position)
         {
-            return IsFreeSpace(position.x, position.y, position.x, position.y);
+            return _grid[position.x, position.y] == null;
         }
 
         public bool IsFree(int x, int y)
         {
-            return IsFreeSpace(x, y, x, y);
+            return _grid[x, y] == null;
         }
 
         /// <summary>
@@ -410,8 +413,7 @@ namespace Modules.Inventories
 
         public IEnumerator<Item> GetEnumerator()
         {
-            foreach (var pair in _items)
-                yield return pair.Key;
+            return _items.Keys.GetEnumerator();
         }
 
         /// <summary>
@@ -419,9 +421,7 @@ namespace Modules.Inventories
         /// </summary>
         public void CopyTo(Item[,] matrix)
         {
-            for (int i = 0; i < _width; i++)
-                for (int j = 0; j < _height; j++)
-                    matrix[i, j] = _grid[i, j];
+            Array.Copy(_grid, matrix, _grid.Length);
         }
 
         /// <summary>
