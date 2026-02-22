@@ -180,8 +180,8 @@ namespace Modules.Inventories
             
             position = Vector2Int.zero;
             
-            for (int y = 0; y <= _height - sizeY; y++)
-                for (int x = 0; x <= _width - sizeX; x++)
+            for (int y = 0, endY = _height - sizeY; y <= endY ; y++)
+                for (int x = 0, endX = _width - sizeX; x <= endX; x++)
                 {
                     if (!IsFreeSpace(x, y, x + sizeX, y + sizeY))
                         continue;
@@ -282,7 +282,8 @@ namespace Modules.Inventories
         /// </summary>
         public Vector2Int[] GetPositions(Item item)
         {
-            ThrowIfNull(item);
+            if (item == null)
+                throw new NullReferenceException($"Null reference {typeof(Item)}!");
             
             if(!_items.TryGetValue(item, out Vector2Int position))
                 throw new KeyNotFoundException($"Item with name {item.Name} doesn't exist!");
@@ -357,8 +358,8 @@ namespace Modules.Inventories
                     if (_grid[x, y] != null && _grid[x, y] != item)
                         return false;
 
-            for (int x = oldPosition.x; x < oldPosition.x + sizeX; x++)
-                for (int y = oldPosition.y; y < oldPosition.y + sizeY; y++)
+            for (int x = oldPosition.x, oldEndX = oldPosition.x + sizeX; x < oldEndX; x++)
+                for (int y = oldPosition.y, oldEndY = oldPosition.y + sizeY; y < oldEndY; y++)
                     _grid[x, y] = null;
 
             for (int x = position.x; x < endX; x++)
@@ -561,12 +562,6 @@ namespace Modules.Inventories
         {
             if (obj == null)
                 throw new ArgumentNullException($"Argument {typeof(T)} is null!");
-        }
-        
-        private void ThrowIfNull<T>(T obj)
-        {
-            if (obj == null)
-                throw new NullReferenceException($"Null reference {typeof(T)}!");
         }
     }
 }
