@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Modules.Inventories
 {
-    public class Inventory : IEnumerable<Item>
+    public sealed class Inventory : IEnumerable<Item>
     {
         public event Action<Item, Vector2Int> OnAdded;
         public event Action<Item, Vector2Int> OnRemoved;
@@ -356,14 +356,10 @@ namespace Modules.Inventories
 
             int count = _items.Count;
             var items = ArrayPool<Item>.Shared.Rent(count);
-            var areas = new int[count];
-            
+
             _items.Keys.CopyTo(items, 0);
 
-            for (int i = 0; i < count; i++)
-                areas[i] = -(items[i].Size.x * items[i].Size.y);
-            
-            Array.Sort(areas, items);
+            Array.Sort(items, 0, count, AreaComparer.Instance);
 
             _items.Clear();
 
@@ -569,6 +565,14 @@ namespace Modules.Inventories
         {
             if (obj == null)
                 throw new ArgumentNullException($"Argument {typeof(T)} is null!");
+        }
+
+        private sealed class AreaComparer : IComparer<Item>
+        {
+            public static readonly AreaComparer Instance = new();
+
+            public int Compare(Item a, Item b) =>
+                b.Size.x * b.Size.y - a.Size.x * a.Size.y;
         }
     }
 }
