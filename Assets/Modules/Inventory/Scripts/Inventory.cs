@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -130,13 +131,7 @@ namespace Modules.Inventories
         /// </summary>
         public bool CanAddItem(Item item)
         {
-            if (item == null)
-                return false;
-            
-            if(_items.ContainsKey(item))
-                return false;
-            
-            return FindFreePosition(item, out _);
+            return item != null && !_items.ContainsKey(item) && FindFreePosition(item, out _);
         }
 
         /// <summary>
@@ -144,10 +139,7 @@ namespace Modules.Inventories
         /// </summary>
         public bool AddItem(Item item)
         {
-            if (item == null)
-                return false;
-
-            if (_items.ContainsKey(item))
+            if (item == null || _items.ContainsKey(item))
                 return false;
 
             int sizeX = item.Size.x;
@@ -185,10 +177,7 @@ namespace Modules.Inventories
         /// </summary>
         public bool Contains(Item item)
         {
-            if (item == null)
-                return false;
-            
-            return _items.ContainsKey(item);
+            return item != null && _items.ContainsKey(item);
         }
 
         /// <summary>
@@ -280,13 +269,7 @@ namespace Modules.Inventories
 
         public bool TryGetPositions(Item item, out Vector2Int[] positions)
         {
-            if (item == null)
-            {
-                positions = null;
-                return false;
-            }
-
-            if (!_items.TryGetValue(item, out Vector2Int position))
+            if (item == null || !_items.TryGetValue(item, out Vector2Int position))
             {
                 positions = null;
                 return false;
@@ -372,20 +355,21 @@ namespace Modules.Inventories
             ClearGrid();
 
             int count = _items.Count;
-            var itemsArray = new Item[count];
+            var items = ArrayPool<Item>.Shared.Rent(count);
             var areas = new int[count];
             
-            _items.Keys.CopyTo(itemsArray, 0);
+            _items.Keys.CopyTo(items, 0);
 
             for (int i = 0; i < count; i++)
-                areas[i] = -(itemsArray[i].Size.x * itemsArray[i].Size.y);
+                areas[i] = -(items[i].Size.x * items[i].Size.y);
             
-            Array.Sort(areas, itemsArray);
+            Array.Sort(areas, items);
 
             _items.Clear();
 
-            foreach (Item item in itemsArray)
+            for (var i = 0; i < count; i++)
             {
+                Item item = items[i];
                 int sizeX = item.Size.x;
                 int sizeY = item.Size.y;
 
@@ -398,6 +382,8 @@ namespace Modules.Inventories
 
                 _items.Add(item, pos);
             }
+
+            ArrayPool<Item>.Shared.Return(items);
         }
 
         /// <summary>
@@ -453,10 +439,7 @@ namespace Modules.Inventories
 
             ThrowIfInvalidSize(sizeX, sizeY);
 
-            if (_items.ContainsKey(item))
-                return false;
-
-            if (!IsFreeSpace(position.x, position.y, position.x + sizeX, position.y + sizeY))
+            if (_items.ContainsKey(item) || !IsFreeSpace(position.x, position.y, position.x + sizeX, position.y + sizeY))
                 return false;
 
             PlaceItem(item, sizeX, sizeY, position);
