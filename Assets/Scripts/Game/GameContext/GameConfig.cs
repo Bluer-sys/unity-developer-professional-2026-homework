@@ -1,5 +1,6 @@
 // ReSharper disable Unity.RedundantSerializeFieldAttribute
 // ReSharper disable CollectionNeverUpdated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Local
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
