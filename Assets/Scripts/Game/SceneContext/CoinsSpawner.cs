@@ -34,6 +34,10 @@ namespace Game.SceneContext
             for (int i = 0; i < count; i++)
             {
                 Vector2Int position = _world.GetRandomPosition();
+                
+                if(_spawnedCoins.ContainsKey(position))
+                    continue;
+                
                 ICoin coin = _coinPool.Spawn(position);
 
                 _spawnedCoins.Add(position, coin);
