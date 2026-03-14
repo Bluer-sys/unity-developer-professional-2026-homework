@@ -6,7 +6,9 @@
         "UIComponents",
         "Zenject",
         "dotweenModules",
-        "Game.Presentation"
+        "Game.Presentation",
+        "R3.Unity",
+        "Planets"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

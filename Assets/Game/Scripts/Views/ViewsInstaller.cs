@@ -1,3 +1,4 @@
+using Game.Presentation;
 using Zenject;
 
 namespace Game.Views
@@ -6,7 +7,7 @@ namespace Game.Views
     {
         public override void InstallBindings()
         {
-            //TODO:
+            
         }
     }
 }

@@ -8,7 +8,17 @@ namespace Game.Presentation
     {
         public override void InstallBindings()
         {
-            //TODO:
+            Container
+                .BindInterfacesAndSelfTo<MoneyPanelPresentation>()
+                .AsCached();
+
+            Container
+                .BindInterfacesAndSelfTo<PlanetPopupPresentation>()
+                .AsCached();
+            
+            Container
+                .BindInterfacesAndSelfTo<PlanetsPresentation>()
+                .AsCached();
         }
     }
 }
