@@ -10,6 +10,7 @@ namespace Game.Presentation
     {
         public string Price => _planet.Price.ToString();
         public Sprite Sprite => _planet.GetIcon(_planet.IsUnlocked);
+        public IPlanet Planet => _planet;
         public ReadOnlyReactiveProperty<bool> IsUnlocked => _isUnlocked;
         public ReadOnlyReactiveProperty<string> IncomeRemainingTime => _incomeRemainingTime;
         public ReadOnlyReactiveProperty<float> IncomeProgress => _incomeProgress;
@@ -61,7 +62,7 @@ namespace Game.Presentation
                 return;
             }
 
-            if (_planet.IsUnlocked)
+            if (_planet.IsUnlocked && _planet.IsIncomeReady)
             {
                 _planetGatherIncomePresentation.BeginGather(_planet);
                 _isGatherProcess.Value = true;

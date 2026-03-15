@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Presentation;
 using Modules.Planets;
+using R3;
 using UnityEngine;
 using Zenject;
 
@@ -11,43 +12,32 @@ namespace Game.Views
         [SerializeField] private PlanetView[] _planetsViews;
 
         private PlanetsPresentation _presentation;
-        private IInstantiator _instantiator;
-        private List<PlanetPresentation> _planetsPresentations;
-        private Dictionary<IPlanet, PlanetView> _viewsMap;
+        private Dictionary<IPlanet, PlanetView> _planetViewMap;
 
         [Inject]
         private void Construct(PlanetsPresentation presentation, IInstantiator instantiator)
         {
-            _instantiator = instantiator;
             _presentation = presentation;
-            _planetsPresentations = new List<PlanetPresentation>(_planetsViews.Length);
-            _viewsMap = new Dictionary<IPlanet, PlanetView>(_planetsViews.Length);
+            _planetViewMap = new Dictionary<IPlanet, PlanetView>(_planetsViews.Length);
         }
 
-        private void Awake() => InitializeViews();
-
-        private void OnDestroy()
+        private void Awake()
         {
-            foreach (var planetPresentation in _planetsPresentations)
-                planetPresentation.Dispose();
+            _presentation.OnPresentersCreated.Subscribe(_ => InitializeViews()).AddTo(this);
         }
 
-        public PlanetView GetView(IPlanet planet) => _viewsMap[planet];
+        public PlanetView GetView(IPlanet planet) => _planetViewMap[planet];
 
         private void InitializeViews()
         {
-            for (int i = 0; i < Mathf.Min(_planetsViews.Length, _presentation.Planets.Count); i++)
+            for (int i = 0; i < Mathf.Min(_planetsViews.Length, _presentation.Presentations.Count); i++)
             {
                 var view = _planetsViews[i];
-                var planet = _presentation.Planets[i];
+                var presentation = _presentation.Presentations[i];
                 
-                var planetPresentation = _instantiator.Instantiate<PlanetPresentation>(new []{ planet });
-                planetPresentation.Initialize();
+                view.Initialize(presentation);
                 
-                _planetsPresentations.Add(planetPresentation);
-                _viewsMap.Add(planet, view);
-                
-                view.Initialize(planetPresentation);
+                _planetViewMap.Add(presentation.Planet, view);
             }
         }
     }
