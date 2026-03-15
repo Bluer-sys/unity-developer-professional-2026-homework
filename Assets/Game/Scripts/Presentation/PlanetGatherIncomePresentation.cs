@@ -16,15 +16,14 @@ namespace Game.Presentation
         {
             if(_processingPlanets.Contains(planet))
                 return;
-
-            planet.GatherIncome();
-
+            
             _onGatherRequested.Execute(planet);
             _processingPlanets.Add(planet);
         }
 
         public void EndGather(IPlanet planet)
         {
+            planet.GatherIncome();
             _processingPlanets.Remove(planet);
         }
     }
