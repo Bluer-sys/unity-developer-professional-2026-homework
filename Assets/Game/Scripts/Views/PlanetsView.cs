@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Presentation;
+using Modules.Planets;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Game.Views
         private PlanetsPresentation _presentation;
         private IInstantiator _instantiator;
         private List<PlanetPresentation> _planetsPresentations;
+        private Dictionary<IPlanet, PlanetView> _viewsMap;
 
         [Inject]
         private void Construct(PlanetsPresentation presentation, IInstantiator instantiator)
@@ -19,18 +21,18 @@ namespace Game.Views
             _instantiator = instantiator;
             _presentation = presentation;
             _planetsPresentations = new List<PlanetPresentation>(_planetsViews.Length);
+            _viewsMap = new Dictionary<IPlanet, PlanetView>(_planetsViews.Length);
         }
 
-        private void Awake()
-        {
-            InitializeViews();
-        }
+        private void Awake() => InitializeViews();
 
         private void OnDestroy()
         {
             foreach (var planetPresentation in _planetsPresentations)
                 planetPresentation.Dispose();
         }
+
+        public PlanetView GetView(IPlanet planet) => _viewsMap[planet];
 
         private void InitializeViews()
         {
@@ -43,6 +45,7 @@ namespace Game.Views
                 planetPresentation.Initialize();
                 
                 _planetsPresentations.Add(planetPresentation);
+                _viewsMap.Add(planet, view);
                 
                 view.Initialize(planetPresentation);
             }

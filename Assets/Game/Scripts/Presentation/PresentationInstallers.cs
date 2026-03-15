@@ -19,6 +19,10 @@ namespace Game.Presentation
             Container
                 .BindInterfacesAndSelfTo<PlanetsPresentation>()
                 .AsCached();
+            
+            Container
+                .BindInterfacesAndSelfTo<PlanetGatherIncomePresentation>()
+                .AsCached();
         }
     }
 }

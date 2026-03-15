@@ -13,11 +13,9 @@ namespace Game.Presentation
         
         private readonly IMoneyStorage _moneyStorage;
 
-        public MoneyPanelPresentation(IMoneyStorage moneyStorage)
-        {
+        public MoneyPanelPresentation(IMoneyStorage moneyStorage) =>
             _moneyStorage = moneyStorage;
-        }
-        
+
         public void Initialize()
         {
             _moneyStorage.OnMoneyChanged += OnMoneyChanged;
@@ -25,14 +23,10 @@ namespace Game.Presentation
             _money.Value = _moneyStorage.Money.ToString();
         }
 
-        public void Dispose()
-        {
-            _moneyStorage.OnMoneyChanged -= OnMoneyChanged; 
-        }
+        public void Dispose() =>
+            _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
 
-        private void OnMoneyChanged(int newValue, int prevValue)
-        {
+        private void OnMoneyChanged(int newValue, int prevValue) =>
             _money.Value = newValue.ToString();
-        }
     }
 }

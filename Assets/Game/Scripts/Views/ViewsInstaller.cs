@@ -1,4 +1,3 @@
-using Game.Presentation;
 using Zenject;
 
 namespace Game.Views
@@ -7,7 +6,15 @@ namespace Game.Views
     {
         public override void InstallBindings()
         {
+            Container
+                .Bind<PlanetsView>()
+                .FromComponentInHierarchy()
+                .AsSingle();
             
+            Container
+                .Bind<MoneyPanelView>()
+                .FromComponentInHierarchy()
+                .AsSingle();
         }
     }
 }

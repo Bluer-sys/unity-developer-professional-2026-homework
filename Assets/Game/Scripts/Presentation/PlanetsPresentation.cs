@@ -7,9 +7,7 @@ namespace Game.Presentation
     {
         public IReadOnlyList<IPlanet> Planets { get; }
 
-        public PlanetsPresentation(IReadOnlyList<IPlanet> planets)
-        {
+        public PlanetsPresentation(IReadOnlyList<IPlanet> planets) =>
             Planets = planets;
-        }
     }
 }

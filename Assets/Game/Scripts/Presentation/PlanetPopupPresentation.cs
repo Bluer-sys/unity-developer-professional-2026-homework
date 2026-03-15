@@ -1,4 +1,3 @@
-using System;
 using Modules.Money;
 using Modules.Planets;
 using R3;
@@ -35,15 +34,10 @@ namespace Game.Presentation
 
         private IPlanet _shownPlanet;
 
-        public PlanetPopupPresentation(IMoneyStorage moneyStorage) 
-        {
+        public PlanetPopupPresentation(IMoneyStorage moneyStorage) =>
             _moneyStorage = moneyStorage;
-        }
 
-        public void Initialize()
-        {
-            Hide();
-        }
+        public void Initialize() => Hide();
 
         public void Show(IPlanet planet)
         {
@@ -74,10 +68,13 @@ namespace Game.Presentation
             _isVisible.Value = false;
         }
 
-        public void Upgrade()
-        {
-            _shownPlanet.Upgrade();
-        }
+        public void Upgrade() => _shownPlanet.Upgrade();
+
+        private void OnPopulationChanged(int value) =>
+            _population.Value = $"Population: {value}";
+
+        private void OnIncomeChanged(int value) =>
+            _income.Value = $"Income: {value} / min";
 
         private void OnUpgraded(int level)
         {
@@ -90,16 +87,6 @@ namespace Game.Presentation
             _upgradePrice.Value = level.ToString();
             _isPriceVisible.Value = isNotMaxLevel;
             _isUpgradeButtonInteractable.Value = isNotMaxLevel && isEnoughMoney;
-        }
-
-        private void OnPopulationChanged(int value)
-        {
-            _population.Value = $"Population: {value}";
-        }
-
-        private void OnIncomeChanged(int value)
-        {
-            _income.Value = $"Income: {value} / min";
         }
     }
 }
