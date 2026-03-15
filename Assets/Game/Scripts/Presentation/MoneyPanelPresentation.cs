@@ -7,9 +7,9 @@ namespace Game.Presentation
 {
     public class MoneyPanelPresentation : IInitializable, IDisposable
     {
-        public ReadOnlyReactiveProperty<string> Money => _money;
+        public ReadOnlyReactiveProperty<int> Money => _money;
 
-        private readonly ReactiveProperty<string> _money = new();
+        private readonly ReactiveProperty<int> _money = new();
         
         private readonly IMoneyStorage _moneyStorage;
 
@@ -20,13 +20,15 @@ namespace Game.Presentation
         {
             _moneyStorage.OnMoneyChanged += OnMoneyChanged;
             
-            _money.Value = _moneyStorage.Money.ToString();
+            _money.Value = _moneyStorage.Money;
         }
 
         public void Dispose() =>
             _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
 
+        public string Formate(int value) => value.ToString();
+        
         private void OnMoneyChanged(int newValue, int prevValue) =>
-            _money.Value = newValue.ToString();
+            _money.Value = newValue;
     }
 }

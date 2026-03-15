@@ -304,3 +304,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Views::Game.Views.MoneyPanelView
   _iconTransform: {fileID: 6204055655084186918}
   _money: {fileID: 3299675748291971791}
+  _changeAnimDuration: 0.5
