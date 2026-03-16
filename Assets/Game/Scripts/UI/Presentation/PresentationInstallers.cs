@@ -1,10 +1,10 @@
-using Game.Presentation.Money;
-using Game.Presentation.Planet;
-using Game.Presentation.Signals;
+using Game.UI.Presentation.Money;
+using Game.UI.Presentation.Planet;
+using Game.UI.Presentation.Signals;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.UI.Presentation
 {
     [CreateAssetMenu(fileName = "PresentationInstallers", menuName = "Zenject/New PresentationInstallers")]
     public sealed class PresentationInstallers : ScriptableObjectInstaller

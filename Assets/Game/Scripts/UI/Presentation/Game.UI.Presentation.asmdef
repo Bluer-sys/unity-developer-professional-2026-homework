@@ -1,14 +1,12 @@
 {
-    "name": "Game.Views",
+    "name": "Game.UI.Presentation",
     "rootNamespace": "",
     "references": [
-        "Unity.TextMeshPro",
-        "UIComponents",
         "Zenject",
-        "dotweenModules",
-        "Game.Presentation",
         "R3.Unity",
-        "Planets"
+        "MoneyStorage",
+        "Planets",
+        "Utils"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

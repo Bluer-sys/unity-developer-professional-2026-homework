@@ -4,7 +4,7 @@ using Modules.Planets;
 using R3;
 using Zenject;
 
-namespace Game.Presentation.Planet
+namespace Game.UI.Presentation.Planet
 {
     public class PlanetsPresentation : IInitializable, IDisposable
     {

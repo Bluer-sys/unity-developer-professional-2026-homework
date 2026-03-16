@@ -1,9 +1,9 @@
-using Game.Presentation.Money;
+using Game.UI.Presentation.Money;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Views.Money
+namespace Game.UI.Views.Money
 {
     public class MoneyView : MonoBehaviour
     {

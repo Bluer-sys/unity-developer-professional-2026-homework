@@ -1,11 +1,11 @@
-using Game.Presentation.Planet;
+using Game.UI.Presentation.Planet;
 using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Game.Views.Planet
+namespace Game.UI.Views.Planet
 {
     public class PlanetPopupView : MonoBehaviour
     {

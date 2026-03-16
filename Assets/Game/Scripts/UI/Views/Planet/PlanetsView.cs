@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Game.Presentation.Planet;
+using Game.UI.Presentation.Planet;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Views.Planet
+namespace Game.UI.Views.Planet
 {
     public class PlanetsView : MonoBehaviour
     {
