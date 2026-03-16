@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 8460962601618271506}
   - component: {fileID: 4035766591218761423}
   - component: {fileID: 4556502046767129200}
+  - component: {fileID: 4384240946668408725}
   - component: {fileID: 4735025768547723398}
   m_Layer: 5
   m_Name: MoneyView
@@ -290,6 +291,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1.2
+--- !u!114 &4384240946668408725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7207275897469232668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ee54b07e6a4cf0b65610adfed7460f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Views::Game.Views.Common.MoneyPanel
+  _money: {fileID: 3299675748291971791}
+  _iconTransform: {fileID: 6204055655084186918}
+  _particleAnimator: {fileID: 0}
+  _particleDuration: 0.5
+  _changeMoneyDuration: 0.5
 --- !u!114 &4735025768547723398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +320,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d93e74050fc480b88208e52cda79f06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Views::Game.Views.MoneyPanelView
-  _iconTransform: {fileID: 6204055655084186918}
-  _money: {fileID: 3299675748291971791}
-  _changeAnimDuration: 0.5
+  _moneyPanel: {fileID: 4384240946668408725}

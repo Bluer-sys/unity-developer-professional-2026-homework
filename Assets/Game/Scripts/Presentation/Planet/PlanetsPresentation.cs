@@ -9,6 +9,7 @@ namespace Game.Presentation
     public class PlanetsPresentation : IInitializable, IDisposable
     {
         public Observable<Unit> OnPresentersCreated => _onPresentersCreated;
+        
         public IReadOnlyList<PlanetPresentation> Presentations => _presentations;
 
         private readonly ReactiveCommand _onPresentersCreated = new();

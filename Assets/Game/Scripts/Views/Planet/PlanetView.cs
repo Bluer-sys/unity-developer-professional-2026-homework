@@ -18,10 +18,7 @@ namespace Game.Views
         [SerializeField] private GameObject _incomeProgressRoot;
         [SerializeField] private GameObject _priceRoot;
         [SerializeField] private GameObject _coin;
-        [SerializeField] private ParticleAnimator _particleAnimator;
 
-        public Vector3 CoinPosition => _coin.transform.position;
-        
         private PlanetPresentation _presentation;
 
         public void Initialize(PlanetPresentation presentation)
@@ -34,10 +31,9 @@ namespace Game.Views
 
             Observable
                 .CombineLatest(
-                    _presentation.IsGatherProcess,
                     _presentation.IsIncomeReady,
                     _presentation.IsUnlocked,
-                    (isGatherProcess, isIncomeReady, isUnlocked) => !isGatherProcess && isIncomeReady && isUnlocked)
+                    (isIncomeReady, isUnlocked) => isIncomeReady && isUnlocked)
                 .Subscribe(_coin.SetActive)
                 .AddTo(this);
                 
@@ -45,6 +41,7 @@ namespace Game.Views
             _button.OnHold += OnButtonHold;
             
             _incomeProgressRoot.SetActive(false);
+            _presentation.OnCoinPositionSet(_coin.transform.position);
         }
 
         private void OnDestroy()

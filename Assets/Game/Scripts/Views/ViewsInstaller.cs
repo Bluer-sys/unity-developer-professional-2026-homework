@@ -12,7 +12,7 @@ namespace Game.Views
                 .AsSingle();
             
             Container
-                .Bind<MoneyPanelView>()
+                .Bind<MoneyView>()
                 .FromComponentInHierarchy()
                 .AsSingle();
         }

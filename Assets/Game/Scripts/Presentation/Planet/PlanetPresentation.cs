@@ -1,4 +1,6 @@
 using System;
+using Game.Presentation.Signals;
+using Modules.Money;
 using Modules.Planets;
 using R3;
 using UnityEngine;
@@ -15,26 +17,26 @@ namespace Game.Presentation
         public ReadOnlyReactiveProperty<string> IncomeRemainingTime => _incomeRemainingTime;
         public ReadOnlyReactiveProperty<float> IncomeProgress => _incomeProgress;
         public ReadOnlyReactiveProperty<bool> IsIncomeReady => _isIncomeReady;
-        public ReadOnlyReactiveProperty<bool> IsGatherProcess => _isGatherProcess;
         
         private readonly ReactiveProperty<bool> _isUnlocked = new();
         private readonly ReactiveProperty<string> _incomeRemainingTime = new();
         private readonly ReactiveProperty<float> _incomeProgress = new();
         private readonly ReactiveProperty<bool> _isIncomeReady = new();
-        private readonly ReactiveProperty<bool> _isGatherProcess = new();
 
         private readonly IPlanet _planet;
         private readonly PlanetPopupPresentation _popupPresentation;
-        private readonly PlanetGatherIncomePresentation _planetGatherIncomePresentation;
+        private readonly SignalBus _signalBus;
 
+        private Vector3 _coinPosition;
+        
         public PlanetPresentation(
             IPlanet planet, 
-            PlanetPopupPresentation popupPresentation, 
-            PlanetGatherIncomePresentation planetGatherIncomePresentation)
+            PlanetPopupPresentation popupPresentation,
+            SignalBus signalBus)
         {
             _planet = planet;
             _popupPresentation = popupPresentation;
-            _planetGatherIncomePresentation = planetGatherIncomePresentation;
+            _signalBus = signalBus;
         }
 
         public void Initialize()
@@ -42,6 +44,7 @@ namespace Game.Presentation
             _planet.OnUnlocked += OnUnlocked;
             _planet.OnIncomeTimeChanged += OnIncomeTimeChanged;
             _planet.OnIncomeReady += OnIncomeReady;
+            _planet.OnGathered += OnGathered;
             
             OnUnlocked();
             OnIncomeReady(false);
@@ -52,8 +55,14 @@ namespace Game.Presentation
             _planet.OnUnlocked -= OnUnlocked;
             _planet.OnIncomeTimeChanged -= OnIncomeTimeChanged;
             _planet.OnIncomeReady -= OnIncomeReady;
+            _planet.OnGathered -= OnGathered;
         }
 
+        public void OnCoinPositionSet(Vector3 position)
+        {
+            _coinPosition = position;
+        }
+        
         public void OnPlanetClicked()
         {
             if (!_planet.IsUnlocked && _planet.CanUnlock)
@@ -63,10 +72,7 @@ namespace Game.Presentation
             }
 
             if (_planet.IsUnlocked && _planet.IsIncomeReady)
-            {
-                _planetGatherIncomePresentation.BeginGather(_planet);
-                _isGatherProcess.Value = true;
-            }
+                _planet.GatherIncome();
         }
 
         public void OnPlanetPopupRequested()
@@ -75,10 +81,14 @@ namespace Game.Presentation
                 _popupPresentation.Show(_planet);
         }
 
+        private void OnGathered(int range)
+        {
+            _signalBus.Fire(new OnMoneyEarnedSignal(_coinPosition, range));
+        }
+
         private void OnIncomeReady(bool isReady)
         {
             _isIncomeReady.Value = isReady;
-            _isGatherProcess.Value = false;
         }
 
         private void OnUnlocked() =>

@@ -1,3 +1,4 @@
+using Game.Presentation.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -8,8 +9,10 @@ namespace Game.Presentation
     {
         public override void InstallBindings()
         {
+            BindSignalBus();
+
             Container
-                .BindInterfacesAndSelfTo<MoneyPanelPresentation>()
+                .BindInterfacesAndSelfTo<MoneyPresentation>()
                 .AsCached();
 
             Container
@@ -19,10 +22,13 @@ namespace Game.Presentation
             Container
                 .BindInterfacesAndSelfTo<PlanetsPresentation>()
                 .AsCached();
-            
-            Container
-                .BindInterfacesAndSelfTo<PlanetGatherIncomePresentation>()
-                .AsCached();
+        }
+
+        private void BindSignalBus()
+        {
+            SignalBusInstaller.Install(Container);
+
+            Container.DeclareSignal<OnMoneyEarnedSignal>();
         }
     }
 }
