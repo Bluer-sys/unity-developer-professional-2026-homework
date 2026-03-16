@@ -3,7 +3,7 @@ using Modules.UI;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Views.Common
+namespace Game.Views.Money
 {
     public class MoneyPanel : MonoBehaviour
     {

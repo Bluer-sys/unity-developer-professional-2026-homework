@@ -1,10 +1,9 @@
-using Game.Presentation;
-using Game.Views.Common;
+using Game.Presentation.Money;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Views
+namespace Game.Views.Money
 {
     public class MoneyView : MonoBehaviour
     {
@@ -29,14 +28,10 @@ namespace Game.Views
             _moneyPanel.ChangeMoney(_presentation.Money);
         }
 
-        private void OnMoneyEarned((Vector3 from, int cur, int prev) tuple)
-        {
+        private void OnMoneyEarned((Vector3 from, int cur, int prev) tuple) =>
             _moneyPanel.PlayGather(tuple.from, tuple.cur, tuple.prev);
-        }
 
-        private void OnMoneySpent(int current)
-        {
+        private void OnMoneySpent(int current) =>
             _moneyPanel.ChangeMoney(current);
-        }
     }
 }

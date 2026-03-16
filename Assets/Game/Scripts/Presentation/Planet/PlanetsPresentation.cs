@@ -4,15 +4,13 @@ using Modules.Planets;
 using R3;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.Presentation.Planet
 {
     public class PlanetsPresentation : IInitializable, IDisposable
     {
-        public Observable<Unit> OnPresentersCreated => _onPresentersCreated;
+        public Observable<IReadOnlyList<PlanetPresentation>> OnPresentersCreated => _onPresentersCreated;
         
-        public IReadOnlyList<PlanetPresentation> Presentations => _presentations;
-
-        private readonly ReactiveCommand _onPresentersCreated = new();
+        private readonly ReactiveCommand<IReadOnlyList<PlanetPresentation>> _onPresentersCreated = new();
         
         private readonly IReadOnlyList<IPlanet> _planets;
         private readonly IInstantiator _instantiator;
@@ -43,7 +41,7 @@ namespace Game.Presentation
                 _presentations.Add(presentation);
             }
 
-            _onPresentersCreated?.Execute(default);
+            _onPresentersCreated?.Execute(_presentations);
         }
     }
 }

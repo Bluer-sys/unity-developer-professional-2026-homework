@@ -5,7 +5,7 @@ using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.Presentation.Money
 {
     public class MoneyPresentation : IInitializable, IDisposable
     {

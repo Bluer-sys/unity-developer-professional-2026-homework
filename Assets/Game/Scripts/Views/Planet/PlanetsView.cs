@@ -1,43 +1,36 @@
 using System.Collections.Generic;
-using Game.Presentation;
-using Modules.Planets;
+using Game.Presentation.Planet;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Views
+namespace Game.Views.Planet
 {
     public class PlanetsView : MonoBehaviour
     {
         [SerializeField] private PlanetView[] _planetsViews;
 
         private PlanetsPresentation _presentation;
-        private Dictionary<IPlanet, PlanetView> _planetViewMap;
 
         [Inject]
         private void Construct(PlanetsPresentation presentation, IInstantiator instantiator)
         {
             _presentation = presentation;
-            _planetViewMap = new Dictionary<IPlanet, PlanetView>(_planetsViews.Length);
         }
 
         private void Awake()
         {
-            _presentation.OnPresentersCreated.Subscribe(_ => InitializeViews()).AddTo(this);
+            _presentation.OnPresentersCreated.Subscribe(InitializeViews).AddTo(this);
         }
 
-        public PlanetView GetView(IPlanet planet) => _planetViewMap[planet];
-
-        private void InitializeViews()
+        private void InitializeViews(IReadOnlyList<PlanetPresentation> presentations)
         {
-            for (int i = 0; i < Mathf.Min(_planetsViews.Length, _presentation.Presentations.Count); i++)
+            for (int i = 0; i < Mathf.Min(_planetsViews.Length, presentations.Count); i++)
             {
                 var view = _planetsViews[i];
-                var presentation = _presentation.Presentations[i];
+                var presentation = presentations[i];
                 
                 view.Initialize(presentation);
-                
-                _planetViewMap.Add(presentation.Planet, view);
             }
         }
     }

@@ -1,18 +1,16 @@
 using System;
 using Game.Presentation.Signals;
-using Modules.Money;
 using Modules.Planets;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.Presentation.Planet
 {
     public class PlanetPresentation : IInitializable, IDisposable
     {
         public string Price => _planet.Price.ToString();
         public Sprite Sprite => _planet.GetIcon(_planet.IsUnlocked);
-        public IPlanet Planet => _planet;
         public ReadOnlyReactiveProperty<bool> IsUnlocked => _isUnlocked;
         public ReadOnlyReactiveProperty<string> IncomeRemainingTime => _incomeRemainingTime;
         public ReadOnlyReactiveProperty<float> IncomeProgress => _incomeProgress;
@@ -58,11 +56,9 @@ namespace Game.Presentation
             _planet.OnGathered -= OnGathered;
         }
 
-        public void OnCoinPositionSet(Vector3 position)
-        {
+        public void OnCoinPositionSet(Vector3 position) =>
             _coinPosition = position;
-        }
-        
+
         public void OnPlanetClicked()
         {
             if (!_planet.IsUnlocked && _planet.CanUnlock)
@@ -81,15 +77,11 @@ namespace Game.Presentation
                 _popupPresentation.Show(_planet);
         }
 
-        private void OnGathered(int range)
-        {
+        private void OnGathered(int range) =>
             _signalBus.Fire(new OnMoneyEarnedSignal(_coinPosition, range));
-        }
 
-        private void OnIncomeReady(bool isReady)
-        {
+        private void OnIncomeReady(bool isReady) =>
             _isIncomeReady.Value = isReady;
-        }
 
         private void OnUnlocked() =>
             _isUnlocked.Value = _planet.IsUnlocked;
