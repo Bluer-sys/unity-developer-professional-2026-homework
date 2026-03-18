@@ -4,7 +4,7 @@ using Modules;
 using SnakeGame;
 using UnityEngine;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public class CoinsSpawner : ICoinsSpawner
     {

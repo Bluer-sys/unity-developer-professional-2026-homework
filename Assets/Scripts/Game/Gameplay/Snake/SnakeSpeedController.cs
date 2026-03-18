@@ -2,7 +2,7 @@ using System;
 using Modules;
 using Zenject;
 
-namespace Game.GameObjects
+namespace Game.Gameplay
 {
     public class SnakeSpeedController : IInitializable, IDisposable
     {

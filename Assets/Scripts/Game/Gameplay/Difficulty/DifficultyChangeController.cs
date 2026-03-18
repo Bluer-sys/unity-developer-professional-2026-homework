@@ -2,7 +2,7 @@ using System;
 using Modules;
 using Zenject;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public class DifficultyChangeController : IInitializable, IDisposable
     {

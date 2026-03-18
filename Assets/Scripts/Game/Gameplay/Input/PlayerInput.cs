@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public class PlayerInput : ITickable, IPlayerInput
     {

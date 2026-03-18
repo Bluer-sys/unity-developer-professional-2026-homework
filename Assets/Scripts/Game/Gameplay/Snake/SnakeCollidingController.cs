@@ -1,11 +1,10 @@
 using System;
-using Game.GameContext;
 using Modules;
 using SnakeGame;
 using UnityEngine;
 using Zenject;
 
-namespace Game.GameObjects
+namespace Game.Gameplay
 {
     public class SnakeCollidingController : IInitializable, IDisposable
     {

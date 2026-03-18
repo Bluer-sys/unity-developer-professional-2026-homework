@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public interface IGameCycle
     {

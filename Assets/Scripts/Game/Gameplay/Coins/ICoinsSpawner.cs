@@ -2,7 +2,7 @@ using System;
 using Modules;
 using UnityEngine;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public interface ICoinsSpawner
     {

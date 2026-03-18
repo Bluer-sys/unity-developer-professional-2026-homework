@@ -1,10 +1,9 @@
-using Game.GameObjects;
 using Modules;
 using SnakeGame;
 using UnityEngine;
 using Zenject;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public class SceneInstaller : MonoInstaller
     {

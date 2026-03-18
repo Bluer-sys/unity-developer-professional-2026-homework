@@ -2,7 +2,7 @@ using Modules;
 using UnityEngine;
 using Zenject;
 
-namespace Game.GameContext
+namespace Game.Gameplay
 {
     public class CoinsPool : MonoMemoryPool<Vector2Int, Coin>
     {

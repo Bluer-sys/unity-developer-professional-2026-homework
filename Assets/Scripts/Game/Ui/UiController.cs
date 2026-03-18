@@ -1,5 +1,5 @@
 using System;
-using Game.GameContext;
+using Game.Gameplay;
 using SnakeGame;
 using Zenject;
 
