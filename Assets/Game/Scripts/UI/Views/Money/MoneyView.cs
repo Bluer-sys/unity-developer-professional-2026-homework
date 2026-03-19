@@ -17,13 +17,8 @@ namespace Game.UI.Views.Money
 
         private void Awake()
         {
-            _presentation.OnMoneyEarned
-                         .Subscribe(OnMoneyEarned)
-                         .AddTo(this);
-            
-            _presentation.OnMoneySpent
-                         .Subscribe(OnMoneySpent)
-                         .AddTo(this);
+            _presentation.OnMoneyEarned.Subscribe(OnMoneyEarned).AddTo(this);
+            _presentation.OnMoneySpent.Subscribe(OnMoneySpent).AddTo(this);
 
             _moneyPanel.ChangeMoney(_presentation.Money);
         }
