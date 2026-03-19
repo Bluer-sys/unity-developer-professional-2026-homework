@@ -4,6 +4,7 @@ using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Game.UI.Views.Planet
 {
@@ -21,9 +22,12 @@ namespace Game.UI.Views.Planet
 
         private PlanetPresentation _presentation;
 
-        public void Initialize(PlanetPresentation presentation)
-        {
+        [Inject]
+        private void Construct(PlanetPresentation presentation) =>
             _presentation = presentation;
+        
+        public void Awake()
+        {
             _presentation.IsUnlocked.Subscribe(SetUnlocked).AddTo(this);
             _presentation.IncomeRemainingTime.Subscribe(v => _incomeRemainingTime.text = v).AddTo(this);
             _presentation.IncomeProgress.Subscribe(v => _incomeProgressBar.fillAmount = v).AddTo(this);
@@ -41,13 +45,17 @@ namespace Game.UI.Views.Planet
             _button.OnHold += OnButtonHold;
             
             _incomeProgressRoot.SetActive(false);
+            
             _presentation.OnCoinPositionSet(_coin.transform.position);
+            _presentation.Initialize();
         }
 
         private void OnDestroy()
         {
             _button.OnClick -= OnButtonClick;
             _button.OnHold -= OnButtonHold;
+            
+            _presentation.Dispose();
         }
 
         private void OnButtonClick() =>
