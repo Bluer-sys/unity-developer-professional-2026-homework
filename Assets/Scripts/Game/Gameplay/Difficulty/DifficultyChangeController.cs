@@ -37,7 +37,6 @@ namespace Game.Gameplay
             if (_difficulty.Next(out int difficulty))
             {
                 _coinsSpawner.Spawn(difficulty);
-                _gameCycle.SetDifficulty(difficulty, _difficulty.Max);
             }
             else
             {

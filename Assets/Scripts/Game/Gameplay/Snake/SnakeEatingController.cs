@@ -10,19 +10,16 @@ namespace Game.Gameplay
         private readonly ISnake _snake;
         private readonly IScore _score;
         private readonly ICoinsSpawner _coinsSpawner;
-        private readonly IGameCycle _gameCycle;
 
         public SnakeEatingController(
                 ISnake snake, 
                 IScore score,
-                ICoinsSpawner coinsSpawner,
-                IGameCycle gameCycle
+                ICoinsSpawner coinsSpawner
             )
         {
             _snake = snake;
             _score = score;
             _coinsSpawner = coinsSpawner;
-            _gameCycle = gameCycle;
         }
 
         public void Initialize()
@@ -45,7 +42,6 @@ namespace Game.Gameplay
         {
             _score.Add(coin.Score);
             _snake.Expand(coin.Bones);
-            _gameCycle.SetScore(_score.Current);
         }
     }
 }

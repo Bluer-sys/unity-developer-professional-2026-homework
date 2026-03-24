@@ -1,5 +1,6 @@
 using System;
 using Game.Gameplay;
+using Modules;
 using SnakeGame;
 using Zenject;
 
@@ -8,29 +9,34 @@ namespace Game.Ui
     public class UiController : IInitializable, IDisposable
     {
         private readonly IGameCycle _gameCycle;
+        private readonly IDifficulty _difficulty;
+        private readonly IScore _score;
         private readonly IGameUI _gameUI;
 
-        public UiController(IGameCycle gameCycle, IGameUI gameUI)
+        public UiController(IGameCycle gameCycle, IDifficulty difficulty, IScore score, IGameUI gameUI)
         {
             _gameCycle = gameCycle;
             _gameUI = gameUI;
+            _difficulty = difficulty;
+            _score = score;
         }
 
         public void Initialize()
         {
             _gameCycle.OnGameFailed += OnGameFailed;
-            _gameCycle.OnDifficultyChanged += OnDifficultyChanged;
-            _gameCycle.OnScoreChanged += OnScoreChanged;
+            _difficulty.OnStateChanged += OnDifficultyChanged;
+            _score.OnStateChanged += OnScoreChanged;
             _gameCycle.OnGameWin += OnGameWin;
             
             OnScoreChanged(0);
+            OnDifficultyChanged();
         }
 
         public void Dispose()
         {
             _gameCycle.OnGameFailed -= OnGameFailed;
-            _gameCycle.OnDifficultyChanged -= OnDifficultyChanged;
-            _gameCycle.OnScoreChanged -= OnScoreChanged;
+            _difficulty.OnStateChanged -= OnDifficultyChanged;
+            _score.OnStateChanged -= OnScoreChanged;
             _gameCycle.OnGameWin -= OnGameWin;
         }
 
@@ -49,9 +55,9 @@ namespace Game.Ui
             _gameUI.GameOver(true);
         }
 
-        private void OnDifficultyChanged(int current, int max)
+        private void OnDifficultyChanged()
         {
-            _gameUI.SetDifficulty(current, max);
+            _gameUI.SetDifficulty(_difficulty.Current, _difficulty.Max);
         }
     }
 }
