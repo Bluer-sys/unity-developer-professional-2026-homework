@@ -21,40 +21,42 @@ namespace Game.Views
 
         private PlanetPresentation _presentation;
 
-        public void Initialize(PlanetPresentation presentation)
+        public void Construct(PlanetPresentation presentation)
         {
             _presentation = presentation;
             _presentation.IsUnlocked.Subscribe(SetUnlocked).AddTo(this);
             _presentation.IncomeRemainingTime.Subscribe(v => _incomeRemainingTime.text = v).AddTo(this);
             _presentation.IncomeProgress.Subscribe(v => _incomeProgressBar.fillAmount = v).AddTo(this);
-            _presentation.IsIncomeReady.Select(v => !v).Subscribe(_incomeProgressRoot.SetActive).AddTo(this);
 
             Observable
                 .CombineLatest(
                     _presentation.IsIncomeReady,
                     _presentation.IsUnlocked,
-                    (isIncomeReady, isUnlocked) => isIncomeReady && isUnlocked)
-                .Subscribe(_coin.SetActive)
+                    (isIncomeReady, isUnlocked) => (isIncomeReady, isUnlocked))
+                .Subscribe(OnIncomeStatusChanged)
                 .AddTo(this);
                 
-            _button.OnClick += OnButtonClick;
-            _button.OnHold += OnButtonHold;
-            
-            _incomeProgressRoot.SetActive(false);
+            Observable
+                .FromEvent(h => _button.OnClick += h, h => _button.OnClick -= h)
+                .Subscribe(_ => _presentation.OnPlanetClicked())
+                .AddTo(this);
+
+            Observable
+                .FromEvent(h => _button.OnHold += h, h => _button.OnHold -= h)
+                .Subscribe(_ => _presentation.OnPlanetPopupRequested())
+                .AddTo(this);
+
             _presentation.OnCoinPositionSet(_coin.transform.position);
         }
 
-        private void OnDestroy()
+        private void OnIncomeStatusChanged((bool isIncomeReady, bool isUnlocked) tuple)
         {
-            _button.OnClick -= OnButtonClick;
-            _button.OnHold -= OnButtonHold;
+            bool isIncomeReady = tuple.isIncomeReady;
+            bool isUnlocked = tuple.isUnlocked;
+            
+            _incomeProgressRoot.SetActive(!isIncomeReady && isUnlocked);
+            _coin.SetActive(isIncomeReady && isUnlocked);
         }
-
-        private void OnButtonClick() =>
-            _presentation.OnPlanetClicked();
-
-        private void OnButtonHold() =>
-            _presentation.OnPlanetPopupRequested();
 
         private void SetUnlocked(bool isUnlocked)
         {

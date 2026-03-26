@@ -8,29 +8,28 @@ namespace Game.Views
 {
     public class PlanetCollectionView : MonoBehaviour
     {
-        [SerializeField] private PlanetView[] _planetsViews;
-
         private PlanetCollectionPresentation _presentation;
+        private PlanetView[] _planetsViews;
 
         [Inject]
-        private void Construct(PlanetCollectionPresentation presentation, IInstantiator instantiator)
+        private void Construct(
+            PlanetCollectionPresentation presentation, 
+            PlanetView[] planetViews, 
+            IInstantiator instantiator)
         {
             _presentation = presentation;
+            _planetsViews = planetViews;
+            _presentation.OnPresentersCreated.Subscribe(ConstructViews).AddTo(this);
         }
 
-        private void Awake()
-        {
-            _presentation.OnPresentersCreated.Subscribe(InitializeViews).AddTo(this);
-        }
-
-        private void InitializeViews(IReadOnlyList<PlanetPresentation> presentations)
+        private void ConstructViews(IReadOnlyList<PlanetPresentation> presentations)
         {
             for (int i = 0; i < Mathf.Min(_planetsViews.Length, presentations.Count); i++)
             {
                 var view = _planetsViews[i];
                 var presentation = presentations[i];
                 
-                view.Initialize(presentation);
+                view.Construct(presentation);
             }
         }
     }

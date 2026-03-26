@@ -12,11 +12,9 @@ namespace Game.Views
         private MoneyPresentation _presentation;
 
         [Inject]
-        private void Construct(MoneyPresentation presentation) =>
-            _presentation = presentation;
-
-        private void Awake()
+        private void Construct(MoneyPresentation presentation)
         {
+            _presentation = presentation;
             _presentation.OnMoneyEarned.Subscribe(OnMoneyEarned).AddTo(this);
             _presentation.OnMoneySpent.Subscribe(OnMoneySpent).AddTo(this);
 

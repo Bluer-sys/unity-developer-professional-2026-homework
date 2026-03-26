@@ -6,6 +6,10 @@ namespace Game.Views
     {
         public override void InstallBindings()
         {
+            Container
+                .Bind<PlanetView>()
+                .FromComponentsInHierarchy()
+                .AsCached();
         }
     }
 }
