@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Game.Presentation
 {
-    public class PlanetCollectionPresentation : IDisposable
+    public class PlanetCollectionPresentation : IInitializable, IDisposable
     {
         public IReadOnlyList<PlanetPresentation> PlanetPresentations => _planetPresentations;
         
@@ -18,8 +18,14 @@ namespace Game.Presentation
             _planets = planets;
             _instantiator = instantiator;
             _planetPresentations = new List<PlanetPresentation>(_planets.Count);
-            
-            CreatePresenters();
+
+            CreatePlanetPresentations();
+        }
+
+        public void Initialize()
+        {
+            foreach (var presentation in _planetPresentations)
+                presentation.Initialize();
         }
 
         public void Dispose()
@@ -28,13 +34,11 @@ namespace Game.Presentation
                 presentation.Dispose();
         }
 
-        private void CreatePresenters()
+        private void CreatePlanetPresentations() 
         {
             foreach (IPlanet planet in _planets)
             {
                 var presentation = _instantiator.Instantiate<PlanetPresentation>(new[] { planet });
-                presentation.Initialize();
-
                 _planetPresentations.Add(presentation);
             }
         }
