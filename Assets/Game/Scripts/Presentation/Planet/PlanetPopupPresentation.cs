@@ -4,7 +4,7 @@ using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.UI.Presentation.Planet
+namespace Game.Presentation
 {
     public class PlanetPopupPresentation : IInitializable
     {

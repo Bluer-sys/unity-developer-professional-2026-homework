@@ -4,9 +4,9 @@ using Modules.Planets;
 using R3;
 using Zenject;
 
-namespace Game.UI.Presentation.Planet
+namespace Game.Presentation
 {
-    public class PlanetsPresentation : IInitializable, IDisposable
+    public class PlanetCollectionPresentation : IInitializable, IDisposable
     {
         public Observable<IReadOnlyList<PlanetPresentation>> OnPresentersCreated => _onPresentersCreated;
         
@@ -16,7 +16,7 @@ namespace Game.UI.Presentation.Planet
         private readonly IInstantiator _instantiator;
         private readonly List<PlanetPresentation> _presentations;
 
-        public PlanetsPresentation(IReadOnlyList<IPlanet> planets, IInstantiator instantiator)
+        public PlanetCollectionPresentation(IReadOnlyList<IPlanet> planets, IInstantiator instantiator)
         {
             _planets = planets;
             _instantiator = instantiator;

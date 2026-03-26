@@ -1,11 +1,10 @@
 using System;
-using Game.UI.Presentation.Signals;
 using Modules.Planets;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.UI.Presentation.Planet
+namespace Game.Presentation
 {
     public class PlanetPresentation : IInitializable, IDisposable
     {

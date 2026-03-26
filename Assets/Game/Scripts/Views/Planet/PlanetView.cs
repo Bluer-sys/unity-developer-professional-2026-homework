@@ -1,11 +1,11 @@
-using Game.UI.Presentation.Planet;
+using Game.Presentation;
 using Modules.UI;
 using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI.Views.Planet
+namespace Game.Views
 {
     public class PlanetView : MonoBehaviour
     {

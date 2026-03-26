@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace Game.UI.Views
+namespace Game.Views
 {
     public sealed class ViewsInstaller : MonoInstaller
     {

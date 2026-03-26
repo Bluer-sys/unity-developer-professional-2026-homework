@@ -1,19 +1,19 @@
 using System.Collections.Generic;
-using Game.UI.Presentation.Planet;
+using Game.Presentation;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.UI.Views.Planet
+namespace Game.Views
 {
-    public class PlanetsView : MonoBehaviour
+    public class PlanetCollectionView : MonoBehaviour
     {
         [SerializeField] private PlanetView[] _planetsViews;
 
-        private PlanetsPresentation _presentation;
+        private PlanetCollectionPresentation _presentation;
 
         [Inject]
-        private void Construct(PlanetsPresentation presentation, IInstantiator instantiator)
+        private void Construct(PlanetCollectionPresentation presentation, IInstantiator instantiator)
         {
             _presentation = presentation;
         }

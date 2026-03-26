@@ -1,5 +1,5 @@
 {
-    "name": "Game.UI.Presentation",
+    "name": "Game.Presentation",
     "rootNamespace": "",
     "references": [
         "Zenject",

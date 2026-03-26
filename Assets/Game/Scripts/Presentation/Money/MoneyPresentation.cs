@@ -1,11 +1,10 @@
 using System;
-using Game.UI.Presentation.Signals;
 using Modules.Money;
 using R3;
 using UnityEngine;
 using Zenject;
 
-namespace Game.UI.Presentation.Money
+namespace Game.Presentation
 {
     public class MoneyPresentation : IInitializable, IDisposable
     {

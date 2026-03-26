@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.UI.Presentation.Signals
+namespace Game.Presentation
 {
     public readonly struct OnMoneyEarnedSignal
     {

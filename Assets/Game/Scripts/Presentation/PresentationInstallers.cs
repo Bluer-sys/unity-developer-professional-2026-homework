@@ -1,10 +1,7 @@
-using Game.UI.Presentation.Money;
-using Game.UI.Presentation.Planet;
-using Game.UI.Presentation.Signals;
 using UnityEngine;
 using Zenject;
 
-namespace Game.UI.Presentation
+namespace Game.Presentation
 {
     [CreateAssetMenu(fileName = "PresentationInstallers", menuName = "Zenject/New PresentationInstallers")]
     public sealed class PresentationInstallers : ScriptableObjectInstaller
@@ -22,7 +19,7 @@ namespace Game.UI.Presentation
                 .AsCached();
             
             Container
-                .BindInterfacesAndSelfTo<PlanetsPresentation>()
+                .BindInterfacesAndSelfTo<PlanetCollectionPresentation>()
                 .AsCached();
         }
 

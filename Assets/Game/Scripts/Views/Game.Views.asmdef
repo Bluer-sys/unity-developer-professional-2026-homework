@@ -1,5 +1,5 @@
 {
-    "name": "Game.UI.Views",
+    "name": "Game.Views",
     "rootNamespace": "",
     "references": [
         "Unity.TextMeshPro",
@@ -7,8 +7,7 @@
         "Zenject",
         "dotweenModules",
         "R3.Unity",
-        "Planets",
-        "Game.UI.Presentation"
+        "Game.Presentation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

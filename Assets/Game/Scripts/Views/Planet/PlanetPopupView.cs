@@ -1,11 +1,11 @@
-using Game.UI.Presentation.Planet;
+using Game.Presentation;
 using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Game.UI.Views.Planet
+namespace Game.Views
 {
     public class PlanetPopupView : MonoBehaviour
     {
@@ -23,11 +23,10 @@ namespace Game.UI.Views.Planet
         private PlanetPopupPresentation _presentation;
 
         [Inject]
-        private void Construct(PlanetPopupPresentation presentation) =>
+        private void Construct(PlanetPopupPresentation presentation)
+        {
             _presentation = presentation;
 
-        private void Awake()
-        {
             _presentation.Label.Subscribe(v => _label.text = v).AddTo(this);
             _presentation.Population.Subscribe(v => _population.text = v).AddTo(this);
             _presentation.Level.Subscribe(v => _level.text = v).AddTo(this);
@@ -38,7 +37,7 @@ namespace Game.UI.Views.Planet
             _presentation.IsUpgradeButtonInteractable.Subscribe(v => _upgradeButton.interactable = v).AddTo(this);
             _presentation.IsPriceVisible.Subscribe(v => _upgradePriceRoot.SetActive(v)).AddTo(this);
             _presentation.Sprite.Subscribe(v => _preview.sprite = v).AddTo(this);
-            
+
             _upgradeButton.OnClickAsObservable().Subscribe(_ => _presentation.Upgrade()).AddTo(this);
             _closeButton.OnClickAsObservable().Subscribe(_ => _presentation.Hide()).AddTo(this);
         }
