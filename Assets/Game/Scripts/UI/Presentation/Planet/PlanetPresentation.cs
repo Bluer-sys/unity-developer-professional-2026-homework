@@ -28,7 +28,7 @@ namespace Game.UI.Presentation.Planet
         private Vector3 _coinPosition;
         
         public PlanetPresentation(
-            IPlanet planet,
+            IPlanet planet, 
             PlanetPopupPresentation popupPresentation,
             SignalBus signalBus)
         {
