@@ -1,3 +1,4 @@
+using System;
 using Modules.Money;
 using Modules.Planets;
 using R3;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace Game.Presentation
 {
-    public class PlanetPopupPresentation : IInitializable
+    public class PlanetPopupPresentation : IInitializable, IDisposable
     {
         public ReadOnlyReactiveProperty<string> Label => _label;
         public ReadOnlyReactiveProperty<string> Population => _population;
@@ -31,17 +32,23 @@ namespace Game.Presentation
         private readonly ReactiveProperty<Sprite> _sprite = new();
         
         private readonly IMoneyStorage _moneyStorage;
+        private readonly SignalBus _signalBus;
 
         private IPlanet _shownPlanet;
 
-        public PlanetPopupPresentation(IMoneyStorage moneyStorage) =>
-            _moneyStorage = moneyStorage;
-
-        public void Initialize() => Hide();
-
-        public void Show(IPlanet planet)
+        public PlanetPopupPresentation(IMoneyStorage moneyStorage, SignalBus signalBus)
         {
-            _shownPlanet = planet;
+            _moneyStorage = moneyStorage;
+            _signalBus = signalBus;
+        }
+
+        public void Initialize() => _signalBus.Subscribe<OnPlanetPopupRequestedSignal>(Show);
+
+        public void Dispose() => _signalBus.Unsubscribe<OnPlanetPopupRequestedSignal>(Show);
+
+        private void Show(OnPlanetPopupRequestedSignal signal)
+        {
+            _shownPlanet = signal.Planet;
             _shownPlanet.OnIncomeChanged += OnIncomeChanged;
             _shownPlanet.OnPopulationChanged += OnPopulationChanged;
             _shownPlanet.OnUpgraded += OnUpgraded;

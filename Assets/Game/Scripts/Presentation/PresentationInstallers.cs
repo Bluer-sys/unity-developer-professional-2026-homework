@@ -28,6 +28,7 @@ namespace Game.Presentation
             SignalBusInstaller.Install(Container);
 
             Container.DeclareSignal<OnMoneyEarnedSignal>();
+            Container.DeclareSignal<OnPlanetPopupRequestedSignal>();
         }
     }
 }

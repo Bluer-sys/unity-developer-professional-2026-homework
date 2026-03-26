@@ -1,33 +1,30 @@
 using System;
 using System.Collections.Generic;
 using Modules.Planets;
-using R3;
 using Zenject;
 
 namespace Game.Presentation
 {
-    public class PlanetCollectionPresentation : IInitializable, IDisposable
+    public class PlanetCollectionPresentation : IDisposable
     {
-        public Observable<IReadOnlyList<PlanetPresentation>> OnPresentersCreated => _onPresentersCreated;
-        
-        private readonly ReactiveCommand<IReadOnlyList<PlanetPresentation>> _onPresentersCreated = new();
+        public IReadOnlyList<PlanetPresentation> PlanetPresentations => _planetPresentations;
         
         private readonly IReadOnlyList<IPlanet> _planets;
         private readonly IInstantiator _instantiator;
-        private readonly List<PlanetPresentation> _presentations;
+        private readonly List<PlanetPresentation> _planetPresentations;
 
         public PlanetCollectionPresentation(IReadOnlyList<IPlanet> planets, IInstantiator instantiator)
         {
             _planets = planets;
             _instantiator = instantiator;
-            _presentations = new List<PlanetPresentation>(_planets.Count);
+            _planetPresentations = new List<PlanetPresentation>(_planets.Count);
+            
+            CreatePresenters();
         }
-
-        public void Initialize() => CreatePresenters();
 
         public void Dispose()
         {
-            foreach (var presentation in _presentations)
+            foreach (var presentation in _planetPresentations)
                 presentation.Dispose();
         }
 
@@ -38,10 +35,8 @@ namespace Game.Presentation
                 var presentation = _instantiator.Instantiate<PlanetPresentation>(new[] { planet });
                 presentation.Initialize();
 
-                _presentations.Add(presentation);
+                _planetPresentations.Add(presentation);
             }
-
-            _onPresentersCreated?.Execute(_presentations);
         }
     }
 }

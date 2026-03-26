@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Game.Presentation;
-using R3;
 using UnityEngine;
 using Zenject;
 
@@ -19,11 +17,14 @@ namespace Game.Views
         {
             _presentation = presentation;
             _planetsViews = planetViews;
-            _presentation.OnPresentersCreated.Subscribe(ConstructViews).AddTo(this);
+            
+            ConstructViews();
         }
 
-        private void ConstructViews(IReadOnlyList<PlanetPresentation> presentations)
+        private void ConstructViews()
         {
+            var presentations = _presentation.PlanetPresentations;
+
             for (int i = 0; i < Mathf.Min(_planetsViews.Length, presentations.Count); i++)
             {
                 var view = _planetsViews[i];

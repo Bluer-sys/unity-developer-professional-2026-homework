@@ -21,18 +21,13 @@ namespace Game.Presentation
         private readonly ReactiveProperty<bool> _isIncomeReady = new();
 
         private readonly IPlanet _planet;
-        private readonly PlanetPopupPresentation _popupPresentation;
         private readonly SignalBus _signalBus;
 
         private Vector3 _coinPosition;
         
-        public PlanetPresentation(
-            IPlanet planet, 
-            PlanetPopupPresentation popupPresentation,
-            SignalBus signalBus)
+        public PlanetPresentation(IPlanet planet, SignalBus signalBus)
         {
             _planet = planet;
-            _popupPresentation = popupPresentation;
             _signalBus = signalBus;
         }
 
@@ -72,8 +67,8 @@ namespace Game.Presentation
 
         public void OnPlanetPopupRequested()
         {
-            if(_planet.IsUnlocked)
-                _popupPresentation.Show(_planet);
+            if (_planet.IsUnlocked)
+                _signalBus.Fire(new OnPlanetPopupRequestedSignal(_planet));
         }
 
         private void OnGathered(int range) =>
