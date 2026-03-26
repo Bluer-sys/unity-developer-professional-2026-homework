@@ -16,15 +16,12 @@ namespace Game.Views
         {
             _presentation = presentation;
             _presentation.OnMoneyEarned.Subscribe(OnMoneyEarned).AddTo(this);
-            _presentation.OnMoneySpent.Subscribe(OnMoneySpent).AddTo(this);
+            _presentation.OnMoneySpent.Subscribe(_moneyPanel.ChangeMoney).AddTo(this);
 
             _moneyPanel.ChangeMoney(_presentation.Money);
         }
 
         private void OnMoneyEarned((Vector3 from, int cur, int prev) tuple) =>
             _moneyPanel.PlayGather(tuple.from, tuple.cur, tuple.prev);
-
-        private void OnMoneySpent(int current) =>
-            _moneyPanel.ChangeMoney(current);
     }
 }
