@@ -9,16 +9,18 @@ namespace Game.UI
     {
         [Inject]
         private void Construct(
-            IReadOnlyList<IPlanet> planets, 
-            IReadOnlyList<PlanetPresenter> planetPresenters,
-            SignalBus signalBus)
+                IReadOnlyList<IPlanet> planets, 
+                IReadOnlyList<PlanetPresenter> planetPresenters,
+                MoneyPresenter moneyPresenter,
+                PlanetPopupPresenter planetPopupPresenter
+            )
         {
             for (int i = 0; i < Mathf.Min(planets.Count, planetPresenters.Count); i++)
             {
                 var model = planets[i];
                 var presenter = planetPresenters[i];
 
-                presenter.Construct(model, signalBus);
+                presenter.Construct(model, moneyPresenter, planetPopupPresenter);
             }
         }
     }

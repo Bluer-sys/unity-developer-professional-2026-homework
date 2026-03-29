@@ -11,36 +11,28 @@ namespace Game.UI
         [SerializeField] private PlanetPopupView _view;
         
         private IMoneyStorage _moneyStorage;
-        private SignalBus _signalBus;
 
         private IPlanet _shownPlanet;
 
         [Inject]
-        public void Construct(IMoneyStorage moneyStorage, SignalBus signalBus)
-        {
+        public void Construct(IMoneyStorage moneyStorage) =>
             _moneyStorage = moneyStorage;
-            _signalBus = signalBus;
-        }
 
         public void Initialize()
         {
-            _signalBus.Subscribe<OnPlanetPopupRequestedSignal>(Show);
-            
             _view.OnUpgrade.AddListener(Upgrade);
             _view.OnClose.AddListener(Hide);
         }
 
         public void Dispose()
         {
-            _signalBus.Unsubscribe<OnPlanetPopupRequestedSignal>(Show);
-            
             _view.OnUpgrade.RemoveListener(Upgrade);
             _view.OnClose.RemoveListener(Hide);
         }
 
-        private void Show(OnPlanetPopupRequestedSignal signal)
+        public void Show(IPlanet planet)
         {
-            _shownPlanet = signal.Planet;
+            _shownPlanet = planet;
             _shownPlanet.OnIncomeChanged += OnIncomeChanged;
             _shownPlanet.OnPopulationChanged += OnPopulationChanged;
             _shownPlanet.OnUpgraded += OnUpgraded;
@@ -77,13 +69,14 @@ namespace Game.UI
 
         private void OnUpgraded(int level)
         {
-            bool isNotMaxLevel = !_shownPlanet.IsMaxLevel;
-            bool isEnoughMoney = _moneyStorage.IsEnough(_shownPlanet.Price);
+            int price = _shownPlanet.Price;
             int maxLevel = _shownPlanet.MaxLevel;
+            bool isNotMaxLevel = !_shownPlanet.IsMaxLevel;
+            bool isEnoughMoney = _moneyStorage.IsEnough(price);
 
             _view.SetLevel($"Level: {level}/{maxLevel}");
             _view.SetUpgradeLabel(isNotMaxLevel ? "Upgrade" : "MAX LEVEL");
-            _view.SetUpgradePrice(level.ToString());
+            _view.SetUpgradePrice(price.ToString());
             _view.SetPriceVisible(isNotMaxLevel);
             _view.SetUpgradeButtonInteractable(isNotMaxLevel && isEnoughMoney);
         }

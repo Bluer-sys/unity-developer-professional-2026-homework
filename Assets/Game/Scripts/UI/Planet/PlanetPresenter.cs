@@ -9,13 +9,18 @@ namespace Game.UI
     {
         [SerializeField] private PlanetView _view;
 
-        private SignalBus _signalBus;
         private IPlanet _planet;
+        private MoneyPresenter _moneyPresenter;
+        private PlanetPopupPresenter _planetPopupPresenter;
 
-        public void Construct(IPlanet planet, SignalBus signalBus)
+        public void Construct(
+            IPlanet planet,
+            MoneyPresenter moneyPresenter, 
+            PlanetPopupPresenter planetPopupPresenter)
         {
             _planet = planet;
-            _signalBus = signalBus;
+            _moneyPresenter = moneyPresenter;
+            _planetPopupPresenter = planetPopupPresenter;
         }
 
         public void Initialize()
@@ -58,11 +63,11 @@ namespace Game.UI
         private void OnPopupRequested()
         {
             if (_planet.IsUnlocked)
-                _signalBus.Fire(new OnPlanetPopupRequestedSignal(_planet));
+                _planetPopupPresenter.Show(_planet);
         }
 
         private void OnGathered(int range) =>
-            _signalBus.Fire(new OnMoneyEarnedSignal(_view.CoinPosition, range));
+            _moneyPresenter.EarnMoney(_view.CoinPosition, range);
 
         private void OnIncomeReady(bool isReady) =>
             _view.OnIncomeStatusChanged(isReady, _planet.IsUnlocked);

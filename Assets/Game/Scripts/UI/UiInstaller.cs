@@ -8,35 +8,21 @@ namespace Game.UI
     {
         public override void InstallBindings()
         {
-            BindSignalBus();
-            
             Container.Bind<PlanetCollectionPresenter>()
                      .FromComponentInHierarchy()
-                     .AsSingle()
-                     .NonLazy();
+                     .AsSingle();
             
             Container.BindInterfacesAndSelfTo<PlanetPresenter>()
                      .FromComponentsInHierarchy()
-                     .AsCached()
-                     .NonLazy();
+                     .AsCached();
 
-            Container.BindInterfacesTo<PlanetPopupPresenter>()
+            Container.BindInterfacesAndSelfTo<PlanetPopupPresenter>()
                      .FromComponentInHierarchy()
-                     .AsSingle()
-                     .NonLazy();
+                     .AsCached();
 
-            Container.BindInterfacesTo<MoneyPresenter>()
+            Container.BindInterfacesAndSelfTo<MoneyPresenter>()
                      .FromComponentInHierarchy()
-                     .AsSingle()
-                     .NonLazy();
-        }
-
-        private void BindSignalBus()
-        {
-            SignalBusInstaller.Install(Container);
-
-            Container.DeclareSignal<OnMoneyEarnedSignal>();
-            Container.DeclareSignal<OnPlanetPopupRequestedSignal>();
+                     .AsCached();
         }
     }
 }

@@ -10,34 +10,24 @@ namespace Game.UI
         [SerializeField] private MoneyView _view;
         
         private IMoneyStorage _moneyStorage;
-        private SignalBus _signalBus;
 
         [Inject]
-        public void Construct(IMoneyStorage moneyStorage, SignalBus signalBus)
-        {
+        public void Construct(IMoneyStorage moneyStorage) =>
             _moneyStorage = moneyStorage;
-            _signalBus = signalBus;
-        }
 
         public void Initialize()
         {
             _moneyStorage.OnMoneySpent += SpentMoney;
-            _signalBus.Subscribe<OnMoneyEarnedSignal>(EarnMoney);
+            
+            _view.ChangeMoney(_moneyStorage.Money);
         }
 
-        public void Dispose()
-        {
+        public void Dispose() => 
             _moneyStorage.OnMoneySpent -= SpentMoney;
-            _signalBus.Unsubscribe<OnMoneyEarnedSignal>(EarnMoney);
-        }
 
-        private void EarnMoney(OnMoneyEarnedSignal signal)
-        {
-            _view.PlayGather(signal.From,
-                _moneyStorage.Money,
-                _moneyStorage.Money - signal.Range);
-        }
-        
+        public void EarnMoney(Vector3 from, int range) =>
+            _view.PlayGather(from, _moneyStorage.Money, _moneyStorage.Money - range);
+
         private void SpentMoney(int newValue, int range) =>
             _view.ChangeMoney(newValue);
     }
