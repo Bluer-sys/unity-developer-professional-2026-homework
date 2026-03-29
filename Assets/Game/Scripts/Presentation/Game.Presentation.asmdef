@@ -3,10 +3,10 @@
     "rootNamespace": "",
     "references": [
         "Zenject",
-        "R3.Unity",
         "MoneyStorage",
         "Planets",
-        "Utils"
+        "Utils",
+        "Game.Views"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,17 +7,17 @@ namespace Game.Presentation
 {
     public class PlanetCollectionPresentation : IInitializable, IDisposable
     {
-        public IReadOnlyList<PlanetPresentation> PlanetPresentations => _planetPresentations;
+        public IReadOnlyList<PlanetPresenter> PlanetPresentations => _planetPresentations;
         
         private readonly IReadOnlyList<IPlanet> _planets;
         private readonly IInstantiator _instantiator;
-        private readonly List<PlanetPresentation> _planetPresentations;
+        private readonly List<PlanetPresenter> _planetPresentations;
 
         public PlanetCollectionPresentation(IReadOnlyList<IPlanet> planets, IInstantiator instantiator)
         {
             _planets = planets;
             _instantiator = instantiator;
-            _planetPresentations = new List<PlanetPresentation>(_planets.Count);
+            _planetPresentations = new List<PlanetPresenter>(_planets.Count);
 
             CreatePlanetPresentations();
         }
@@ -38,7 +38,7 @@ namespace Game.Presentation
         {
             foreach (IPlanet planet in _planets)
             {
-                var presentation = _instantiator.Instantiate<PlanetPresentation>(new[] { planet });
+                var presentation = _instantiator.Instantiate<PlanetPresenter>(new[] { planet });
                 _planetPresentations.Add(presentation);
             }
         }

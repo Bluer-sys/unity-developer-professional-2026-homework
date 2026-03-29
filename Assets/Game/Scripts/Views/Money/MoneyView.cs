@@ -1,7 +1,4 @@
-using Game.Presentation;
-using R3;
 using UnityEngine;
-using Zenject;
 
 namespace Game.Views
 {
@@ -9,19 +6,10 @@ namespace Game.Views
     {
         [SerializeField] private MoneyPanel _moneyPanel;
         
-        private MoneyPresentation _presentation;
+        public void ChangeMoney(int current) =>
+            _moneyPanel.ChangeMoney(current);
 
-        [Inject]
-        private void Construct(MoneyPresentation presentation)
-        {
-            _presentation = presentation;
-            _presentation.OnMoneyEarned.Subscribe(OnMoneyEarned).AddTo(this);
-            _presentation.OnMoneySpent.Subscribe(_moneyPanel.ChangeMoney).AddTo(this);
-
-            _moneyPanel.ChangeMoney(_presentation.Money);
-        }
-
-        private void OnMoneyEarned((Vector3 from, int cur, int prev) tuple) =>
-            _moneyPanel.PlayGather(tuple.from, tuple.cur, tuple.prev);
+        public void PlayEarnMoney(Vector3 from, int cur, int prev) =>
+            _moneyPanel.PlayGather(from, cur, prev);
     }
 }

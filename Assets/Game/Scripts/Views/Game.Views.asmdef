@@ -5,9 +5,7 @@
         "Unity.TextMeshPro",
         "UIComponents",
         "Zenject",
-        "dotweenModules",
-        "R3.Unity",
-        "Game.Presentation"
+        "dotweenModules"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

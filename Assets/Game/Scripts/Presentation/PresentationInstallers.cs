@@ -11,11 +11,11 @@ namespace Game.Presentation
             BindSignalBus();
 
             Container
-                .BindInterfacesAndSelfTo<MoneyPresentation>()
+                .BindInterfacesAndSelfTo<MoneyPresenter>()
                 .AsCached();
 
             Container
-                .BindInterfacesAndSelfTo<PlanetPopupPresentation>()
+                .BindInterfacesAndSelfTo<PlanetPopupPresenter>()
                 .AsCached();
             
             Container
