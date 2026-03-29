@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 5364966909751367753}
   - component: {fileID: 5146271484780636146}
   - component: {fileID: 2121043912536296404}
+  - component: {fileID: 512836199684882748}
   m_Layer: 5
   m_Name: PlanetPopup
   m_TagString: Untagged
@@ -290,6 +291,19 @@ MonoBehaviour:
   _upgradeButton: {fileID: 3885529525276896717}
   _closeButton: {fileID: 4860622370961867766}
   _preview: {fileID: 328163744762118583}
+--- !u!114 &512836199684882748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860805340701978150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cc33c67c8d423fa166960277f719b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.UI::Game.UI.PlanetPopupPresenter
+  _view: {fileID: 2121043912536296404}
 --- !u!1 &965717003820527526
 GameObject:
   m_ObjectHideFlags: 0

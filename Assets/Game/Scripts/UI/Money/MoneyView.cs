@@ -3,9 +3,9 @@ using Modules.UI;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Views
+namespace Game.UI
 {
-    public class MoneyPanel : MonoBehaviour
+    public class MoneyView : MonoBehaviour
     {
         [SerializeField] private TMP_Text _money;
         [SerializeField] private RectTransform _iconTransform;

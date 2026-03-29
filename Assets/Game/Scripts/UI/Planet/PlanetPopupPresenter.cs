@@ -1,22 +1,23 @@
 using System;
-using Game.Views;
 using Modules.Money;
 using Modules.Planets;
+using UnityEngine;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.UI
 {
-    public class PlanetPopupPresenter : IInitializable, IDisposable
+    public class PlanetPopupPresenter : MonoBehaviour, IInitializable, IDisposable
     {
-        private readonly PlanetPopupView _view;
-        private readonly IMoneyStorage _moneyStorage;
-        private readonly SignalBus _signalBus;
+        [SerializeField] private PlanetPopupView _view;
+        
+        private IMoneyStorage _moneyStorage;
+        private SignalBus _signalBus;
 
         private IPlanet _shownPlanet;
 
-        public PlanetPopupPresenter(PlanetPopupView view, IMoneyStorage moneyStorage, SignalBus signalBus)
+        [Inject]
+        public void Construct(IMoneyStorage moneyStorage, SignalBus signalBus)
         {
-            _view = view;
             _moneyStorage = moneyStorage;
             _signalBus = signalBus;
         }

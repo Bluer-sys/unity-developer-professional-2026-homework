@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 4035766591218761423}
   - component: {fileID: 4556502046767129200}
   - component: {fileID: 4384240946668408725}
-  - component: {fileID: 4735025768547723398}
+  - component: {fileID: 3086607399496120389}
   m_Layer: 5
   m_Name: MoneyView
   m_TagString: Untagged
@@ -308,7 +308,7 @@ MonoBehaviour:
   _particleAnimator: {fileID: 0}
   _particleDuration: 0.5
   _changeMoneyDuration: 0.5
---- !u!114 &4735025768547723398
+--- !u!114 &3086607399496120389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7207275897469232668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93e74050fc480b88208e52cda79f06, type: 3}
+  m_Script: {fileID: 11500000, guid: 4aa5fd3bd2db433e98dba6421e66a12b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Views::Game.Views.MoneyPanelView
-  _moneyPanel: {fileID: 4384240946668408725}
+  m_EditorClassIdentifier: Game.UI::Game.UI.MoneyPresenter
+  _view: {fileID: 4384240946668408725}

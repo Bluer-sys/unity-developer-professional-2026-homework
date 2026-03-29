@@ -2,13 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Views
+namespace Game.UI
 {
     public class PlanetPopupView : MonoBehaviour
     {
-        public Button.ButtonClickedEvent OnUpgrade => _upgradeButton.onClick;
-        public Button.ButtonClickedEvent OnClose => _closeButton.onClick;
-        
         [SerializeField] private TMP_Text _label;
         [SerializeField] private TMP_Text _population;
         [SerializeField] private TMP_Text _level;
@@ -20,6 +17,9 @@ namespace Game.Views
         [SerializeField] private Button _closeButton;
         [SerializeField] private Image _preview;
 
+        public Button.ButtonClickedEvent OnUpgrade => _upgradeButton.onClick;
+        public Button.ButtonClickedEvent OnClose => _closeButton.onClick;
+        
         public void SetVisible(bool state) => gameObject.SetActive(state);
         public void SetPriceVisible(bool state) => _upgradePriceRoot.SetActive(state);
         public void SetLabelText(string value) => _label.text = value;

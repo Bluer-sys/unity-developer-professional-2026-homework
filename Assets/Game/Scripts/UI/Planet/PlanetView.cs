@@ -4,14 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Views
+namespace Game.UI
 {
     public class PlanetView : MonoBehaviour
     {
         public event Action OnClick;
         public event Action OnHold;
-        
-        public Vector3 CoinPosition => _coin.transform.position;
         
         [SerializeField] private SmartButton _button;
         [SerializeField] private Image _icon;
@@ -23,16 +21,18 @@ namespace Game.Views
         [SerializeField] private GameObject _priceRoot;
         [SerializeField] private GameObject _coin;
 
+        public Vector3 CoinPosition => _coin.transform.position;
+        
         private void OnEnable()
         {
-            _button.OnClick += OnClick;
-            _button.OnHold += OnHold;
+            _button.OnClick += OnClickHandler;
+            _button.OnHold += OnHoldHandler;
         }
-        
+
         private void OnDisable()
         {
-            _button.OnClick -= OnClick;
-            _button.OnHold -= OnHold;
+            _button.OnClick -= OnClickHandler;
+            _button.OnHold -= OnHoldHandler;
         }
 
         public void SetIncomeProgress(string remainingTime, float progress01)
@@ -57,5 +57,9 @@ namespace Game.Views
         public void SetPrice(string price) => _price.text = price;
         
         public void SetIcon(Sprite sprite) => _icon.sprite = sprite;
+
+        private void OnHoldHandler() => OnHold?.Invoke();
+
+        private void OnClickHandler() => OnClick?.Invoke();
     }
 }

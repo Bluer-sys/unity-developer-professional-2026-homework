@@ -1,6 +1,6 @@
 using Modules.Planets;
 
-namespace Game.Presentation
+namespace Game.UI
 {
     public readonly struct OnPlanetPopupRequestedSignal
     {

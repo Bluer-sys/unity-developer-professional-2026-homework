@@ -1,20 +1,19 @@
 using System;
-using Game.Views;
 using Modules.Planets;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.UI
 {
-    public class PlanetPresenter : IInitializable, IDisposable
+    public class PlanetPresenter : MonoBehaviour, IInitializable, IDisposable
     {
-        private readonly PlanetView _view;
-        private readonly IPlanet _planet;
-        private readonly SignalBus _signalBus;
+        [SerializeField] private PlanetView _view;
 
-        public PlanetPresenter(PlanetView view, IPlanet planet, SignalBus signalBus)
+        private SignalBus _signalBus;
+        private IPlanet _planet;
+
+        public void Construct(IPlanet planet, SignalBus signalBus)
         {
-            _view = view;
             _planet = planet;
             _signalBus = signalBus;
         }
@@ -28,7 +27,7 @@ namespace Game.Presentation
 
             _view.OnClick += OnClicked;
             _view.OnHold += OnPopupRequested;
-            
+
             SetUnlocked(false);
             OnIncomeReady(false);
         }

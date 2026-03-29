@@ -447,6 +447,7 @@ GameObject:
   - component: {fileID: 1226517422905731925}
   - component: {fileID: 7486801599208217449}
   - component: {fileID: 3159015845967633803}
+  - component: {fileID: 1115403515740582665}
   m_Layer: 5
   m_Name: PlanetView
   m_TagString: Untagged
@@ -507,6 +508,19 @@ MonoBehaviour:
   _incomeProgressRoot: {fileID: 5564512366540979095}
   _priceRoot: {fileID: 6850814019076832775}
   _coin: {fileID: 320550912344372757}
+--- !u!114 &1115403515740582665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080244410604157239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ebcd313495436588b9ede16160eb64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.UI::Game.UI.PlanetPresenter
+  _view: {fileID: 3159015845967633803}
 --- !u!1 &5564512366540979095
 GameObject:
   m_ObjectHideFlags: 0

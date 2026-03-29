@@ -1,22 +1,20 @@
 using System;
-using Game.Views;
 using Modules.Money;
+using UnityEngine;
 using Zenject;
 
-namespace Game.Presentation
+namespace Game.UI
 {
-    public class MoneyPresenter : IInitializable, IDisposable
+    public class MoneyPresenter : MonoBehaviour, IInitializable, IDisposable
     {
-        private readonly MoneyView _view;
-        private readonly IMoneyStorage _moneyStorage;
-        private readonly SignalBus _signalBus;
+        [SerializeField] private MoneyView _view;
+        
+        private IMoneyStorage _moneyStorage;
+        private SignalBus _signalBus;
 
-        public MoneyPresenter(
-            MoneyView view,
-            IMoneyStorage moneyStorage,
-            SignalBus signalBus)
+        [Inject]
+        public void Construct(IMoneyStorage moneyStorage, SignalBus signalBus)
         {
-            _view = view;
             _moneyStorage = moneyStorage;
             _signalBus = signalBus;
         }
@@ -35,7 +33,7 @@ namespace Game.Presentation
 
         private void EarnMoney(OnMoneyEarnedSignal signal)
         {
-            _view.PlayEarnMoney(signal.From,
+            _view.PlayGather(signal.From,
                 _moneyStorage.Money,
                 _moneyStorage.Money - signal.Range);
         }
