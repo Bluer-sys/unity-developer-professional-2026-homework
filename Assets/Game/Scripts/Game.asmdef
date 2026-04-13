@@ -1,0 +1,19 @@
+{
+    "name": "Game",
+    "rootNamespace": "",
+    "references": [
+        "Modules.Repository",
+        "UniTask",
+        "Zenject",
+        "Modules.Entities"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
