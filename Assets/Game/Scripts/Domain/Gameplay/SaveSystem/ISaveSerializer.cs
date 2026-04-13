@@ -6,7 +6,7 @@ namespace Game.Gameplay
     {
         string Key { get; }
         
-        JToken Serialize();
-        void Deserialize(JToken data);
+        JToken Serialize(object payload = null);
+        void Deserialize(JToken data, object payload = null);
     }
 }

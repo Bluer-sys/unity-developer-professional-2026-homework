@@ -10,9 +10,9 @@ namespace Game.Gameplay
     {
         public override string Key => "entity";
         
-        private readonly IReadOnlyDictionary<Type, IComponentSerializer> _serializers;
+        private readonly IReadOnlyDictionary<Type, ISaveSerializer> _serializers;
 
-        public EntitySerializer(IReadOnlyDictionary<Type, IComponentSerializer> serializers) =>
+        public EntitySerializer(IReadOnlyDictionary<Type, ISaveSerializer> serializers) =>
             _serializers = serializers;
 
         protected override JToken SerializeInternal(Entity entity)

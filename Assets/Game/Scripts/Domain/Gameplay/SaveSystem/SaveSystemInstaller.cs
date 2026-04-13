@@ -8,59 +8,56 @@ using Zenject;
 
 namespace Game.Gameplay
 {
-    [CreateAssetMenu(
-        fileName = "SaveSystemInstaller",
-        menuName = "Zenject/New Save System Installer"
-    )]
+    [CreateAssetMenu(fileName = "SaveSystemInstaller",
+        menuName = "Zenject/New Save System Installer")]
     public class SaveSystemInstaller : ScriptableObjectInstaller
     {
-        [SerializeField] 
+        [SerializeField]
         private RepositoryInstaller _repositoryInstaller;
-        
+
         public override void InstallBindings()
         {
             Container.Install(_repositoryInstaller);
-            
-            Container.BindInterfacesTo<SaveManager>().AsSingle();
-            
+
+            Container.BindInterfacesTo<SaveManager>()
+                     .AsSingle();
+
             Container.Bind<ISaveSerializer[]>()
                      .FromMethod(BindSerializers)
-                     .AsSingle();
-            
-            Container.Bind<IReadOnlyDictionary<Type, IComponentSerializer>>()
-                     .FromMethod(BindComponentSerializers)
                      .AsSingle();
         }
 
         private ISaveSerializer[] BindSerializers(InjectContext context)
         {
+            var container = context.Container;
+
             return new ISaveSerializer[]
             {
-                context.Container.Instantiate<EntitiesSerializer>()
-            };
-        }
-
-        private Dictionary<Type, IComponentSerializer> BindComponentSerializers(InjectContext context)
-        {
-            return new Dictionary<Type, IComponentSerializer>
-            {
-                { typeof(Entity), context.Container.Instantiate<EntitySerializer>(new object[]
+                container.Instantiate<EntityWorldSerializer>(new object[]
+                {
+                    new Dictionary<Type, ISaveSerializer>
                     {
-                        new Dictionary<Type, IComponentSerializer>
-                        {
-                            { typeof(Countdown), Instantiate<CountdownSerializer>() },
-                            { typeof(Health), Instantiate<HealthSerializer>() },
-                            { typeof(Team), Instantiate<TeamSerializer>() },
-                            { typeof(ResourceBag), Instantiate<ResourceBagSerializer>() },
-                            { typeof(DestinationPoint), Instantiate<DestinationPointSerializer>() },
-                            { typeof(TargetObject), Instantiate<TargetObjectSerializer>() },
-                            { typeof(ProductionOrder), Instantiate<ProductionOrderSerializer>() },
-                        }
-                    })
-                },
+                        { typeof(Entity), CreateEntitySerializer() }
+                    }
+                })
             };
 
-            T Instantiate<T>() => context.Container.Instantiate<T>();
+            EntitySerializer CreateEntitySerializer()
+            {
+                return container.Instantiate<EntitySerializer>(new object[]
+                {
+                    new Dictionary<Type, ISaveSerializer>
+                    {
+                        { typeof(Countdown), container.Instantiate<CountdownSerializer>() },
+                        { typeof(Health), container.Instantiate<HealthSerializer>() },
+                        { typeof(Team), container.Instantiate<TeamSerializer>() },
+                        { typeof(ResourceBag), container.Instantiate<ResourceBagSerializer>() },
+                        { typeof(DestinationPoint), container.Instantiate<DestinationPointSerializer>() },
+                        { typeof(TargetObject), container.Instantiate<TargetObjectSerializer>() },
+                        { typeof(ProductionOrder), container.Instantiate<ProductionOrderSerializer>() },
+                    }
+                });
+            }
         }
     }
 }
