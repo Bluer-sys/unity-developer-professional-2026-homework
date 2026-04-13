@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Modules.Entities;
 using UnityEngine;
 
-namespace SampleGame.Gameplay
+namespace Game.Gameplay
 {
     //Can be extended
     public sealed class ProductionOrder : MonoBehaviour

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Game.App;
 using Modules.Entities;
 using Modules.Extensions;
-using SampleGame.Gameplay;
 using UnityEngine;
 using Zenject;
 
@@ -37,19 +36,28 @@ namespace Game.Gameplay
         {
             return new ISaveSerializer[]
             {
-                Instantiate<EntitiesSerializer>(),
+                context.Container.Instantiate<EntitiesSerializer>()
             };
-            
-            T Instantiate<T>() => context.Container.Instantiate<T>();
         }
 
         private Dictionary<Type, IComponentSerializer> BindComponentSerializers(InjectContext context)
         {
             return new Dictionary<Type, IComponentSerializer>
             {
-                { typeof(EntityWorld), Instantiate<EntityWorldSerializer>() },
-                { typeof(Entity), Instantiate<EntitySerializer>() },
-                { typeof(Countdown), Instantiate<CountdownSerializer>() }
+                { typeof(Entity), context.Container.Instantiate<EntitySerializer>(new object[]
+                    {
+                        new Dictionary<Type, IComponentSerializer>
+                        {
+                            { typeof(Countdown), Instantiate<CountdownSerializer>() },
+                            { typeof(Health), Instantiate<HealthSerializer>() },
+                            { typeof(Team), Instantiate<TeamSerializer>() },
+                            { typeof(ResourceBag), Instantiate<ResourceBagSerializer>() },
+                            { typeof(DestinationPoint), Instantiate<DestinationPointSerializer>() },
+                            { typeof(TargetObject), Instantiate<TargetObjectSerializer>() },
+                            { typeof(ProductionOrder), Instantiate<ProductionOrderSerializer>() },
+                        }
+                    })
+                },
             };
 
             T Instantiate<T>() => context.Container.Instantiate<T>();

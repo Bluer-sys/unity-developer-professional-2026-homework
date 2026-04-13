@@ -26,7 +26,7 @@ namespace Game.Repository
             
             byte[] bytes = Encoding.UTF8.GetBytes(body.ToString());
 
-            var request = new UnityWebRequest($"{_uri}/save?version={version}","POST")
+            var request = new UnityWebRequest($"{_uri}/save?version={version}","PUT")
             {
                 uploadHandler = new UploadHandlerRaw(bytes),
                 downloadHandler = new DownloadHandlerBuffer(),

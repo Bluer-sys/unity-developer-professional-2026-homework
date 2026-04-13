@@ -1,7 +1,7 @@
 using SampleGame.Common;
 using UnityEngine;
 
-namespace SampleGame.Gameplay
+namespace Game.Gameplay
 {
     //Can be extended
     public sealed class ResourceBag : MonoBehaviour

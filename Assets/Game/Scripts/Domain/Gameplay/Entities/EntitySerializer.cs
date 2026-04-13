@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Modules.Entities;
 using Newtonsoft.Json.Linq;
-using SampleGame.Common;
 using UnityEngine;
 
 namespace Game.Gameplay
@@ -19,22 +18,20 @@ namespace Game.Gameplay
         protected override JToken SerializeInternal(Entity entity)
         {
             var components = entity.GetComponents<Component>();
-            var jComponents = new JArray(components.Length);
+            var jComponents = new JObject();
             
             foreach(var component in components)
             {
-                var serializer = _serializers[component.GetType()];
+                if(!_serializers.TryGetValue(component.GetType(), out var serializer))
+                    continue;
+                
                 var jToken = serializer.Serialize(component);
                 
-                jComponents.Add(jToken);
+                jComponents.Add(serializer.Key, jToken);
             }
 
             var data = new JObject
             {
-                { "position", new JObject(new SerializedVector3(entity.transform.position)) },
-                { "rotation", new JObject(new SerializedVector3(entity.transform.eulerAngles)) },
-                { "id", entity.Id },
-                { "name", entity.Name },
                 { "components", jComponents }
             };
 
@@ -43,13 +40,15 @@ namespace Game.Gameplay
 
         protected override void DeserializeInternal(JToken data, Entity entity)
         {
-            var jComponents = data["components"].Value<JArray>();
+            var jComponents = data["components"].Value<JObject>();
             
             var components = entity.GetComponents<Component>();
             
             foreach (Component component in components)
             {
-                var serializer = _serializers[component.GetType()];
+                if (!_serializers.TryGetValue(component.GetType(), out var serializer))
+                    continue;
+                
                 var jComponent = jComponents[serializer.Key];
 
                 serializer.Deserialize(jComponent, component);
