@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Modules.Encryption;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,10 +12,12 @@ namespace Game.Repository
     public class RemoteRepository : IRepository
     {
         private readonly string _uri;
+        private readonly IEncryptor _encryptor;
 
-        public RemoteRepository(string uri)
+        public RemoteRepository(string uri, IEncryptor encryptor)
         {
             _uri = uri;
+            _encryptor = encryptor;
         }
         
         public async UniTask<bool> Save(string version, JObject data, CancellationToken cancellationToken = default)
@@ -24,8 +27,8 @@ namespace Game.Repository
                 ["data"] = data.ToString()
             };
             
-            byte[] bytes = Encoding.UTF8.GetBytes(body.ToString());
-
+            var bytes = Encoding.UTF8.GetBytes(_encryptor.Encrypt(body.ToString()));
+            
             var request = new UnityWebRequest($"{_uri}/save?version={version}","PUT")
             {
                 uploadHandler = new UploadHandlerRaw(bytes),
@@ -76,9 +79,11 @@ namespace Game.Repository
                 Debug.LogError($"Load failed: {request.error}");
                 return (false, null);
             }
+
+            var responce = _encryptor.Decrypt(request.downloadHandler.text);
             
-            var responce = JObject.Parse(request.downloadHandler.text);
-            var jsonText = responce["data"]?.ToString();
+            var jObject = JObject.Parse(responce);
+            var jsonText = jObject["data"]?.ToString();
             
             if(string.IsNullOrEmpty(jsonText))
                 return (false, null);

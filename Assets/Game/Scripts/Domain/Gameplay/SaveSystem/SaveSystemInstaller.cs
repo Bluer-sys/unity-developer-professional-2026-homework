@@ -8,7 +8,8 @@ using Zenject;
 
 namespace Game.Gameplay
 {
-    [CreateAssetMenu(fileName = "SaveSystemInstaller",
+    [CreateAssetMenu(
+        fileName = "SaveSystemInstaller",
         menuName = "Zenject/New Save System Installer")]
     public class SaveSystemInstaller : ScriptableObjectInstaller
     {

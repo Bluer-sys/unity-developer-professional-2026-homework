@@ -2,7 +2,8 @@
     "name": "Modules.Repository",
     "rootNamespace": "",
     "references": [
-        "UniTask"
+        "UniTask",
+        "Modules.Encryption"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

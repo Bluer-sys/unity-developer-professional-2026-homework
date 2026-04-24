@@ -1,13 +1,7 @@
 {
-    "name": "Game",
+    "name": "Modules.Encryption",
     "rootNamespace": "",
-    "references": [
-        "Modules.Repository",
-        "Modules.Encryption",
-        "UniTask",
-        "Zenject",
-        "Modules.Entities"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

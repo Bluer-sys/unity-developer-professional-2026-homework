@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Repository;
+using Modules.Encryption;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -13,11 +14,16 @@ namespace Game.Gameplay
         
         private readonly ISaveSerializer[] _saveSerializers;
         private readonly IRepository _repository;
+        private readonly IEncryptor _encryptor;
 
-        public SaveManager(ISaveSerializer[] saveSerializers, IRepository repository)
+        public SaveManager(
+            ISaveSerializer[] saveSerializers, 
+            IRepository repository, 
+            IEncryptor encryptor)
         {
             _saveSerializers = saveSerializers;
             _repository = repository;
+            _encryptor = encryptor;
         }
         
         public async UniTask<bool> Save(Action<bool, int> onSaved = null, CancellationToken cancellationToken = default)
@@ -27,7 +33,7 @@ namespace Game.Gameplay
 
             foreach (ISaveSerializer serializer in _saveSerializers)
                 data.Add(serializer.Key, serializer.Serialize());
-
+            
             bool success = await _repository.Save(version.ToString(), data, cancellationToken);
 
             if (!success)
