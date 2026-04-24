@@ -10,6 +10,7 @@ namespace Game.App
     public class RepositoryInstaller : Installer
     {
         [SerializeField] private string _uri = "http://127.0.0.1:8888";
+        [SerializeField] private string _saveFolderPath;
         [SerializeField] private string _encryptionKey;
         
         public override void InstallBindings()
@@ -20,9 +21,28 @@ namespace Game.App
                      .WithArguments(_encryptionKey);
             
             Container
-                .BindInterfacesTo<RemoteRepository>()
+                .Bind<RemoteRepository>()
                 .AsSingle()
                 .WithArguments(_uri);
+            
+            Container
+                .Bind<FileRepository>()
+                .AsSingle()
+                .WithArguments(_saveFolderPath);
+
+            Container
+                .Bind<IRepository>()
+                .To<SyncRepository>()
+                .FromMethod(BindSyncRepository)
+                .AsSingle();
+        }
+
+        private SyncRepository BindSyncRepository(InjectContext context)
+        {
+            return new SyncRepository(
+                    context.Container.Resolve<RemoteRepository>(),
+                    context.Container.Resolve<FileRepository>()
+                );
         }
     }
 }

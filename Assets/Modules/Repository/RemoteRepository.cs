@@ -26,8 +26,13 @@ namespace Game.Repository
             {
                 ["data"] = data.ToString()
             };
+
+            var bodyStr = body.ToString();
+
+            if (_encryptor != null)
+                bodyStr = _encryptor.Encrypt(bodyStr);
             
-            var bytes = Encoding.UTF8.GetBytes(_encryptor.Encrypt(body.ToString()));
+            var bytes = Encoding.UTF8.GetBytes(bodyStr);
             
             var request = new UnityWebRequest($"{_uri}/save?version={version}","PUT")
             {
@@ -80,7 +85,10 @@ namespace Game.Repository
                 return (false, null);
             }
 
-            var responce = _encryptor.Decrypt(request.downloadHandler.text);
+            var responce = request.downloadHandler.text;
+
+            if (_encryptor != null)
+                responce = _encryptor.Decrypt(responce);
             
             var jObject = JObject.Parse(responce);
             var jsonText = jObject["data"]?.ToString();

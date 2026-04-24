@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::Game.Gameplay.SaveSystemInstaller
   _repositoryInstaller:
     _uri: http://127.0.0.1:8888
+    _saveFolderPath: 
     _encryptionKey: qw235

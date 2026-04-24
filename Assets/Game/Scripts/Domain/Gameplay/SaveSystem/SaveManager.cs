@@ -14,16 +14,13 @@ namespace Game.Gameplay
         
         private readonly ISaveSerializer[] _saveSerializers;
         private readonly IRepository _repository;
-        private readonly IEncryptor _encryptor;
 
         public SaveManager(
             ISaveSerializer[] saveSerializers, 
-            IRepository repository, 
-            IEncryptor encryptor)
+            IRepository repository)
         {
             _saveSerializers = saveSerializers;
             _repository = repository;
-            _encryptor = encryptor;
         }
         
         public async UniTask<bool> Save(Action<bool, int> onSaved = null, CancellationToken cancellationToken = default)
