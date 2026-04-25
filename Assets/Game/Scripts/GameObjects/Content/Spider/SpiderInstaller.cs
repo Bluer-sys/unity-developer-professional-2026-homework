@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Game
 {
-    public sealed class CharacterInstaller : MonoInstaller
+    public sealed class SpiderInstaller : MonoInstaller
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private Rigidbody2D _rigidbody;
@@ -12,8 +12,9 @@ namespace Game
         [SerializeField] private MoveComponent.Settings _moveSettings;
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
-        [SerializeField] private JumpComponent.Settings _jumpSettings;
-        [SerializeField] private Character.Settings _characterSettings;
+        [SerializeField] private PatrolComponent.Settings _patrolSettings;
+        [SerializeField] private DamageOnContactComponent.Settings _damageSettings;
+        [SerializeField] private Spider.Settings _spiderSettings;
 
         public override void InstallBindings()
         {
@@ -26,11 +27,13 @@ namespace Game
             Container.BindInterfacesAndSelfTo<LookComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<GroundedComponent>().AsSingle().WithArguments(_groundedSettings);
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
-            Container.BindInterfacesAndSelfTo<JumpComponent>().AsSingle().WithArguments(_jumpSettings);
+            Container.BindInterfacesAndSelfTo<PatrolComponent>().AsSingle().WithArguments(_patrolSettings);
+            Container.BindInterfacesAndSelfTo<PushableComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<KnockbackComponent>().AsSingle();
-            Container.BindInterfacesAndSelfTo<DisableRigidbodyOnDeathComponent>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
+            Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<Character>().AsSingle().WithArguments(_characterSettings).NonLazy();
+            Container.BindInterfacesAndSelfTo<Spider>().AsSingle().WithArguments(_spiderSettings).NonLazy();
         }
     }
 }

@@ -1,21 +1,34 @@
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace Game
 {
-    public sealed class Lava : MonoBehaviour
+    public sealed class Lava : IInitializable, IDisposable
     {
-        [SerializeField]
-        private TriggerComponent _trigger;
+        private readonly TriggerComponent _triggerComponent;
 
-        private void OnEnable() => _trigger.OnEntered += this.OnTriggerEntered;
-
-        private void OnDisable() => _trigger.OnEntered -= this.OnTriggerEntered;
-
-        private void OnTriggerEntered(Collider2D col)
+        public Lava(TriggerComponent triggerComponent)
         {
-            IGameEntity entity = col.GetComponentInParent<GameEntity>();
-            if (entity != null && entity.TryGet(out HealthComponent health))
-                health.SetZero();
+            _triggerComponent = triggerComponent;
+        }
+
+        void IInitializable.Initialize() =>
+            _triggerComponent.OnEntered += OnEntered;
+
+        void IDisposable.Dispose() =>
+            _triggerComponent.OnEntered -= OnEntered;
+
+        private void OnEntered(Collider2D col)
+        {
+            GameEntity entity = col.GetComponentInParent<GameEntity>();
+            if (entity == null)
+                return;
+
+            if (!entity.TryGet(out HealthComponent health))
+                return;
+
+            health.SetZero();
         }
     }
 }

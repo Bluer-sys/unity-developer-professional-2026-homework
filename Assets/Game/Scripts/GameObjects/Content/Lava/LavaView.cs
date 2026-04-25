@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace Game
 {
@@ -9,12 +10,16 @@ namespace Game
 
         private TriggerComponent _triggerComponent;
 
-        private void Awake() => _triggerComponent = this.GetComponentInParent<TriggerComponent>();
+        [Inject]
+        private void Construct(TriggerComponent triggerComponent)
+        {
+            _triggerComponent = triggerComponent;
+        }
 
-        private void OnEnable() => _triggerComponent.OnEntered += this.OnTrigger;
+        private void OnEnable() => _triggerComponent.OnEntered += OnEntered;
 
-        private void OnDisable() => _triggerComponent.OnEntered -= this.OnTrigger;
+        private void OnDisable() => _triggerComponent.OnEntered -= OnEntered;
 
-        private void OnTrigger(Collider2D obj) => _audioSource.Play();
+        private void OnEntered(Collider2D _) => _audioSource.Play();
     }
 }

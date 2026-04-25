@@ -1,0 +1,25 @@
+using UnityEngine;
+using Zenject;
+
+namespace Game
+{
+    public sealed class TrapInstaller : MonoInstaller
+    {
+        [SerializeField] private Transform _transform;
+
+        [SerializeField] private HealthComponent.Settings _healthSettings;
+        [SerializeField] private DamageOnContactComponent.Settings _damageSettings;
+
+        public override void InstallBindings()
+        {
+            Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
+            Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);
+            Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
+            Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<Trap>().AsSingle().NonLazy();
+        }
+    }
+}
