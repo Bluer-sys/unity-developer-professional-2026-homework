@@ -34,20 +34,9 @@ namespace Game.Gameplay
 
             return new ISaveSerializer[]
             {
-                container.Instantiate<EntityWorldSerializer>(new object[]
+                container.Instantiate<EntityWorldSerializer>(new Dictionary<Type, ISaveSerializer>
                 {
-                    new Dictionary<Type, ISaveSerializer>
-                    {
-                        { typeof(Entity), CreateEntitySerializer() }
-                    }
-                })
-            };
-
-            EntitySerializer CreateEntitySerializer()
-            {
-                return container.Instantiate<EntitySerializer>(new object[]
-                {
-                    new Dictionary<Type, ISaveSerializer>
+                    { typeof(Entity), container.Instantiate<EntitySerializer>(new Dictionary<Type, ISaveSerializer>
                     {
                         { typeof(Countdown), container.Instantiate<CountdownSerializer>() },
                         { typeof(Health), container.Instantiate<HealthSerializer>() },
@@ -56,9 +45,9 @@ namespace Game.Gameplay
                         { typeof(DestinationPoint), container.Instantiate<DestinationPointSerializer>() },
                         { typeof(TargetObject), container.Instantiate<TargetObjectSerializer>() },
                         { typeof(ProductionOrder), container.Instantiate<ProductionOrderSerializer>() },
-                    }
-                });
-            }
+                    }) }
+                })
+            };
         }
     }
 }

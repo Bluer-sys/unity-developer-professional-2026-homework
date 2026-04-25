@@ -15,10 +15,11 @@ namespace Game.App
         
         public override void InstallBindings()
         {
-            Container.Bind<IEncryptor>()
-                     .To<AesEncryptor>()
-                     .AsSingle()
-                     .WithArguments(_encryptionKey);
+            if(!string.IsNullOrWhiteSpace(_encryptionKey))
+                Container.Bind<IEncryptor>()
+                         .To<AesEncryptor>()
+                         .AsSingle()
+                         .WithArguments(_encryptionKey);
             
             Container
                 .Bind<RemoteRepository>()

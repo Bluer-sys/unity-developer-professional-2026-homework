@@ -14,7 +14,7 @@ namespace Game.Repository
         private readonly string _uri;
         private readonly IEncryptor _encryptor;
 
-        public RemoteRepository(string uri, IEncryptor encryptor)
+        public RemoteRepository(string uri, IEncryptor encryptor = null)
         {
             _uri = uri;
             _encryptor = encryptor;

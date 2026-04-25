@@ -1913,6 +1913,11 @@ namespace Zenject
             return (T)result;
         }
 
+        public T Instantiate<T>(params object[] extraArgs)
+        {
+            return Instantiate<T>(extraArgs.AsEnumerable());
+        }
+        
         public object Instantiate(Type concreteType)
         {
             return Instantiate(concreteType, new object[0]);

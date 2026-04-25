@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Repository;
-using Modules.Encryption;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 

@@ -18,7 +18,7 @@ namespace Game.Repository
         public async UniTask<bool> Save(string version, JObject data, CancellationToken ct = default)
         {
             long timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            data["SaveTime"] = timestamp;
+            data["saveTime"] = timestamp;
 
             int count = _repositories.Length;
             if (count == 0)
@@ -54,7 +54,7 @@ namespace Game.Repository
                     continue;
 
                 long timestamp = 0;
-                if (gameData.TryGetValue("SaveTime", out JToken token)) 
+                if (gameData.TryGetValue("saveTime", out JToken token)) 
                     timestamp = token.Value<long>();
 
                 if (timestamp > lastTimestamp)
