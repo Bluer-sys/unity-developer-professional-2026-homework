@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Modules.Encryption;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 namespace Game.Repository
 {
@@ -21,22 +22,26 @@ namespace Game.Repository
 
         public async UniTask<(bool, JObject)> Load(string version, CancellationToken ct = default)
         {
-            if (!File.Exists(_saveFolderPath))
+            var filePath = Path.Combine(_saveFolderPath, version);
+            
+            if (!File.Exists(filePath))
                 return (false, null);
 
             try
             {
-                var filePath = Path.Combine(_saveFolderPath, version);
                 var bytes = await File.ReadAllBytesAsync(filePath, ct);
                 
                 if (_encryptor != null)
                     bytes = _encryptor.Decrypt(bytes);
 
                 string json = Encoding.UTF8.GetString(bytes);
+                Debug.Log($"Load completed: {json}");
+                
                 return (true, JObject.Parse(json));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.Log($"Load failed: {e.Message}");
                 return (false, null);
             }
         }
@@ -53,10 +58,13 @@ namespace Game.Repository
                 var filePath = Path.Combine(_saveFolderPath, version);
                 
                 await File.WriteAllBytesAsync(filePath, bytes, ct);
+                Debug.Log($"Save completed: {data}");
+                
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.Log($"Save failed: {e.Message}");
                 return false;
             }
         }
