@@ -1,26 +1,39 @@
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace Game
 {
-    [RequireComponent(typeof(GroundedComponent), typeof(Rigidbody2D))]
-    public sealed class ExtraGravityComponent : MonoBehaviour
+    public sealed class ExtraGravityComponent : IFixedTickable
     {
-        [SerializeField]
-        private float _gravity = -7f;
-        
-        private GroundedComponent _groundedComponent;
-        private Rigidbody2D _rigidbody;
-
-        private void Awake()
+        [Serializable]
+        public class Settings
         {
-            _groundedComponent = this.GetComponent<GroundedComponent>();
-            _rigidbody = this.GetComponent<Rigidbody2D>();
+            [field: SerializeField]
+            public float Gravity { get; private set; }
         }
 
-        private void FixedUpdate()
+        private readonly Settings _settings;
+        private readonly GroundedComponent _groundedComponent;
+        private readonly RigidbodyComponent _rigidbodyComponent;
+
+        public ExtraGravityComponent(
+            Settings settings,
+            GroundedComponent groundedComponent,
+            RigidbodyComponent rigidbodyComponent)
         {
-            if (!_groundedComponent.IsGrounded)
-                _rigidbody.linearVelocity += new Vector2(0, _gravity * Time.fixedDeltaTime);
+            _settings = settings;
+            _groundedComponent = groundedComponent;
+            _rigidbodyComponent = rigidbodyComponent;
+        }
+
+        void IFixedTickable.FixedTick()
+        {
+            if (_groundedComponent.IsGrounded)
+                return;
+
+            Rigidbody2D rigidbody = _rigidbodyComponent.Rigidbody;
+            rigidbody.linearVelocity += new Vector2(0, _settings.Gravity * Time.fixedDeltaTime);
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Game
 
         private void OnTriggerEntered(Collider2D col)
         {
-            HealthComponent health = col.GetComponentInParent<HealthComponent>();
-            if (health != null)
+            IGameEntity entity = col.GetComponentInParent<GameEntity>();
+            if (entity != null && entity.TryGet(out HealthComponent health))
                 health.SetZero();
         }
     }

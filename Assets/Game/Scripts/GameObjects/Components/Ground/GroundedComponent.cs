@@ -1,56 +1,58 @@
 using System;
 using UnityEngine;
-using Sirenix.OdinInspector;
+using Zenject;
 
 namespace Game
 {
-    [Serializable]
-    public sealed class GroundedComponent : MonoBehaviour
+    public sealed class GroundedComponent : IFixedTickable
     {
-        public event Action<bool> OnGrounded;
-        
-        [SerializeField]
-        private Transform _feet;
+        [Serializable]
+        public class Settings
+        {
+            [field: SerializeField]
+            public Transform Feet { get; private set; }
 
-        [SerializeField]
-        private LayerMask _layerMask;
-        
-        [SerializeField]
-        private float _groundDistance = 0.15f;
-        
-        [ShowInInspector, ReadOnly]
+            [field: SerializeField]
+            public LayerMask LayerMask { get; private set; }
+
+            [field: SerializeField]
+            public float Distance { get; private set; }
+        }
+
+        public event Action<bool> OnGrounded;
+
+        private readonly Settings _settings;
+
         private Transform _ground;
-        
-        [ShowInInspector, ReadOnly, HideInEditorMode]
         private bool _isGrounded;
 
         public Transform Ground => _ground;
-        
         public bool IsGrounded => _isGrounded;
-        
-        private void FixedUpdate()
+
+        public GroundedComponent(Settings settings)
         {
-            RaycastHit2D hit = Physics2D.Raycast(_feet.position, Vector2.down, _groundDistance, _layerMask);
+            _settings = settings;
+        }
+
+        void IFixedTickable.FixedTick()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(
+                _settings.Feet.position,
+                Vector2.down,
+                _settings.Distance,
+                _settings.LayerMask);
 
             bool grounded = hit;
+
             if (grounded != _isGrounded)
             {
                 _isGrounded = grounded;
                 _ground = _isGrounded ? hit.transform : null;
-                this.OnGrounded?.Invoke(_isGrounded);
+                OnGrounded?.Invoke(_isGrounded);
             }
             else
             {
                 _ground = _isGrounded ? hit.transform : null;
-            }
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_feet != null)
-            {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_feet.position, _feet.position + Vector3.down * _groundDistance);
             }
         }
     }

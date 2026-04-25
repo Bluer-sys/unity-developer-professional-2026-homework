@@ -3,21 +3,25 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class HealthComponent : MonoBehaviour
+    public sealed class HealthComponent
     {
-        [SerializeField]
-        private float _maxHealth;
+        [Serializable]
+        public class Settings
+        {
+            [field: SerializeField]
+            public float MaxHealth { get; private set; }
+        }
+
+        public event Action<float> OnHealthChanged;
+        public event Action OnDied;
 
         public float CurrentHealth { get; private set; }
         public bool IsAlive => CurrentHealth > 0;
         public bool IsDied => CurrentHealth <= 0;
 
-        public event Action<float> OnHealthChanged;
-        public event Action OnDied;
-
-        private void Awake()
+        public HealthComponent(Settings settings)
         {
-            CurrentHealth = _maxHealth;
+            CurrentHealth = settings.MaxHealth;
         }
 
         public void TakeDamage(float damage)
@@ -32,7 +36,7 @@ namespace Game
                 OnDied?.Invoke();
         }
 
-        public void SetZero() => 
+        public void SetZero() =>
             this.TakeDamage(this.CurrentHealth);
     }
 }
