@@ -153,7 +153,7 @@ namespace Game
 
         private void TickMove()
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
+            float horizontal = Input.GetAxis("Horizontal");
             Move(new Vector2(horizontal, 0f));
         }
 

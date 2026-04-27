@@ -5,7 +5,6 @@ namespace Game
 {
     public sealed class SnakeInstaller : MonoInstaller
     {
-        [SerializeField] private Transform _transform;
         [SerializeField] private Rigidbody2D _rigidbody;
 
         [SerializeField] private HealthComponent.Settings _healthSettings;
@@ -18,7 +17,7 @@ namespace Game
 
         public override void InstallBindings()
         {
-            Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
+            Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 

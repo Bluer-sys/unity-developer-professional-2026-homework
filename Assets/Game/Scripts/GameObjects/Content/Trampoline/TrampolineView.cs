@@ -40,22 +40,22 @@ namespace Game
             _tween?.Kill();
 
             _tween = DOTween.Sequence()
-                .Append(DOTween.To(
-                    () => _animator.GetFloat(ThrowUp),
-                    x => _animator.SetFloat(ThrowUp, x),
-                    1f,
-                    0.1f))
-                .Append(DOTween.To(
-                    () => _animator.GetFloat(ThrowUp),
-                    x => _animator.SetFloat(ThrowUp, x),
-                    0f,
-                    0.15f))
-                .Append(DOTween.To(
-                    () => _animator.GetFloat(ThrowUp),
-                    x => _animator.SetFloat(ThrowUp, x),
-                    0.5f,
-                    0.2f))
-                .SetEase(Ease.OutQuad);
+                            .Append(DOTween.To(
+                                () => _animator.GetFloat(ThrowUp),
+                                x => _animator.SetFloat(ThrowUp, x),
+                                1f,
+                                0.1f))
+                            .Append(DOTween.To(
+                                () => _animator.GetFloat(ThrowUp),
+                                x => _animator.SetFloat(ThrowUp, x),
+                                0f,
+                                0.15f))
+                            .Append(DOTween.To(
+                                () => _animator.GetFloat(ThrowUp),
+                                x => _animator.SetFloat(ThrowUp, x),
+                                0.5f,
+                                0.2f))
+                            .SetEase(Ease.OutQuad);
         }
     }
 }

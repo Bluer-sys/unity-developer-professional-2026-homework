@@ -6,19 +6,19 @@ namespace Game
     {
         public T Get<T>() where T : class
         {
-            return this.Container.Resolve<T>();
+            return Container.Resolve<T>();
         }
 
         public bool TryGet<T>(out T result) where T : class
         {
-            result = this.Container.TryResolve<T>();
+            result = Container.TryResolve<T>();
             return result != null;
         }
 
         public string Name
         {
-            get => this.name;
-            set => this.name = value;
+            get => name;
+            set => name = value;
         }
     }
 }

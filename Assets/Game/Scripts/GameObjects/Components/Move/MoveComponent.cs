@@ -40,7 +40,7 @@ namespace Game
             if (_condition != null && !_condition.Evaluate())
                 return;
 
-            _transformComponent.Transform.Translate((Vector3) direction * _settings.Speed * Time.fixedDeltaTime);
+            _transformComponent.Transform.Translate((Vector3) direction * (_settings.Speed * Time.fixedDeltaTime));
         }
     }
 }
