@@ -14,22 +14,23 @@ namespace Game
         public bool TryKnockback(Collider2D target, Vector2 force)
         {
             Rigidbody2D rb = target.attachedRigidbody;
+            
             if (rb == null)
                 return false;
-
+            
             Transform self = _transformComponent.Transform;
-            if (rb.transform == self)
-                return false;
+            float dirX = rb.transform.position.x >= self.position.x ? 1f : -1f;
+            Vector2 finalForce = new Vector2(force.x * dirX, force.y);
 
             GameEntity targetEntity = target.GetComponentInParent<GameEntity>();
+            
             if (targetEntity != null
                 && targetEntity.TryGet(out PushableComponent pushable)
                 && !pushable.CanBePushed)
                 return false;
-
-            float dirX = rb.transform.position.x >= self.position.x ? 1f : -1f;
-            Vector2 finalForce = new Vector2(force.x * dirX, force.y);
+            
             rb.AddForce(finalForce, ForceMode2D.Impulse);
+            
             return true;
         }
     }

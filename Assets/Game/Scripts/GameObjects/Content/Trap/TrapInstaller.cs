@@ -10,6 +10,8 @@ namespace Game
 
         public override void InstallBindings()
         {
+            Container.Bind<GameEntity>().FromComponentInHierarchy().AsSingle();
+            
             Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 

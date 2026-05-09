@@ -12,7 +12,7 @@ namespace Game
             public float MaxHealth { get; private set; }
         }
 
-        public event Action<float> OnHealthChanged;
+        public event Action OnHealthDecreased;
         public event Action OnDied;
 
         public float CurrentHealth { get; private set; }
@@ -30,13 +30,13 @@ namespace Game
                 return;
 
             CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-            OnHealthChanged?.Invoke(CurrentHealth);
+            OnHealthDecreased?.Invoke();
 
             if (CurrentHealth <= 0)
                 OnDied?.Invoke();
         }
 
         public void SetZero() =>
-            this.TakeDamage(this.CurrentHealth);
+            TakeDamage(CurrentHealth);
     }
 }

@@ -21,7 +21,7 @@ namespace Game
         void IFixedTickable.FixedTick()
         {
             bool standing = _currentGround != null;
-            bool hasPlatform = this.IsStanding(out Transform platform);
+            bool hasPlatform = IsStanding(out Transform platform);
 
             if (!standing && hasPlatform)
             {

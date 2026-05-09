@@ -114,7 +114,7 @@ namespace Game
                 return;
 
             _waitingForLanding = false;
-            this.SpawnWave();
+            SpawnWave();
         }
 
         private void SpawnWave()

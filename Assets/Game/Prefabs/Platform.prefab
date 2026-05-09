@@ -325,8 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd895ea07afa34f0ca71731d425164ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.MovingPlatformInstaller
+  _transform: {fileID: 7845036276167105276}
   _moveSettings:
     <Speed>k__BackingField: 2
   _patrolSettings:
-    <Left>k__BackingField: {fileID: 5434138037557620653}
-    <Right>k__BackingField: {fileID: 7441270365842623162}
+    <FirstPoint>k__BackingField: {fileID: 5434138037557620653}
+    <SecondPoint>k__BackingField: {fileID: 7441270365842623162}

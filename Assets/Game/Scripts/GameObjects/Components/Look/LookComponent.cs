@@ -6,6 +6,8 @@ namespace Game
     {
         private readonly TransformComponent _transformComponent;
 
+        public float CurrentDirection => _transformComponent.Transform.localScale.x > 0 ? 1 : -1;
+        
         public LookComponent(TransformComponent transformComponent)
         {
             _transformComponent = transformComponent;

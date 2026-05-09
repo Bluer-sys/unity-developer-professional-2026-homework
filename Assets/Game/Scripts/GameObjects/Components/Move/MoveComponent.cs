@@ -21,6 +21,8 @@ namespace Game
         private readonly TransformComponent _transformComponent;
         private ICondition _condition;
 
+        public Vector2 MoveDirection { get; private set; }
+
         public MoveComponent(Settings settings, TransformComponent transformComponent)
         {
             _settings = settings;
@@ -32,15 +34,23 @@ namespace Game
             _condition = condition;
         }
 
-        public void Move(Vector2 direction)
+        public void Move(Vector2 direction, float deltaTime)
         {
-            if (direction == Vector2.zero)
+            if (direction == Vector2.zero || _condition != null && !_condition.Evaluate())
+            {
+                MoveDirection = Vector2.zero;
                 return;
+            }
 
-            if (_condition != null && !_condition.Evaluate())
-                return;
+            _transformComponent.Transform.Translate((Vector3) direction * (_settings.Speed * deltaTime));
 
-            _transformComponent.Transform.Translate((Vector3) direction * (_settings.Speed * Time.fixedDeltaTime));
+            MoveDirection = direction;
+        }
+        
+        public void Move(Transform point, float deltaTime)
+        {
+            var direction = (point.position - _transformComponent.Transform.position).normalized;
+            Move(direction, deltaTime);
         }
     }
 }

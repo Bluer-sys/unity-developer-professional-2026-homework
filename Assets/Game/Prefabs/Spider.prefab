@@ -168,7 +168,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.375, z: 0}
-  m_LocalScale: {x: 1, y: 0.75, z: 1}
+  m_LocalScale: {x: -1, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1907655734650557041}
@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.SpiderInstaller
   _rigidbody: {fileID: 1948404990201771869}
+  _transform: {fileID: 5742867724401082830}
   _healthSettings:
     <MaxHealth>k__BackingField: 1
   _moveSettings:
@@ -285,8 +286,8 @@ MonoBehaviour:
   _gravitySettings:
     <Gravity>k__BackingField: -7
   _patrolSettings:
-    <Left>k__BackingField: {fileID: 330482538772977516}
-    <Right>k__BackingField: {fileID: 5737562046146701280}
+    <FirstPoint>k__BackingField: {fileID: 330482538772977516}
+    <SecondPoint>k__BackingField: {fileID: 5737562046146701280}
   _damageSettings:
     <Damage>k__BackingField: 1
   _spiderSettings:
@@ -354,7 +355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4511365287505092160, guid: f7bc0bf025fb34cb4ac2bd9999e51ce6, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7458919548120637365, guid: f7bc0bf025fb34cb4ac2bd9999e51ce6, type: 3}
       propertyPath: m_Name

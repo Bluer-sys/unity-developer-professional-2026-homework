@@ -6,6 +6,7 @@ namespace Game
     public sealed class SpiderInstaller : MonoInstaller
     {
         [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private Transform _transform;
 
         [SerializeField] private HealthComponent.Settings _healthSettings;
         [SerializeField] private MoveComponent.Settings _moveSettings;
@@ -17,7 +18,9 @@ namespace Game
 
         public override void InstallBindings()
         {
-            Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
+            Container.Bind<GameEntity>().FromComponentInHierarchy().AsSingle();
+            
+            Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 
@@ -31,8 +34,13 @@ namespace Game
             Container.BindInterfacesAndSelfTo<KnockbackComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
-
+            
             Container.BindInterfacesAndSelfTo<Spider>().AsSingle().WithArguments(_spiderSettings).NonLazy();
+
+            Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
+
+            Container.BindInterfacesTo<MoveViewComponent>().AsSingle();
+            Container.BindInterfacesTo<GroundedViewComponent>().AsSingle();
         }
     }
 }

@@ -30,6 +30,12 @@ namespace Game
             Container.BindInterfacesAndSelfTo<DisableRigidbodyOnDeathComponent>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<Character>().AsSingle().WithArguments(_characterSettings).NonLazy();
+
+            Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<AudioSource>().FromComponentInHierarchy().AsSingle();
+            
+            Container.BindInterfacesTo<MoveViewComponent>().AsSingle();
+            Container.BindInterfacesTo<GroundedViewComponent>().AsSingle();
         }
     }
 }

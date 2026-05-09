@@ -4,64 +4,66 @@ using Zenject;
 
 namespace Game
 {
-    public sealed class PatrolComponent : IFixedTickable
+    public sealed class PatrolComponent : IInitializable, IFixedTickable
     {
         [Serializable]
         public class Settings
         {
             [field: SerializeField]
-            public Transform Left { get; private set; }
+            public Transform FirstPoint { get; private set; }
 
             [field: SerializeField]
-            public Transform Right { get; private set; }
+            public Transform SecondPoint { get; private set; }
         }
 
-        public event Action<int> OnDirectionChanged;
-
         private readonly Settings _settings;
-        private readonly TransformComponent _transformComponent;
         private readonly MoveComponent _moveComponent;
+        private readonly TransformComponent _transformComponent;
 
-        private int _direction = 1;
         private bool _enabled = true;
-
-        public int Direction => _direction;
+        private Transform _targetPoint;
 
         public PatrolComponent(
             Settings settings,
-            TransformComponent transformComponent,
-            MoveComponent moveComponent)
+            MoveComponent moveComponent,
+            TransformComponent transformComponent)
         {
             _settings = settings;
-            _transformComponent = transformComponent;
             _moveComponent = moveComponent;
+            _transformComponent = transformComponent;
         }
 
         public void Enable() => _enabled = true;
         public void Disable() => _enabled = false;
+
+        void IInitializable.Initialize()
+        {
+            _targetPoint = _settings.SecondPoint;
+        }
 
         void IFixedTickable.FixedTick()
         {
             if (!_enabled)
                 return;
 
-            float x = _transformComponent.Transform.position.x;
+            _moveComponent.Move(_targetPoint, Time.fixedDeltaTime);
 
-            if (_direction > 0 && x >= _settings.Right.position.x)
-                this.SetDirection(-1);
-            else if (_direction < 0 && x <= _settings.Left.position.x)
-                this.SetDirection(1);
-
-            _moveComponent.Move(new Vector2(_direction, 0));
+            float sqrMagnitude = (_transformComponent.Transform.position - _targetPoint.position).sqrMagnitude;
+            
+            if(sqrMagnitude < 0.1f)
+                SwitchPoint();
         }
 
-        private void SetDirection(int direction)
+        private void SwitchPoint()
         {
-            if (_direction == direction)
-                return;
+            Transform first = _settings.FirstPoint;
+            Transform second = _settings.SecondPoint;
 
-            _direction = direction;
-            OnDirectionChanged?.Invoke(_direction);
+            if (_targetPoint == first)
+                _targetPoint = second;
+
+            else if (_targetPoint == second)
+                _targetPoint = first;
         }
     }
 }

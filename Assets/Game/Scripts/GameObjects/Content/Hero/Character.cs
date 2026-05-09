@@ -44,8 +44,8 @@ namespace Game
             public Ability PushUp { get; private set; }
         }
 
-        public event Action OnTossed;
-        public event Action OnPushedUp;
+        public event Action OnPushed;
+        public event Action OnBlownUp;
 
         private readonly Settings _settings;
         private readonly TransformComponent _transformComponent;
@@ -94,31 +94,23 @@ namespace Game
         {
         }
 
-        public void Move(Vector2 direction)
-        {
-            _moveComponent.Move(direction);
-
-            if (direction.x != 0 && _healthComponent.IsAlive)
-                _lookComponent.Look(direction.x);
-        }
-
-        public void Jump()
+        private void Jump()
         {
             _jumpComponent.Jump();
         }
 
-        public void Toss()
+        private void Toss()
         {
             if (!_healthComponent.IsAlive)
                 return;
 
-            if (this.IsTossing || this.IsPushingUp)
+            if (IsTossing || IsPushingUp)
                 return;
 
             _tossDelayLeft = _settings.Toss.Delay;
         }
 
-        public void PushUp()
+        private void PushUp()
         {
             if (!_healthComponent.IsAlive)
                 return;
@@ -126,7 +118,7 @@ namespace Game
             if (!_groundedComponent.IsGrounded)
                 return;
 
-            if (this.IsTossing || this.IsPushingUp)
+            if (IsTossing || IsPushingUp)
                 return;
 
             _pushUpDelayLeft = _settings.PushUp.Delay;
@@ -146,61 +138,68 @@ namespace Game
 
         void IFixedTickable.FixedTick()
         {
-            TickMove();
-            TickToss();
-            TickPushUp();
+            float deltaTime = Time.fixedDeltaTime;
+            
+            MoveTick(deltaTime);
+            TossTick(deltaTime);
+            PushUpTick(deltaTime);
         }
 
-        private void TickMove()
+        private void MoveTick(float deltaTime)
         {
             float horizontal = Input.GetAxis("Horizontal");
-            Move(new Vector2(horizontal, 0f));
+            Vector2 direction = new Vector2(horizontal, 0f);
+            
+            _moveComponent.Move(direction, deltaTime);
+
+            if (direction.x != 0 && _healthComponent.IsAlive)
+                _lookComponent.Look(direction.x);
         }
 
-        private void TickToss()
+        private void TossTick(float deltaTime)
         {
             if (_tossCooldownLeft > 0)
-                _tossCooldownLeft -= Time.fixedDeltaTime;
+                _tossCooldownLeft -= deltaTime;
 
             if (_tossDelayLeft < 0)
                 return;
 
-            _tossDelayLeft -= Time.fixedDeltaTime;
+            _tossDelayLeft -= deltaTime;
             if (_tossDelayLeft > 0)
                 return;
 
             _tossDelayLeft = -1f;
-            this.ApplyKnockback(_settings.Toss);
+            ApplyKnockback(_settings.Toss);
             _tossCooldownLeft = _settings.Toss.Cooldown;
-            OnTossed?.Invoke();
+            OnPushed?.Invoke();
         }
 
-        private void TickPushUp()
+        private void PushUpTick(float deltaTime)
         {
             if (_pushUpCooldownLeft > 0)
-                _pushUpCooldownLeft -= Time.fixedDeltaTime;
+                _pushUpCooldownLeft -= deltaTime;
 
             if (_pushUpDelayLeft < 0)
                 return;
 
-            _pushUpDelayLeft -= Time.fixedDeltaTime;
+            _pushUpDelayLeft -= deltaTime;
             if (_pushUpDelayLeft > 0)
                 return;
 
             _pushUpDelayLeft = -1f;
-            this.ApplyKnockback(_settings.PushUp);
+            ApplyKnockback(_settings.PushUp);
             _pushUpCooldownLeft = _settings.PushUp.Cooldown;
-            OnPushedUp?.Invoke();
+            OnBlownUp?.Invoke();
         }
 
         private void ApplyKnockback(Settings.Ability ability)
         {
             Transform self = _transformComponent.Transform;
             float dirX = self.right.x >= 0 ? 1f : -1f;
-            Vector2 origin = (Vector2) self.position
-                + new Vector2(ability.OverlapOffset.x * dirX, ability.OverlapOffset.y);
+            Vector2 origin = (Vector2) self.position + new Vector2(ability.OverlapOffset.x * dirX, ability.OverlapOffset.y);
 
             Collider2D[] hits = Physics2D.OverlapBoxAll(origin, ability.OverlapSize, 0f, ability.Mask);
+            
             foreach (Collider2D hit in hits)
                 _knockbackComponent.TryKnockback(hit, ability.Force);
         }

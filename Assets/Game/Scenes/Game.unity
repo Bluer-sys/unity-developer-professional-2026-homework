@@ -1860,6 +1860,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5317583574092245336, guid: b12d48f7b934943239d57d70cddd96e7, type: 3}
+      propertyPath: _trampolineSettings.<Force>k__BackingField.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317583574092245336, guid: b12d48f7b934943239d57d70cddd96e7, type: 3}
+      propertyPath: _trampolineSettings.<Force>k__BackingField.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7321891268234170333, guid: b12d48f7b934943239d57d70cddd96e7, type: 3}
       propertyPath: _force.x
       value: 20

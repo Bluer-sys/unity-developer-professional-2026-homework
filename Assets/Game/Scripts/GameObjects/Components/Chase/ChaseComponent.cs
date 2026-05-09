@@ -30,7 +30,7 @@ namespace Game
                 return;
 
             float dirX = (_target.position.x > _transformComponent.Transform.position.x) ? 1f : -1f;
-            _moveComponent.Move(new Vector2(dirX, 0));
+            _moveComponent.Move(new Vector2(dirX, 0), Time.fixedDeltaTime);
         }
     }
 }

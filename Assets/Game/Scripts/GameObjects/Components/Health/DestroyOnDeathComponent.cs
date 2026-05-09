@@ -6,14 +6,14 @@ namespace Game
     public sealed class DestroyOnDeathComponent : IInitializable, IDisposable
     {
         private readonly HealthComponent _healthComponent;
-        private readonly TransformComponent _transformComponent;
+        private readonly GameEntity _gameEntity;
 
         public DestroyOnDeathComponent(
             HealthComponent healthComponent,
-            TransformComponent transformComponent)
+            GameEntity gameEntity)
         {
             _healthComponent = healthComponent;
-            _transformComponent = transformComponent;
+            _gameEntity = gameEntity;
         }
 
         void IInitializable.Initialize() =>
@@ -23,6 +23,6 @@ namespace Game
             _healthComponent.OnDied -= OnDied;
 
         private void OnDied() =>
-            UnityEngine.Object.Destroy(_transformComponent.Transform.gameObject);
+            UnityEngine.Object.Destroy(_gameEntity.gameObject);
     }
 }

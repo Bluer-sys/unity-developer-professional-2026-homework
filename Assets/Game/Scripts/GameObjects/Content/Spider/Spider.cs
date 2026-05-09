@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Game
 {
-    public sealed class Spider : IInitializable, IDisposable
+    public sealed class Spider : IInitializable, IDisposable, IFixedTickable
     {
         [Serializable]
         public class Settings
@@ -22,6 +22,7 @@ namespace Game
         private readonly KnockbackComponent _knockbackComponent;
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
+        private readonly MoveComponent _moveComponent;
 
         private float _knockbackCooldownEnd;
 
@@ -31,7 +32,8 @@ namespace Game
             PatrolComponent patrolComponent,
             KnockbackComponent knockbackComponent,
             CollisionComponent collisionComponent,
-            HealthComponent healthComponent)
+            HealthComponent healthComponent,
+            MoveComponent moveComponent)
         {
             _settings = settings;
             _lookComponent = lookComponent;
@@ -39,26 +41,25 @@ namespace Game
             _knockbackComponent = knockbackComponent;
             _collisionComponent = collisionComponent;
             _healthComponent = healthComponent;
+            _moveComponent = moveComponent;
         }
 
         void IInitializable.Initialize()
         {
-            _patrolComponent.OnDirectionChanged += OnDirectionChanged;
             _collisionComponent.OnEntered += OnCollisionEntered;
             _healthComponent.OnDied += OnDied;
-
-            _lookComponent.Look(_patrolComponent.Direction);
         }
 
         void IDisposable.Dispose()
         {
-            _patrolComponent.OnDirectionChanged -= OnDirectionChanged;
             _collisionComponent.OnEntered -= OnCollisionEntered;
             _healthComponent.OnDied -= OnDied;
         }
 
-        private void OnDirectionChanged(int direction) =>
-            _lookComponent.Look(direction);
+        void IFixedTickable.FixedTick()
+        {
+            _lookComponent.Look(_moveComponent.MoveDirection.x);
+        }
 
         private void OnCollisionEntered(Collision2D collision)
         {
