@@ -20,14 +20,15 @@ namespace Game
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 
+            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);
             Container.BindInterfacesAndSelfTo<MoveComponent>().AsSingle().WithArguments(_moveSettings);
             Container.BindInterfacesAndSelfTo<LookComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<GroundedComponent>().AsSingle().WithArguments(_groundedSettings);
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
             Container.BindInterfacesAndSelfTo<JumpComponent>().AsSingle().WithArguments(_jumpSettings);
-            Container.BindInterfacesAndSelfTo<KnockbackComponent>().AsSingle();
-            Container.BindInterfacesAndSelfTo<DisableRigidbodyOnDeathComponent>().AsSingle();
+            Container.BindInterfacesTo<DisableRigidbodyOnDeathComponent>().AsSingle();
+            Container.BindInterfacesTo<StandingPlatformComponent>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<Character>().AsSingle().WithArguments(_characterSettings).NonLazy();
 

@@ -31,7 +31,7 @@ namespace Game
         private readonly GroundedComponent _groundedComponent;
         private readonly JumpComponent _jumpComponent;
         private readonly TargetDetectorComponent _detectorComponent;
-        private readonly KnockbackComponent _knockbackComponent;
+        private readonly PushComponent _pushComponent;
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
 
@@ -46,7 +46,7 @@ namespace Game
             GroundedComponent groundedComponent,
             JumpComponent jumpComponent,
             TargetDetectorComponent detectorComponent,
-            KnockbackComponent knockbackComponent,
+            PushComponent pushComponent,
             CollisionComponent collisionComponent,
             HealthComponent healthComponent)
         {
@@ -56,7 +56,7 @@ namespace Game
             _groundedComponent = groundedComponent;
             _jumpComponent = jumpComponent;
             _detectorComponent = detectorComponent;
-            _knockbackComponent = knockbackComponent;
+            _pushComponent = pushComponent;
             _collisionComponent = collisionComponent;
             _healthComponent = healthComponent;
         }
@@ -123,7 +123,7 @@ namespace Game
             Collider2D[] hits = Physics2D.OverlapCircleAll(center, _settings.WaveRadius, _settings.WaveMask);
 
             foreach (Collider2D hit in hits)
-                _knockbackComponent.TryKnockback(hit, _settings.KnockbackForce);
+                _pushComponent.TryPush(hit, _settings.KnockbackForce);
         }
 
         private void OnDetected(Transform target) =>
@@ -134,7 +134,7 @@ namespace Game
             if (Time.time < _knockbackCooldownEnd)
                 return;
 
-            if (_knockbackComponent.TryKnockback(collision.collider, _settings.KnockbackForce))
+            if (_pushComponent.TryPush(collision.collider, _settings.KnockbackForce))
                 _knockbackCooldownEnd = Time.time + _settings.KnockbackCooldown;
         }
 

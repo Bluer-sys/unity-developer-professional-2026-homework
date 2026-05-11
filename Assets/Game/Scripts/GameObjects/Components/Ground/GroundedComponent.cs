@@ -23,11 +23,8 @@ namespace Game
 
         private readonly Settings _settings;
 
-        private Transform _ground;
-        private bool _isGrounded;
-
-        public Transform Ground => _ground;
-        public bool IsGrounded => _isGrounded;
+        public Transform Ground { get; private set; }
+        public bool IsGrounded { get; private set; }
 
         public GroundedComponent(Settings settings)
         {
@@ -42,18 +39,15 @@ namespace Game
                 _settings.Distance,
                 _settings.LayerMask);
 
-            bool grounded = hit;
+            bool isGrounded = hit.collider != null;
 
-            if (grounded != _isGrounded)
+            if (IsGrounded != isGrounded)
             {
-                _isGrounded = grounded;
-                _ground = _isGrounded ? hit.transform : null;
-                OnGrounded?.Invoke(_isGrounded);
+                IsGrounded = isGrounded;
+                OnGrounded?.Invoke(IsGrounded);
             }
-            else
-            {
-                _ground = _isGrounded ? hit.transform : null;
-            }
+            
+            Ground = IsGrounded ? hit.transform : null;
         }
     }
 }

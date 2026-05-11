@@ -1,4 +1,5 @@
 using System;
+using Game.Scripts;
 using UnityEngine;
 using Zenject;
 
@@ -27,16 +28,19 @@ namespace Game
         public event Action OnJumped;
 
         private readonly Settings _settings;
-        private readonly RigidbodyComponent _rigidbodyComponent;
-
+        private readonly PushComponent _pushComponent;
+        
+        private readonly UnityTimer _delayTimer;
+        private readonly UnityTimer _cooldownTimer;
+        
         private ICondition _condition;
         private float _delayLeft = -1f;
         private float _cooldownLeft;
 
-        public JumpComponent(Settings settings, RigidbodyComponent rigidbodyComponent)
+        public JumpComponent(Settings settings, PushComponent pushComponent)
         {
             _settings = settings;
-            _rigidbodyComponent = rigidbodyComponent;
+            _pushComponent = pushComponent;
         }
 
         public void SetCondition(ICondition condition)
@@ -71,7 +75,7 @@ namespace Game
                 return;
 
             _delayLeft = -1f;
-            _rigidbodyComponent.Rigidbody.AddForce(Vector2.up * _settings.Force, ForceMode2D.Impulse);
+            _pushComponent.TryPushSelf(Vector2.up * _settings.Force);
             _cooldownLeft = _settings.Cooldown;
             OnJumped?.Invoke();
         }

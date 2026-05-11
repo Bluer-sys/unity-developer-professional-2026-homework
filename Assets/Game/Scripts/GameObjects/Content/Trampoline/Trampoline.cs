@@ -15,16 +15,16 @@ namespace Game
 
         private readonly Settings _settings;
         private readonly TriggerComponent _triggerComponent;
-        private readonly KnockbackComponent _knockbackComponent;
+        private readonly PushComponent _pushComponent;
 
         public Trampoline(
             Settings settings,
             TriggerComponent triggerComponent,
-            KnockbackComponent knockbackComponent)
+            PushComponent pushComponent)
         {
             _settings = settings;
             _triggerComponent = triggerComponent;
-            _knockbackComponent = knockbackComponent;
+            _pushComponent = pushComponent;
         }
 
         void IInitializable.Initialize() =>
@@ -40,7 +40,7 @@ namespace Game
                 return;
 
             rb.linearVelocityY = 0;
-            _knockbackComponent.TryKnockback(other, _settings.Force);
+            _pushComponent.TryPush(other, _settings.Force);
         }
     }
 }

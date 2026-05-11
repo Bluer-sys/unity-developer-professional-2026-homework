@@ -20,7 +20,7 @@ namespace Game
         private readonly TargetDetectorComponent _detectorComponent;
         private readonly ChaseComponent _chaseComponent;
         private readonly LookComponent _lookComponent;
-        private readonly KnockbackComponent _knockbackComponent;
+        private readonly PushComponent _pushComponent;
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
 
@@ -31,7 +31,7 @@ namespace Game
             TargetDetectorComponent detectorComponent,
             ChaseComponent chaseComponent,
             LookComponent lookComponent,
-            KnockbackComponent knockbackComponent,
+            PushComponent pushComponent,
             CollisionComponent collisionComponent,
             HealthComponent healthComponent)
         {
@@ -39,7 +39,7 @@ namespace Game
             _detectorComponent = detectorComponent;
             _chaseComponent = chaseComponent;
             _lookComponent = lookComponent;
-            _knockbackComponent = knockbackComponent;
+            _pushComponent = pushComponent;
             _collisionComponent = collisionComponent;
             _healthComponent = healthComponent;
         }
@@ -87,7 +87,7 @@ namespace Game
             if (Time.time < _knockbackCooldownEnd)
                 return;
 
-            if (_knockbackComponent.TryKnockback(collision.collider, _settings.KnockbackForce))
+            if (_pushComponent.TryPush(collision.collider, _settings.KnockbackForce))
                 _knockbackCooldownEnd = Time.time + _settings.KnockbackCooldown;
         }
 

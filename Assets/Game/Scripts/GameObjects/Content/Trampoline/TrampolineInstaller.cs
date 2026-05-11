@@ -12,7 +12,7 @@ namespace Game
         {
             Container.Bind<TriggerComponent>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<TransformComponent>().AsSingle().WithArguments(transform);
-            Container.BindInterfacesAndSelfTo<KnockbackComponent>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<Trampoline>().AsSingle().WithArguments(_trampolineSettings).NonLazy();
         }
     }

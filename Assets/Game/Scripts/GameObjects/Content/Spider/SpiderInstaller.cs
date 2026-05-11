@@ -31,7 +31,7 @@ namespace Game
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
             Container.BindInterfacesAndSelfTo<PatrolComponent>().AsSingle().WithArguments(_patrolSettings);
             Container.BindInterfacesAndSelfTo<PushableComponent>().AsSingle();
-            Container.BindInterfacesAndSelfTo<KnockbackComponent>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
             

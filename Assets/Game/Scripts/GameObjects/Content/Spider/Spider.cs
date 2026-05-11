@@ -19,7 +19,7 @@ namespace Game
         private readonly Settings _settings;
         private readonly LookComponent _lookComponent;
         private readonly PatrolComponent _patrolComponent;
-        private readonly KnockbackComponent _knockbackComponent;
+        private readonly PushComponent _pushComponent;
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
         private readonly MoveComponent _moveComponent;
@@ -30,7 +30,7 @@ namespace Game
             Settings settings,
             LookComponent lookComponent,
             PatrolComponent patrolComponent,
-            KnockbackComponent knockbackComponent,
+            PushComponent pushComponent,
             CollisionComponent collisionComponent,
             HealthComponent healthComponent,
             MoveComponent moveComponent)
@@ -38,7 +38,7 @@ namespace Game
             _settings = settings;
             _lookComponent = lookComponent;
             _patrolComponent = patrolComponent;
-            _knockbackComponent = knockbackComponent;
+            _pushComponent = pushComponent;
             _collisionComponent = collisionComponent;
             _healthComponent = healthComponent;
             _moveComponent = moveComponent;
@@ -66,7 +66,7 @@ namespace Game
             if (Time.time < _knockbackCooldownEnd)
                 return;
 
-            if (_knockbackComponent.TryKnockback(collision.collider, _settings.KnockbackForce))
+            if (_pushComponent.TryPush(collision.collider, _settings.KnockbackForce))
                 _knockbackCooldownEnd = Time.time + _settings.KnockbackCooldown;
         }
 

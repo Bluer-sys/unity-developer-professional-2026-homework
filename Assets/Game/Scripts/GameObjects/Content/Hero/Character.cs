@@ -54,7 +54,7 @@ namespace Game
         private readonly LookComponent _lookComponent;
         private readonly GroundedComponent _groundedComponent;
         private readonly JumpComponent _jumpComponent;
-        private readonly KnockbackComponent _knockbackComponent;
+        private readonly PushComponent _pushComponent;
 
         private float _tossDelayLeft = -1f;
         private float _tossCooldownLeft;
@@ -72,7 +72,7 @@ namespace Game
             LookComponent lookComponent,
             GroundedComponent groundedComponent,
             JumpComponent jumpComponent,
-            KnockbackComponent knockbackComponent)
+            PushComponent pushComponent)
         {
             _settings = settings;
             _transformComponent = transformComponent;
@@ -81,7 +81,7 @@ namespace Game
             _lookComponent = lookComponent;
             _groundedComponent = groundedComponent;
             _jumpComponent = jumpComponent;
-            _knockbackComponent = knockbackComponent;
+            _pushComponent = pushComponent;
         }
 
         void IInitializable.Initialize()
@@ -201,7 +201,7 @@ namespace Game
             Collider2D[] hits = Physics2D.OverlapBoxAll(origin, ability.OverlapSize, 0f, ability.Mask);
             
             foreach (Collider2D hit in hits)
-                _knockbackComponent.TryKnockback(hit, ability.Force);
+                _pushComponent.TryPush(hit, ability.Force);
         }
 
         bool MoveComponent.ICondition.Evaluate() =>
