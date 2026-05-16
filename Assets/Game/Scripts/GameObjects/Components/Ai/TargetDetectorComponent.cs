@@ -22,10 +22,9 @@ namespace Game
         private readonly Settings _settings;
         private readonly TransformComponent _transformComponent;
 
-        private Transform _target;
+        public Transform Target { get; private set; }
 
-        public Transform Target => _target;
-        public bool HasTarget => _target != null;
+        public bool HasTarget => Target != null;
 
         public TargetDetectorComponent(Settings settings, TransformComponent transformComponent)
         {
@@ -39,19 +38,19 @@ namespace Game
             Collider2D hit = Physics2D.OverlapCircle(origin, _settings.Radius, _settings.Mask);
             Transform newTarget = hit ? hit.transform : null;
 
-            if (newTarget != null && _target == null)
+            if (newTarget != null && Target == null)
             {
-                _target = newTarget;
-                OnDetected?.Invoke(_target);
+                Target = newTarget;
+                OnDetected?.Invoke(Target);
             }
-            else if (newTarget == null && _target != null)
+            else if (newTarget == null && Target != null)
             {
-                _target = null;
+                Target = null;
                 OnLost?.Invoke();
             }
             else
             {
-                _target = newTarget;
+                Target = newTarget;
             }
         }
     }

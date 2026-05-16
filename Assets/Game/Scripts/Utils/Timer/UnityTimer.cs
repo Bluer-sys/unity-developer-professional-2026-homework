@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Scripts
 {
-    public sealed class UnityTimer
+    public sealed class UnityTimer : ITimer
     {
         private readonly float _duration;
         
@@ -15,20 +15,12 @@ namespace Game.Scripts
 
         public bool IsActive { get; private set; }
 
-        public bool IsFinished => IsActive && Time.time >= _endTime;
+        public bool IsFinished => Time.time >= _endTime;
 
         public void Restart()
         {
             _endTime = Time.time + _duration;
             IsActive = true;
-        }
-
-        public void Run()
-        {
-            if (IsActive)
-                return;
-
-            Restart();
         }
 
         public void Stop()

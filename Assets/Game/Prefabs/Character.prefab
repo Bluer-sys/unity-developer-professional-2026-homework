@@ -191,25 +191,27 @@ MonoBehaviour:
     <Force>k__BackingField: 12
     <Cooldown>k__BackingField: 0.25
     <Delay>k__BackingField: 0.05
+  _pushSettings:
+    <Cooldown>k__BackingField: 0
   _characterSettings:
-    <Toss>k__BackingField:
-      <Force>k__BackingField: {x: 10, y: 3}
-      <Cooldown>k__BackingField: 1
-      <Delay>k__BackingField: 1
-      <OverlapSize>k__BackingField: {x: 5, y: 5}
-      <OverlapOffset>k__BackingField: {x: 0, y: 0}
+    <Push>k__BackingField:
+      <Origin>k__BackingField: {fileID: 924219655302976567}
+      <Force>k__BackingField: {x: 10, y: 2}
+      <Cooldown>k__BackingField: 0.35
+      <Delay>k__BackingField: 0.15
+      <OverlapSize>k__BackingField: {x: 1, y: 1}
       <Mask>k__BackingField:
         serializedVersion: 2
-        m_Bits: 2147484159
-    <PushUp>k__BackingField:
+        m_Bits: 503
+    <BlowUp>k__BackingField:
+      <Origin>k__BackingField: {fileID: 924219655302976567}
       <Force>k__BackingField: {x: 1, y: 10}
-      <Cooldown>k__BackingField: 1
-      <Delay>k__BackingField: 1
-      <OverlapSize>k__BackingField: {x: 5, y: 5}
-      <OverlapOffset>k__BackingField: {x: 0, y: 0}
+      <Cooldown>k__BackingField: 0.35
+      <Delay>k__BackingField: 0.15
+      <OverlapSize>k__BackingField: {x: 1, y: 1}
       <Mask>k__BackingField:
         serializedVersion: 2
-        m_Bits: 2147484159
+        m_Bits: 503
 --- !u!114 &2972651474336090962
 MonoBehaviour:
   m_ObjectHideFlags: 0

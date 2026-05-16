@@ -22,8 +22,6 @@ namespace Game
         private Animator _animator;
         private AudioSource _audioSource;
 
-        private float _previousHealth = float.MaxValue;
-
         [Inject]
         private void Construct(
             JumpComponent jumpComponent,
@@ -44,8 +42,6 @@ namespace Game
 
         private void OnEnable()
         {
-            _previousHealth = _healthComponent.CurrentHealth;
-
             _jumpComponent.OnJumped += OnJumped;
             _character.OnPushed += OnPushed;
             _character.OnBlownUp += OnBlownUp;

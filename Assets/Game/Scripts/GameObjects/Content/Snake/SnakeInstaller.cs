@@ -13,6 +13,7 @@ namespace Game
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
         [SerializeField] private TargetDetectorComponent.Settings _detectorSettings;
         [SerializeField] private DamageOnContactComponent.Settings _damageSettings;
+        [SerializeField] private PushComponent.Settings _pushSettings;
         [SerializeField] private Snake.Settings _snakeSettings;
 
         public override void InstallBindings()
@@ -29,8 +30,7 @@ namespace Game
             Container.BindInterfacesAndSelfTo<GroundedComponent>().AsSingle().WithArguments(_groundedSettings);
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
             Container.BindInterfacesAndSelfTo<TargetDetectorComponent>().AsSingle().WithArguments(_detectorSettings);
-            Container.BindInterfacesAndSelfTo<ChaseComponent>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
 

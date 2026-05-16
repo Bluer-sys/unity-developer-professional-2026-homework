@@ -4,7 +4,11 @@ using Zenject;
 
 namespace Game
 {
-    public sealed class Monkey : IInitializable, IFixedTickable, IDisposable
+    public sealed class Monkey :
+        IInitializable,
+        IFixedTickable,
+        IDisposable, 
+        LookComponent.ICondition
     {
         [Serializable]
         public class Settings
@@ -69,6 +73,8 @@ namespace Game
             _collisionComponent.OnEntered += OnCollisionEntered;
             _healthComponent.OnDied += OnDied;
 
+            _lookComponent.SetCondition(this);
+            
             _jumpTimer = _settings.JumpInterval;
         }
 
@@ -140,5 +146,8 @@ namespace Game
 
         private void OnDied() =>
             _waitingForLanding = false;
+
+        
+        bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
     }
 }

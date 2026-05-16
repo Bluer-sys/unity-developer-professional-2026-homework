@@ -12,6 +12,7 @@ namespace Game
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
         [SerializeField] private JumpComponent.Settings _jumpSettings;
+        [SerializeField] private PushComponent.Settings _pushSettings;
         [SerializeField] private Character.Settings _characterSettings;
 
         public override void InstallBindings()
@@ -20,7 +21,7 @@ namespace Game
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);
             Container.BindInterfacesAndSelfTo<MoveComponent>().AsSingle().WithArguments(_moveSettings);
             Container.BindInterfacesAndSelfTo<LookComponent>().AsSingle();

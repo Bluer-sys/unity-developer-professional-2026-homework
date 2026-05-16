@@ -1,4 +1,5 @@
 using System;
+using Game.Scripts;
 using UnityEngine;
 using Zenject;
 
@@ -8,16 +9,19 @@ namespace Game
         IInitializable,
         ITickable,
         IFixedTickable,
-        IDisposable,
         MoveComponent.ICondition,
-        JumpComponent.ICondition
+        JumpComponent.ICondition,
+        LookComponent.ICondition
     {
         [Serializable]
         public class Settings
         {
             [Serializable]
-            public class Ability
+            public class Ability : ISerializationCallbackReceiver
             {
+                [field: SerializeField]
+                public Transform Origin { get; private set; }
+                
                 [field: SerializeField]
                 public Vector2 Force { get; private set; }
 
@@ -31,24 +35,33 @@ namespace Game
                 public Vector2 OverlapSize { get; private set; }
 
                 [field: SerializeField]
-                public Vector2 OverlapOffset { get; private set; }
-
-                [field: SerializeField]
                 public LayerMask Mask { get; private set; }
+                
+                public ITimer CooldownTimer { get; private set; }
+                
+                public ITimer DelayTimer { get; private set; }
+                
+                public bool InProcess => !CooldownTimer.IsFinished || !DelayTimer.IsFinished;
+
+                public void OnBeforeSerialize() {}
+                public void OnAfterDeserialize()
+                {
+                    CooldownTimer = new UnityTimer(Cooldown);
+                    DelayTimer = new UnityTimer(Delay);
+                }
             }
 
             [field: SerializeField]
-            public Ability Toss { get; private set; }
+            public Ability Push { get; private set; }
 
             [field: SerializeField]
-            public Ability PushUp { get; private set; }
+            public Ability BlowUp { get; private set; }
         }
 
         public event Action OnPushed;
         public event Action OnBlownUp;
 
         private readonly Settings _settings;
-        private readonly TransformComponent _transformComponent;
         private readonly HealthComponent _healthComponent;
         private readonly MoveComponent _moveComponent;
         private readonly LookComponent _lookComponent;
@@ -56,17 +69,8 @@ namespace Game
         private readonly JumpComponent _jumpComponent;
         private readonly PushComponent _pushComponent;
 
-        private float _tossDelayLeft = -1f;
-        private float _tossCooldownLeft;
-        private float _pushUpDelayLeft = -1f;
-        private float _pushUpCooldownLeft;
-
-        public bool IsTossing => _tossDelayLeft >= 0 || _tossCooldownLeft > 0;
-        public bool IsPushingUp => _pushUpDelayLeft >= 0 || _pushUpCooldownLeft > 0;
-
         public Character(
             Settings settings,
-            TransformComponent transformComponent,
             HealthComponent healthComponent,
             MoveComponent moveComponent,
             LookComponent lookComponent,
@@ -75,7 +79,6 @@ namespace Game
             PushComponent pushComponent)
         {
             _settings = settings;
-            _transformComponent = transformComponent;
             _healthComponent = healthComponent;
             _moveComponent = moveComponent;
             _lookComponent = lookComponent;
@@ -88,61 +91,30 @@ namespace Game
         {
             _moveComponent.SetCondition(this);
             _jumpComponent.SetCondition(this);
-        }
-
-        void IDisposable.Dispose()
-        {
-        }
-
-        private void Jump()
-        {
-            _jumpComponent.Jump();
-        }
-
-        private void Toss()
-        {
-            if (!_healthComponent.IsAlive)
-                return;
-
-            if (IsTossing || IsPushingUp)
-                return;
-
-            _tossDelayLeft = _settings.Toss.Delay;
-        }
-
-        private void PushUp()
-        {
-            if (!_healthComponent.IsAlive)
-                return;
-
-            if (!_groundedComponent.IsGrounded)
-                return;
-
-            if (IsTossing || IsPushingUp)
-                return;
-
-            _pushUpDelayLeft = _settings.PushUp.Delay;
+            _lookComponent.SetCondition(this);
         }
 
         void ITickable.Tick()
         {
             if (Input.GetKeyDown(KeyCode.Space))
-                Jump();
+                _jumpComponent.Jump();
 
-            if (Input.GetMouseButtonDown(0))
-                Toss();
+            if (!_settings.Push.InProcess && 
+                !_settings.BlowUp.InProcess)
+            {
+                if (Input.GetMouseButtonDown(0))
+                    _settings.Push.DelayTimer.Restart();
 
-            if (Input.GetMouseButtonDown(1))
-                PushUp();
+                if (Input.GetMouseButtonDown(1))
+                    _settings.BlowUp.DelayTimer.Restart();
+            }
         }
 
         void IFixedTickable.FixedTick()
         {
-            float deltaTime = Time.fixedDeltaTime;
-            
-            MoveTick(deltaTime);
-            TossTick(deltaTime);
-            PushUpTick(deltaTime);
+            MoveTick(Time.deltaTime);
+            PushTick();
+            BlowUpTick();
         }
 
         private void MoveTick(float deltaTime)
@@ -152,62 +124,54 @@ namespace Game
             
             _moveComponent.Move(direction, deltaTime);
 
-            if (direction.x != 0 && _healthComponent.IsAlive)
+            if (direction.x != 0)
                 _lookComponent.Look(direction.x);
         }
 
-        private void TossTick(float deltaTime)
+        private void PushTick()
         {
-            if (_tossCooldownLeft > 0)
-                _tossCooldownLeft -= deltaTime;
+            var delayTimer = _settings.Push.DelayTimer;
 
-            if (_tossDelayLeft < 0)
+            if(!delayTimer.IsActive)
                 return;
-
-            _tossDelayLeft -= deltaTime;
-            if (_tossDelayLeft > 0)
+            
+            if(!delayTimer.IsFinished)
                 return;
-
-            _tossDelayLeft = -1f;
-            ApplyKnockback(_settings.Toss);
-            _tossCooldownLeft = _settings.Toss.Cooldown;
+            
+            ApplyAbility(_settings.Push);
             OnPushed?.Invoke();
+            
+            delayTimer.Stop();
+            _settings.Push.CooldownTimer.Restart();
         }
 
-        private void PushUpTick(float deltaTime)
+        private void BlowUpTick()
         {
-            if (_pushUpCooldownLeft > 0)
-                _pushUpCooldownLeft -= deltaTime;
+            var delayTimer = _settings.BlowUp.DelayTimer;
 
-            if (_pushUpDelayLeft < 0)
+            if (!delayTimer.IsActive)
                 return;
 
-            _pushUpDelayLeft -= deltaTime;
-            if (_pushUpDelayLeft > 0)
+            if (!delayTimer.IsFinished)
                 return;
 
-            _pushUpDelayLeft = -1f;
-            ApplyKnockback(_settings.PushUp);
-            _pushUpCooldownLeft = _settings.PushUp.Cooldown;
+            ApplyAbility(_settings.BlowUp);
             OnBlownUp?.Invoke();
+
+            delayTimer.Stop();
+            _settings.BlowUp.CooldownTimer.Restart();
         }
 
-        private void ApplyKnockback(Settings.Ability ability)
+        private void ApplyAbility(Settings.Ability ability)
         {
-            Transform self = _transformComponent.Transform;
-            float dirX = self.right.x >= 0 ? 1f : -1f;
-            Vector2 origin = (Vector2) self.position + new Vector2(ability.OverlapOffset.x * dirX, ability.OverlapOffset.y);
-
-            Collider2D[] hits = Physics2D.OverlapBoxAll(origin, ability.OverlapSize, 0f, ability.Mask);
+            Collider2D[] hits = Physics2D.OverlapBoxAll(ability.Origin.position, ability.OverlapSize, 0f, ability.Mask);
             
             foreach (Collider2D hit in hits)
                 _pushComponent.TryPush(hit, ability.Force);
         }
 
-        bool MoveComponent.ICondition.Evaluate() =>
-            _healthComponent.IsAlive;
-
-        bool JumpComponent.ICondition.Evaluate() =>
-            _healthComponent.IsAlive && _groundedComponent.IsGrounded;
+        bool MoveComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
+        bool JumpComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _groundedComponent.IsGrounded;
+        bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
     }
 }
