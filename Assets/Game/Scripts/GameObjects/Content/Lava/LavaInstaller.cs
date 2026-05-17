@@ -6,6 +6,7 @@ namespace Game
     {
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
             Container.Bind<TriggerComponent>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<Lava>().AsSingle().NonLazy();
         }

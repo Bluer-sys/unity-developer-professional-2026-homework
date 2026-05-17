@@ -12,6 +12,8 @@ namespace Game
 
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
+            
             Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
 
             Container.BindInterfacesAndSelfTo<MoveComponent>().AsSingle().WithArguments(_moveSettings);

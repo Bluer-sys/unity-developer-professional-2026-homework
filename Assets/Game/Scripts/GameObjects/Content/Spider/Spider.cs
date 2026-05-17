@@ -63,14 +63,12 @@ namespace Game
 
         private void OnCollisionEntered(Collision2D collision)
         {
-            if (Time.time < _knockbackCooldownEnd)
-                return;
-
-            if (_pushComponent.TryPush(collision.collider, _settings.KnockbackForce))
-                _knockbackCooldownEnd = Time.time + _settings.KnockbackCooldown;
+            _pushComponent.TryPush(collision.collider, _settings.KnockbackForce);
         }
 
-        private void OnDied() =>
+        private void OnDied()
+        {
             _patrolComponent.Disable();
+        }
     }
 }

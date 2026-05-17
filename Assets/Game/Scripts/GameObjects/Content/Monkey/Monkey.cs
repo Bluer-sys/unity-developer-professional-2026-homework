@@ -8,7 +8,8 @@ namespace Game
         IInitializable,
         IFixedTickable,
         IDisposable, 
-        LookComponent.ICondition
+        LookComponent.ICondition, 
+        JumpComponent.ICondition
     {
         [Serializable]
         public class Settings
@@ -40,7 +41,6 @@ namespace Game
         private readonly HealthComponent _healthComponent;
 
         private float _jumpTimer;
-        private bool _waitingForLanding;
         private float _knockbackCooldownEnd;
 
         public Monkey(
@@ -74,6 +74,7 @@ namespace Game
             _healthComponent.OnDied += OnDied;
 
             _lookComponent.SetCondition(this);
+            _jumpComponent.SetCondition(this);
             
             _jumpTimer = _settings.JumpInterval;
         }
@@ -108,19 +109,10 @@ namespace Game
             }
         }
 
-        private void OnJumped() =>
-            _waitingForLanding = true;
-
         private void OnGroundedChanged(bool grounded)
         {
-            if (!grounded)
-                return;
-
-            if (!_waitingForLanding)
-                return;
-
-            _waitingForLanding = false;
-            SpawnWave();
+            if (grounded)
+                SpawnWave();
         }
 
         private void SpawnWave()
@@ -149,5 +141,7 @@ namespace Game
 
         
         bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
+
+        public bool Evaluate() => _groundedComponent.IsGrounded;
     }
 }

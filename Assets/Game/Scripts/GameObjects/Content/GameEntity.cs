@@ -2,7 +2,7 @@ using Zenject;
 
 namespace Game
 {
-    public class GameEntity : GameObjectContext, IGameEntity
+    public class GameEntity : GameObjectContext, IGameEntity, ICoroutineRunner
     {
         public T Get<T>() where T : class
         {
