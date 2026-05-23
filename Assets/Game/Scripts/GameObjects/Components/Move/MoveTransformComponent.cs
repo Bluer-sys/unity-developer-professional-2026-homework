@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class MoveComponent
+    public sealed class MoveTransformComponent
     {
         public interface ICondition
         {
@@ -23,7 +23,7 @@ namespace Game
 
         public Vector2 MoveDirection { get; private set; }
 
-        public MoveComponent(Settings settings, TransformComponent transformComponent)
+        public MoveTransformComponent(Settings settings, TransformComponent transformComponent)
         {
             _settings = settings;
             _transformComponent = transformComponent;

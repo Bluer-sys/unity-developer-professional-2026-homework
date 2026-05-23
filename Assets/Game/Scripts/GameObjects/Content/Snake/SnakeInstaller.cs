@@ -8,13 +8,12 @@ namespace Game
         [SerializeField] private Rigidbody2D _rigidbody;
 
         [SerializeField] private HealthComponent.Settings _healthSettings;
-        [SerializeField] private MoveComponent.Settings _moveSettings;
+        [SerializeField] private MoveTransformComponent.Settings _moveSettings;
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
         [SerializeField] private TargetDetectorComponent.Settings _detectorSettings;
         [SerializeField] private DamageOnContactComponent.Settings _damageSettings;
-        [SerializeField] private PushComponent.Settings _pushSettings;
-        [SerializeField] private Snake.Settings _snakeSettings;
+        [SerializeField] private ForceTargetComponent.Settings _pushSettings;
 
         public override void InstallBindings()
         {
@@ -25,16 +24,16 @@ namespace Game
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);
-            Container.BindInterfacesAndSelfTo<MoveComponent>().AsSingle().WithArguments(_moveSettings);
+            Container.BindInterfacesAndSelfTo<MoveTransformComponent>().AsSingle().WithArguments(_moveSettings);
             Container.BindInterfacesAndSelfTo<LookComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<GroundedComponent>().AsSingle().WithArguments(_groundedSettings);
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
             Container.BindInterfacesAndSelfTo<TargetDetectorComponent>().AsSingle().WithArguments(_detectorSettings);
-            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle().WithArguments(_pushSettings);
+            Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<Snake>().AsSingle().WithArguments(_snakeSettings).NonLazy();
+            Container.BindInterfacesAndSelfTo<Snake>().AsSingle().NonLazy();
         }
     }
 }

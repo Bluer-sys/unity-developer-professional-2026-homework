@@ -6,25 +6,15 @@ namespace Game
 {
     public sealed class Trampoline : IInitializable, IDisposable
     {
-        [Serializable]
-        public class Settings
-        {
-            [field: SerializeField]
-            public Vector2 Force { get; private set; }
-        }
-
-        private readonly Settings _settings;
         private readonly TriggerComponent _triggerComponent;
-        private readonly PushComponent _pushComponent;
+        private readonly ForceTargetComponent _forceComponent;
 
         public Trampoline(
-            Settings settings,
             TriggerComponent triggerComponent,
-            PushComponent pushComponent)
+            ForceTargetComponent forceComponent)
         {
-            _settings = settings;
             _triggerComponent = triggerComponent;
-            _pushComponent = pushComponent;
+            _forceComponent = forceComponent;
         }
 
         void IInitializable.Initialize() =>
@@ -33,14 +23,7 @@ namespace Game
         void IDisposable.Dispose() =>
             _triggerComponent.OnEntered -= OnEntered;
 
-        private void OnEntered(Collider2D other)
-        {
-            Rigidbody2D rb = other.attachedRigidbody;
-            if (rb == null)
-                return;
-
-            rb.linearVelocityY = 0;
-            _pushComponent.TryPush(other, _settings.Force);
-        }
+        private void OnEntered(Collider2D other) =>
+            _forceComponent.ApplyForce(other);
     }
 }

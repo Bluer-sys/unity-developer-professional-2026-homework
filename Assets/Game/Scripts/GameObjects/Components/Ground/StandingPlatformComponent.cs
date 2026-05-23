@@ -39,7 +39,7 @@ namespace Game
         private bool IsStanding(out Transform platform)
         {
             platform = _groundedComponent.Ground;
-            return platform != null && platform.CompareTag(Tags.Platform);
+            return platform != null && platform.CompareTag(GameObjectTags.Platform);
         }
     }
 }

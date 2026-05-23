@@ -9,35 +9,25 @@ namespace Game
         IFixedTickable, 
         IDisposable,
         LookComponent.ICondition,
-        MoveComponent.ICondition
+        MoveTransformComponent.ICondition
     {
-        [Serializable]
-        public class Settings
-        {
-            [field: SerializeField]
-            public Vector2 KnockbackForce { get; private set; }
-        }
-
-        private readonly Settings _settings;
         private readonly TargetDetectorComponent _detectorComponent;
         private readonly LookComponent _lookComponent;
-        private readonly PushComponent _pushComponent;
+        private readonly ForceTargetComponent _pushComponent;
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
-        private readonly MoveComponent _moveComponent;
+        private readonly MoveTransformComponent _moveComponent;
 
         private float _knockbackCooldownEnd;
 
         public Snake(
-            Settings settings,
             TargetDetectorComponent detectorComponent,
             LookComponent lookComponent,
-            PushComponent pushComponent,
+            ForceTargetComponent pushComponent,
             CollisionComponent collisionComponent,
             HealthComponent healthComponent,
-            MoveComponent moveComponent)
+            MoveTransformComponent moveComponent)
         {
-            _settings = settings;
             _detectorComponent = detectorComponent;
             _lookComponent = lookComponent;
             _pushComponent = pushComponent;
@@ -54,25 +44,28 @@ namespace Game
             _moveComponent.SetCondition(this);
         }
 
-        void IDisposable.Dispose() => _collisionComponent.OnEntered -= OnCollisionEntered;
-        
-        void IFixedTickable.FixedTick() => FollowTarget();
+        void IDisposable.Dispose()
+        {
+            _collisionComponent.OnEntered -= OnCollisionEntered;
+        }
+
+        void IFixedTickable.FixedTick()
+        {
+            FollowTarget();
+        }
 
         private void FollowTarget()
         {
-            if (!_detectorComponent.HasTarget)
-                return;
-
             _lookComponent.Look(_detectorComponent.Target);
             _moveComponent.Move(_detectorComponent.Target, Time.fixedDeltaTime);
         }
 
         private void OnCollisionEntered(Collision2D collision)
         {
-            _pushComponent.TryPush(collision.collider, _settings.KnockbackForce);
+            _pushComponent.ApplyForce(collision.collider);
         }
 
-        bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
-        bool MoveComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
+        bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _detectorComponent.HasTarget;
+        bool MoveTransformComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _detectorComponent.HasTarget;
     }
 }

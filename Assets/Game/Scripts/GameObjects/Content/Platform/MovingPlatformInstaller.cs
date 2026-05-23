@@ -7,7 +7,7 @@ namespace Game
     {
         [SerializeField] private Transform _transform;
 
-        [SerializeField] private MoveComponent.Settings _moveSettings;
+        [SerializeField] private MoveTransformComponent.Settings _moveSettings;
         [SerializeField] private PatrolComponent.Settings _patrolSettings;
 
         public override void InstallBindings()
@@ -16,7 +16,7 @@ namespace Game
             
             Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
 
-            Container.BindInterfacesAndSelfTo<MoveComponent>().AsSingle().WithArguments(_moveSettings);
+            Container.BindInterfacesAndSelfTo<MoveTransformComponent>().AsSingle().WithArguments(_moveSettings);
             Container.BindInterfacesAndSelfTo<PatrolComponent>().AsSingle().WithArguments(_patrolSettings);
 
             Container.BindInterfacesAndSelfTo<MovingPlatform>().AsSingle().NonLazy();

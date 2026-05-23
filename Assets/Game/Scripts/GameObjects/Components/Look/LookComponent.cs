@@ -23,21 +23,23 @@ namespace Game
         {
             _condition = condition;
         }
-        
+
         public void Look(Transform target)
         {
-            Vector2 direction = target.position - _transformComponent.Transform.position;
-            Vector2 directionN = direction.normalized;
+            if(_condition != null && !_condition.Evaluate())
+                return;
             
-            Look(directionN.x);
+            Vector2 direction = target.position - _transformComponent.Transform.position;
+            Look(direction.x);
         }
 
         public void Look(float direction)
         {
-            if(_condition == null || !_condition.Evaluate())
+            if (_condition != null && !_condition.Evaluate())
                 return;
             
-            _transformComponent.Transform.localScale = new Vector3(direction > 0 ? 1 : -1, 1, 1);
+            float angle = direction > 0 ? 0 : 180;
+            _transformComponent.Transform.eulerAngles = new Vector3(0, angle, 0);
         }
     }
 }

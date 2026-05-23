@@ -15,7 +15,7 @@ namespace Game
         [SerializeField] private ParticleSystem _pushFx;
         [SerializeField] private AudioClip _takeDamageClip;
 
-        private JumpComponent _jumpComponent;
+        private ForceAbilityComponent _jumpComponent;
         private Character _character;
         private HealthComponent _healthComponent;
         private LookComponent _lookComponent;
@@ -24,7 +24,7 @@ namespace Game
 
         [Inject]
         private void Construct(
-            JumpComponent jumpComponent,
+            [Inject(Id = "Jump")] ForceAbilityComponent jumpComponent,
             Character character,
             HealthComponent healthComponent,
             GroundedComponent groundedComponent,
@@ -42,7 +42,7 @@ namespace Game
 
         private void OnEnable()
         {
-            _jumpComponent.OnJumped += OnJumped;
+            _jumpComponent.OnPerformed += OnJumped;
             _character.OnPushed += OnPushed;
             _character.OnBlownUp += OnBlownUp;
             _healthComponent.OnHealthDecreased += OnHealthDecreased;
@@ -50,7 +50,7 @@ namespace Game
 
         private void OnDisable()
         {
-            _jumpComponent.OnJumped -= OnJumped;
+            _jumpComponent.OnPerformed -= OnJumped;
             _character.OnPushed -= OnPushed;
             _character.OnBlownUp -= OnBlownUp;
             _healthComponent.OnHealthDecreased -= OnHealthDecreased;

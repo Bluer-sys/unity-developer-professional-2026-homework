@@ -17,7 +17,7 @@ namespace Game
         }
 
         private readonly Settings _settings;
-        private readonly MoveComponent _moveComponent;
+        private readonly MoveTransformComponent _moveComponent;
         private readonly TransformComponent _transformComponent;
 
         private bool _enabled = true;
@@ -25,7 +25,7 @@ namespace Game
 
         public PatrolComponent(
             Settings settings,
-            MoveComponent moveComponent,
+            MoveTransformComponent moveComponent,
             TransformComponent transformComponent)
         {
             _settings = settings;

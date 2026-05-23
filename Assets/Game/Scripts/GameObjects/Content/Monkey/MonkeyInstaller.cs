@@ -6,15 +6,13 @@ namespace Game
     public sealed class MonkeyInstaller : MonoInstaller
     {
         [SerializeField] private Rigidbody2D _rigidbody;
-
         [SerializeField] private HealthComponent.Settings _healthSettings;
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
-        [SerializeField] private JumpComponent.Settings _jumpSettings;
+        [SerializeField] private ForceTargetComponent.Settings _jumpSettings;
+        [SerializeField] private ForceAbilityComponent.Settings _pushSettings;
         [SerializeField] private TargetDetectorComponent.Settings _detectorSettings;
         [SerializeField] private DamageOnContactComponent.Settings _damageSettings;
-        [SerializeField] private PushComponent.Settings _pushSettings;
-        [SerializeField] private Monkey.Settings _monkeySettings;
 
         public override void InstallBindings()
         {
@@ -28,13 +26,14 @@ namespace Game
             Container.BindInterfacesAndSelfTo<LookComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<GroundedComponent>().AsSingle().WithArguments(_groundedSettings);
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
-            Container.BindInterfacesAndSelfTo<JumpComponent>().AsSingle().WithArguments(_jumpSettings);
             Container.BindInterfacesAndSelfTo<TargetDetectorComponent>().AsSingle().WithArguments(_detectorSettings);
-            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<Monkey>().AsSingle().WithArguments(_monkeySettings).NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);
+            Container.BindInterfacesAndSelfTo<ForceAbilityComponent>().AsCached().WithArguments(_pushSettings);
+            
+            Container.BindInterfacesAndSelfTo<Monkey>().AsSingle().NonLazy();
         }
     }
 }

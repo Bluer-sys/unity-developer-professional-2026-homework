@@ -11,13 +11,14 @@ namespace Game
             [field: SerializeField]
             public float MaxHealth { get; private set; }
         }
-
-        public event Action OnHealthDecreased;
-        public event Action OnDied;
-
+        
         public float CurrentHealth { get; private set; }
         public bool IsAlive => CurrentHealth > 0;
         public bool IsDied => CurrentHealth <= 0;
+
+        public event Action OnHealthDecreased;
+        
+        public event Action OnDied;
 
         public HealthComponent(Settings settings)
         {
@@ -36,7 +37,7 @@ namespace Game
                 OnDied?.Invoke();
         }
 
-        public void SetZero() =>
-            TakeDamage(CurrentHealth);
+        public void SetZero() => 
+            this.TakeDamage(this.CurrentHealth);
     }
 }

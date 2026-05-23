@@ -1,6 +1,6 @@
 namespace Game
 {
-    public static class Tags
+    public static class GameObjectTags
     {
         public const string Platform = "Platform";
     }

@@ -5,20 +5,17 @@ namespace Game
 {
     public sealed class TrampolineInstaller : MonoInstaller
     {
-        [SerializeField]
-        private PushComponent.Settings _pushSettings;
+        [SerializeField] 
+        private ForceTargetComponent.Settings _forceSettings;
         
-        [SerializeField]
-        private Trampoline.Settings _trampolineSettings;
-
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
             
             Container.Bind<TriggerComponent>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<TransformComponent>().AsSingle().WithArguments(transform);
-            Container.BindInterfacesAndSelfTo<PushComponent>().AsSingle().WithArguments(_pushSettings);
-            Container.BindInterfacesAndSelfTo<Trampoline>().AsSingle().WithArguments(_trampolineSettings).NonLazy();
+            Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsSingle().WithArguments(_forceSettings);
+            Container.BindInterfacesAndSelfTo<Trampoline>().AsSingle().NonLazy();
         }
     }
 }

@@ -6,36 +6,23 @@ namespace Game
 {
     public sealed class Spider : IInitializable, IDisposable, IFixedTickable
     {
-        [Serializable]
-        public class Settings
-        {
-            [field: SerializeField]
-            public Vector2 KnockbackForce { get; private set; }
-
-            [field: SerializeField]
-            public float KnockbackCooldown { get; private set; }
-        }
-
-        private readonly Settings _settings;
         private readonly LookComponent _lookComponent;
         private readonly PatrolComponent _patrolComponent;
-        private readonly PushComponent _pushComponent;
+        private readonly ForceTargetComponent _pushComponent;
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
-        private readonly MoveComponent _moveComponent;
+        private readonly MoveTransformComponent _moveComponent;
 
         private float _knockbackCooldownEnd;
 
         public Spider(
-            Settings settings,
             LookComponent lookComponent,
             PatrolComponent patrolComponent,
-            PushComponent pushComponent,
+            ForceTargetComponent pushComponent,
             CollisionComponent collisionComponent,
             HealthComponent healthComponent,
-            MoveComponent moveComponent)
+            MoveTransformComponent moveComponent)
         {
-            _settings = settings;
             _lookComponent = lookComponent;
             _patrolComponent = patrolComponent;
             _pushComponent = pushComponent;
@@ -63,7 +50,7 @@ namespace Game
 
         private void OnCollisionEntered(Collision2D collision)
         {
-            _pushComponent.TryPush(collision.collider, _settings.KnockbackForce);
+            _pushComponent.ApplyForce(collision.collider);
         }
 
         private void OnDied()

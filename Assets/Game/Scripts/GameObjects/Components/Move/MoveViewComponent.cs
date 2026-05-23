@@ -8,9 +8,9 @@ namespace Game
         private static readonly int _isMoving = Animator.StringToHash("IsMoving");
 
         private readonly Animator _animator;
-        private readonly MoveComponent _moveComponent;
+        private readonly MoveTransformComponent _moveComponent;
 
-        public MoveViewComponent(MoveComponent moveComponent, Animator animator)
+        public MoveViewComponent(MoveTransformComponent moveComponent, Animator animator)
         {
             _moveComponent = moveComponent;
             _animator = animator;
