@@ -276,7 +276,7 @@ MonoBehaviour:
   _healthSettings:
     <MaxHealth>k__BackingField: 1
   _moveSettings:
-    <Speed>k__BackingField: 3
+    <Speed>k__BackingField: 1
   _groundedSettings:
     <Feet>k__BackingField: {fileID: 1352263184407691987}
     <LayerMask>k__BackingField:
@@ -290,9 +290,9 @@ MonoBehaviour:
     <SecondPoint>k__BackingField: {fileID: 5737562046146701280}
   _damageSettings:
     <Damage>k__BackingField: 1
-  _spiderSettings:
-    <KnockbackForce>k__BackingField: {x: 1, y: 0}
-    <KnockbackCooldown>k__BackingField: 1
+  _pushSettings:
+    <Force>k__BackingField: {x: 10, y: 1}
+    <RelativeSelf>k__BackingField: 1
 --- !u!1001 &2657911147315956785
 PrefabInstance:
   m_ObjectHideFlags: 0

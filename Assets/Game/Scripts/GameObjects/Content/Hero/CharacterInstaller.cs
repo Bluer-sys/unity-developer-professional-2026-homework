@@ -32,8 +32,8 @@ namespace Game
             Container.BindInterfacesTo<StandingPlatformComponent>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);
-            Container.BindInterfacesAndSelfTo<ForceAbilityComponent>().AsCached().WithConcreteId("Push").WithArguments(_pushSettings);
-            Container.BindInterfacesAndSelfTo<ForceAbilityComponent>().AsCached().WithConcreteId("BlowUp").WithArguments(_blowUpSettings);
+            Container.Bind<ForceAbilityComponent>().WithId("Push").AsCached().WithArguments(_pushSettings);
+            Container.Bind<ForceAbilityComponent>().WithId("BlowUp").AsCached().WithArguments(_blowUpSettings);
 
             // View
             Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();

@@ -15,7 +15,7 @@ namespace Game
         [SerializeField] private ParticleSystem _pushFx;
         [SerializeField] private AudioClip _takeDamageClip;
 
-        private ForceAbilityComponent _jumpComponent;
+        private ForceTargetComponent _jumpComponent;
         private Character _character;
         private HealthComponent _healthComponent;
         private LookComponent _lookComponent;
@@ -24,7 +24,7 @@ namespace Game
 
         [Inject]
         private void Construct(
-            [Inject(Id = "Jump")] ForceAbilityComponent jumpComponent,
+            ForceTargetComponent jumpComponent,
             Character character,
             HealthComponent healthComponent,
             GroundedComponent groundedComponent,

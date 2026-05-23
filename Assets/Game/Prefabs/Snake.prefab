@@ -183,9 +183,9 @@ MonoBehaviour:
       m_Bits: 512
   _damageSettings:
     <Damage>k__BackingField: 1
-  _snakeSettings:
-    <KnockbackForce>k__BackingField: {x: 1, y: 0}
-    <KnockbackCooldown>k__BackingField: 1
+  _pushSettings:
+    <Force>k__BackingField: {x: 3, y: 10}
+    <RelativeSelf>k__BackingField: 1
 --- !u!114 &7271546712657373380
 MonoBehaviour:
   m_ObjectHideFlags: 0

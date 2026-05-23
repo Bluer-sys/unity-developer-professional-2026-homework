@@ -35,16 +35,21 @@ namespace Game
 
         private readonly Settings _settings;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly TransformComponent _transformComponent;
 
         private Func<bool> _condition;
         private Coroutine _coroutine;
         
         public bool IsProcessing => _coroutine != null;
         
-        public ForceAbilityComponent(Settings settings, ICoroutineRunner coroutineRunner)
+        public ForceAbilityComponent(
+            Settings settings,
+            ICoroutineRunner coroutineRunner,
+            TransformComponent transformComponent)
         {
             _settings = settings;
             _coroutineRunner = coroutineRunner;
+            _transformComponent = transformComponent;
         }
 
         public void SetCondition(Func<bool> condition)
@@ -82,11 +87,16 @@ namespace Game
             for (int i = 0; i < Mathf.Min(hits.Length, _settings.OverlapMaxCount); i++)
             {
                 var hit = hits[i];
+                var rb = hit?.attachedRigidbody;
 
-                if (hit == null || hit.attachedRigidbody == null)
+                if (rb == null)
                     return;
 
-                hit.attachedRigidbody.AddForce(_settings.Force, ForceMode2D.Impulse);
+                var self = _transformComponent.Transform;
+                var dirX = Mathf.Sign(rb.transform.position.x - self.position.x);
+                var force = new Vector2(_settings.Force.x * dirX, _settings.Force.y);
+                
+                rb.AddForce(force, ForceMode2D.Impulse);
             }
         }
     }

@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.MonkeyInstaller
   _rigidbody: {fileID: 4964224926931193953}
   _healthSettings:
-    <MaxHealth>k__BackingField: 2
+    <MaxHealth>k__BackingField: 5
   _groundedSettings:
     <Feet>k__BackingField: {fileID: 8291358922918543851}
     <LayerMask>k__BackingField:
@@ -152,24 +152,24 @@ MonoBehaviour:
   _gravitySettings:
     <Gravity>k__BackingField: -7
   _jumpSettings:
-    <Force>k__BackingField: 5
-    <Cooldown>k__BackingField: 1
-    <Delay>k__BackingField: 1
+    <Force>k__BackingField: {x: 0, y: 300}
+  _pushSettings:
+    <Origin>k__BackingField: {fileID: 4238300519197751424}
+    <Force>k__BackingField: {x: 20, y: 2}
+    <Cooldown>k__BackingField: 0
+    <Delay>k__BackingField: 0
+    <OverlapSize>k__BackingField: 5
+    <OverlapMaxCount>k__BackingField: 10
+    <Mask>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 768
   _detectorSettings:
     <Radius>k__BackingField: 5
     <Mask>k__BackingField:
       serializedVersion: 2
       m_Bits: 512
   _damageSettings:
-    <Damage>k__BackingField: 1
-  _monkeySettings:
-    <KnockbackForce>k__BackingField: {x: 1, y: 1}
-    <KnockbackCooldown>k__BackingField: 1
-    <JumpInterval>k__BackingField: 1
-    <WaveRadius>k__BackingField: 2
-    <WaveMask>k__BackingField:
-      serializedVersion: 2
-      m_Bits: 512
+    <Damage>k__BackingField: 10
 --- !u!114 &7173581033693755966
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,16 +10,25 @@ namespace Game
         {
             [field: SerializeField]
             public Vector2 Force { get; private set; }
+            
+            [field: SerializeField]
+            public bool RelativeSelf { get; private set; }
         }
 
         private readonly Settings _settings;
+        private readonly TransformComponent _transformComponent;
+
+        public event Action OnPerformed;
 
         private Func<bool> _condition;
         private Coroutine _coroutine;
         
-        public ForceTargetComponent(Settings settings)
+        public ForceTargetComponent(
+            Settings settings,
+            TransformComponent transformComponent)
         {
             _settings = settings;
+            _transformComponent = transformComponent;
         }
 
         public void SetCondition(Func<bool> condition)
@@ -31,8 +40,19 @@ namespace Game
         {
             if (_condition != null && !_condition.Invoke())
                 return;
+
+            Vector2 force = _settings.Force;
             
-            rb.AddForce(_settings.Force, ForceMode2D.Impulse);
+            if (_settings.RelativeSelf)
+            {
+                var self = _transformComponent.Transform;
+                var dirX = Mathf.Sign(rb.transform.position.x - self.position.x);
+                
+                force = new Vector2(_settings.Force.x * dirX, _settings.Force.y);
+            }
+            
+            rb.AddForce(force, ForceMode2D.Impulse);
+            OnPerformed?.Invoke();
         }
 
         public void ApplyForce(Collider2D collider)

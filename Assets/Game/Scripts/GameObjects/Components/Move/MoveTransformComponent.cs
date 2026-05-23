@@ -36,19 +36,25 @@ namespace Game
 
         public void Move(Vector2 direction, float deltaTime)
         {
-            if (direction == Vector2.zero || _condition != null && !_condition.Evaluate())
+            if(_condition != null && !_condition.Evaluate() || direction == Vector2.zero)
             {
                 MoveDirection = Vector2.zero;
                 return;
             }
 
-            _transformComponent.Transform.Translate((Vector3) direction * (_settings.Speed * deltaTime));
+            _transformComponent.Transform.Translate((Vector3) direction * (_settings.Speed * deltaTime), Space.World);
 
             MoveDirection = direction;
         }
         
         public void Move(Transform point, float deltaTime)
         {
+            if (_condition != null && !_condition.Evaluate())
+            {
+                MoveDirection = Vector2.zero;
+                return;
+            }
+            
             var direction = (point.position - _transformComponent.Transform.position).normalized;
             Move(direction, deltaTime);
         }
