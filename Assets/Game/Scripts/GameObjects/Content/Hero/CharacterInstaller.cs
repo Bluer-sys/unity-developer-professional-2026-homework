@@ -6,7 +6,10 @@ namespace Game
     public sealed class CharacterInstaller : MonoInstaller
     {
         [SerializeField] private Rigidbody2D _rigidbody;
+        
         [SerializeField] private HealthComponent.Settings _healthSettings;
+        [SerializeField] private HealthViewComponent.Settings _healthViewSettings;
+        
         [SerializeField] private MoveTransformComponent.Settings _moveSettings;
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
@@ -35,11 +38,17 @@ namespace Game
             Container.Bind<ForceAbilityComponent>().WithId("Push").AsCached().WithArguments(_pushSettings);
             Container.Bind<ForceAbilityComponent>().WithId("BlowUp").AsCached().WithArguments(_blowUpSettings);
 
-            // View
+            BindView();
+        }
+
+        private void BindView()
+        {
             Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
             Container.Bind<AudioSource>().FromComponentInHierarchy().AsSingle();
             
             Container.BindInterfacesTo<MoveViewComponent>().AsSingle();
+            Container.BindInterfacesTo<HealthViewComponent>().AsSingle().WithArguments(_healthViewSettings);
+            Container.BindInterfacesTo<DeathViewComponent>().AsSingle();
             Container.BindInterfacesTo<GroundedViewComponent>().AsSingle();
         }
     }

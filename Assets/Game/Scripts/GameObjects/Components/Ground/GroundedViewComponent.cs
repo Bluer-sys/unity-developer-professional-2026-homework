@@ -17,19 +17,13 @@ namespace Game
             _animator = animator;
         }
 
-        public void Initialize()
-        {
+        public void Initialize() =>
             _groundedComponent.OnGrounded += OnGrounded;
-        }
 
-        public void Dispose()
-        {
+        public void Dispose() =>
             _groundedComponent.OnGrounded -= OnGrounded;
-        }
 
-        private void OnGrounded(bool isGrounded)
-        {
+        private void OnGrounded(bool isGrounded) =>
             _animator.SetBool(_isGrounded, isGrounded);
-        }
     }
 }

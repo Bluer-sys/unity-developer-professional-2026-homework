@@ -35,7 +35,7 @@ namespace Game
 
         private readonly Settings _settings;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly TransformComponent _transformComponent;
+        private readonly RigidbodyComponent _rigidbodyComponent;
 
         private Func<bool> _condition;
         private Coroutine _coroutine;
@@ -45,11 +45,11 @@ namespace Game
         public ForceAbilityComponent(
             Settings settings,
             ICoroutineRunner coroutineRunner,
-            TransformComponent transformComponent)
+            RigidbodyComponent rigidbodyComponent)
         {
             _settings = settings;
             _coroutineRunner = coroutineRunner;
-            _transformComponent = transformComponent;
+            _rigidbodyComponent = rigidbodyComponent;
         }
 
         public void SetCondition(Func<bool> condition)
@@ -82,22 +82,29 @@ namespace Game
 
         private void ApplyForce()
         {
-            var hits = Physics2D.OverlapCircleAll(_settings.Origin.position, _settings.OverlapSize, _settings.Mask);
+            var origin = _settings.Origin;
+            var hits = Physics2D.OverlapCircleAll(origin.position, _settings.OverlapSize, _settings.Mask);
+            
+            Array.Sort(hits, (a, b) => GetSqrDistanceToSelf(a, origin).CompareTo(GetSqrDistanceToSelf(b, origin)));
 
             for (int i = 0; i < Mathf.Min(hits.Length, _settings.OverlapMaxCount); i++)
             {
                 var hit = hits[i];
                 var rb = hit?.attachedRigidbody;
 
-                if (rb == null)
-                    return;
+                if (rb == null || ReferenceEquals(rb, _rigidbodyComponent.Rigidbody))
+                    continue;
 
-                var self = _transformComponent.Transform;
-                var dirX = Mathf.Sign(rb.transform.position.x - self.position.x);
+                var dirX = Mathf.Sign(rb.transform.position.x - origin.position.x);
                 var force = new Vector2(_settings.Force.x * dirX, _settings.Force.y);
                 
                 rb.AddForce(force, ForceMode2D.Impulse);
             }
         }
+        
+        private static float GetSqrDistanceToSelf(Collider2D hit, Transform self) =>
+            hit == null 
+                ? float.PositiveInfinity 
+                : ((Vector2) hit.transform.position - (Vector2) self.position).sqrMagnitude;
     }
 }

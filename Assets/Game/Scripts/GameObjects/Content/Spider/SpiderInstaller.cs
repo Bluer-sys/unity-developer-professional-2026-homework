@@ -7,8 +7,10 @@ namespace Game
     {
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Transform _transform;
-
+        
         [SerializeField] private HealthComponent.Settings _healthSettings;
+        [SerializeField] private HealthViewComponent.Settings _healthViewSettings;
+
         [SerializeField] private MoveTransformComponent.Settings _moveSettings;
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
@@ -19,6 +21,7 @@ namespace Game
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<Spider>().AsSingle().NonLazy();
 
             Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
@@ -32,14 +35,19 @@ namespace Game
             Container.BindInterfacesAndSelfTo<PatrolComponent>().AsSingle().WithArguments(_patrolSettings);
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
-            Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
-            
-            Container.BindInterfacesAndSelfTo<Spider>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<DisableRigidbodyOnDeathComponent>().AsSingle();
 
+            BindView();
+        }
+
+        private void BindView()
+        {
             Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesTo<MoveViewComponent>().AsSingle();
             Container.BindInterfacesTo<GroundedViewComponent>().AsSingle();
+            Container.BindInterfacesTo<DeathViewComponent>().AsSingle();
+            Container.BindInterfacesTo<HealthViewComponent>().AsSingle().WithArguments(_healthViewSettings);
         }
     }
 }

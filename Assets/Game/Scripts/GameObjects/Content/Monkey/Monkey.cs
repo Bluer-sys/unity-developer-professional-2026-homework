@@ -17,6 +17,7 @@ namespace Game
         private readonly RigidbodyComponent _rigidbodyComponent;
         private readonly ForceTargetComponent _jumpComponent;
         private readonly ForceAbilityComponent _pushComponent;
+        private readonly CooldownComponent _jumpCooldownComponent;
 
         public Monkey(
             RigidbodyComponent rigidbodyComponent,
@@ -25,7 +26,8 @@ namespace Game
             TargetDetectorComponent detectorComponent,
             HealthComponent healthComponent,
             ForceTargetComponent jumpComponent,
-            ForceAbilityComponent pushComponent)
+            ForceAbilityComponent pushComponent,
+            CooldownComponent jumpCooldownComponent)
         {
             _rigidbodyComponent = rigidbodyComponent;
             _jumpComponent = jumpComponent;
@@ -34,6 +36,7 @@ namespace Game
             _detectorComponent = detectorComponent;
             _healthComponent = healthComponent;
             _pushComponent = pushComponent;
+            _jumpCooldownComponent = jumpCooldownComponent;
         }
 
         void IInitializable.Initialize()
@@ -53,7 +56,16 @@ namespace Game
 
         void IFixedTickable.FixedTick()
         {
+            JumpTick();
+        }
+
+        private void JumpTick()
+        {
+            if(!_jumpCooldownComponent.IsExpired)
+                return;
+            
             _jumpComponent.ApplyForce(_rigidbodyComponent.Rigidbody);
+            _jumpCooldownComponent.Reset();
         }
 
         private void OnGroundedChanged(bool grounded)

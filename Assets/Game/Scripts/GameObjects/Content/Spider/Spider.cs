@@ -12,6 +12,7 @@ namespace Game
         private readonly CollisionComponent _collisionComponent;
         private readonly HealthComponent _healthComponent;
         private readonly MoveTransformComponent _moveComponent;
+        private readonly GroundedComponent _groundedComponent;
 
         private float _knockbackCooldownEnd;
 
@@ -21,7 +22,8 @@ namespace Game
             ForceTargetComponent pushComponent,
             CollisionComponent collisionComponent,
             HealthComponent healthComponent,
-            MoveTransformComponent moveComponent)
+            MoveTransformComponent moveComponent,
+            GroundedComponent groundedComponent)
         {
             _lookComponent = lookComponent;
             _patrolComponent = patrolComponent;
@@ -29,12 +31,15 @@ namespace Game
             _collisionComponent = collisionComponent;
             _healthComponent = healthComponent;
             _moveComponent = moveComponent;
+            _groundedComponent = groundedComponent;
         }
 
         void IInitializable.Initialize()
         {
             _collisionComponent.OnEntered += OnCollisionEntered;
             _healthComponent.OnDied += OnDied;
+
+            _pushComponent.SetCondition(() => _healthComponent.IsAlive && _groundedComponent.IsGrounded);
         }
 
         void IDisposable.Dispose()

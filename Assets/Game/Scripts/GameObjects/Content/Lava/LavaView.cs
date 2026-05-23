@@ -1,25 +1,27 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 namespace Game
 {
-    public sealed class LavaView : MonoBehaviour
+    public sealed class LavaView : IInitializable, IDisposable
     {
-        [SerializeField]
-        private AudioSource _audioSource;
+        private readonly AudioSource _audioSource;
+        private readonly TriggerComponent _triggerComponent;
 
-        private TriggerComponent _triggerComponent;
-
-        [Inject]
-        private void Construct(TriggerComponent triggerComponent)
+        public LavaView(TriggerComponent triggerComponent, AudioSource audioSource)
         {
             _triggerComponent = triggerComponent;
+            _audioSource = audioSource;
         }
 
-        private void OnEnable() => _triggerComponent.OnEntered += OnEntered;
+        public void Initialize() =>
+            _triggerComponent.OnEntered += OnEntered;
 
-        private void OnDisable() => _triggerComponent.OnEntered -= OnEntered;
+        public void Dispose() =>
+            _triggerComponent.OnEntered -= OnEntered;
 
-        private void OnEntered(Collider2D _) => _audioSource.Play();
+        private void OnEntered(Collider2D collider) 
+            => _audioSource.Play();
     }
 }

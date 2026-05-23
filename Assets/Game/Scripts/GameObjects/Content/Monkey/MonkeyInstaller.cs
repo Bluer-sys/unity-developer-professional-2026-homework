@@ -6,10 +6,15 @@ namespace Game
     public sealed class MonkeyInstaller : MonoInstaller
     {
         [SerializeField] private Rigidbody2D _rigidbody;
+        
+        [SerializeField] private ForceTargetComponent.Settings _jumpSettings;
+        [SerializeField] private CooldownComponent.Settings _jumpCooldownSettings;
+        
         [SerializeField] private HealthComponent.Settings _healthSettings;
+        [SerializeField] private HealthViewComponent.Settings _healthViewSettings;
+        
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
-        [SerializeField] private ForceTargetComponent.Settings _jumpSettings;
         [SerializeField] private ForceAbilityComponent.Settings _pushSettings;
         [SerializeField] private TargetDetectorComponent.Settings _detectorSettings;
         [SerializeField] private DamageOnContactComponent.Settings _damageSettings;
@@ -17,6 +22,7 @@ namespace Game
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<Monkey>().AsSingle().NonLazy();
             
             Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
@@ -31,9 +37,19 @@ namespace Game
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);
+            Container.BindInterfacesAndSelfTo<CooldownComponent>().AsCached().WithArguments(_jumpCooldownSettings);
+            
             Container.BindInterfacesAndSelfTo<ForceAbilityComponent>().AsCached().WithArguments(_pushSettings);
             
-            Container.BindInterfacesAndSelfTo<Monkey>().AsSingle().NonLazy();
+            BindView();
+        }
+
+        private void BindView()
+        {
+            Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<GroundedViewComponent>().AsSingle();
+            Container.BindInterfacesTo<DeathViewComponent>().AsSingle();
+            Container.BindInterfacesTo<HealthViewComponent>().AsSingle().WithArguments(_healthViewSettings);
         }
     }
 }

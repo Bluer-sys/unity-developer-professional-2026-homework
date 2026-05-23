@@ -6,8 +6,10 @@ namespace Game
     public sealed class SnakeInstaller : MonoInstaller
     {
         [SerializeField] private Rigidbody2D _rigidbody;
-
+        
         [SerializeField] private HealthComponent.Settings _healthSettings;
+        [SerializeField] private HealthViewComponent.Settings _healthViewSettings;
+        
         [SerializeField] private MoveTransformComponent.Settings _moveSettings;
         [SerializeField] private GroundedComponent.Settings _groundedSettings;
         [SerializeField] private ExtraGravityComponent.Settings _gravitySettings;
@@ -18,6 +20,7 @@ namespace Game
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<Snake>().AsSingle().NonLazy();
             
             Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
             Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
@@ -33,7 +36,17 @@ namespace Game
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<Snake>().AsSingle().NonLazy();
+            BindView();
+        }
+
+        private void BindView()
+        {
+            Container.Bind<Animator>().FromComponentInHierarchy().AsSingle();
+
+            Container.BindInterfacesTo<MoveViewComponent>().AsSingle();
+            Container.BindInterfacesTo<GroundedViewComponent>().AsSingle();
+            Container.BindInterfacesTo<DeathViewComponent>().AsSingle();
+            Container.BindInterfacesTo<HealthViewComponent>().AsSingle().WithArguments(_healthViewSettings);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Game
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<Trap>().AsSingle().NonLazy();
             
             Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
@@ -18,8 +19,6 @@ namespace Game
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<Trap>().AsSingle().NonLazy();
         }
     }
 }

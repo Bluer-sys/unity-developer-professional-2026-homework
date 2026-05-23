@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 6669714101369260119}
   - component: {fileID: 2972651474336090962}
   - component: {fileID: 8364523372104078170}
-  - component: {fileID: 2971617375237266723}
   m_Layer: 9
   m_Name: Character
   m_TagString: Character
@@ -177,6 +176,10 @@ MonoBehaviour:
   _rigidbody: {fileID: 2743180993930163208}
   _healthSettings:
     <MaxHealth>k__BackingField: 5
+  _healthViewSettings:
+    <DamagedColor>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
+    <Frequency>k__BackingField: 0.2
+    <Loops>k__BackingField: 3
   _moveSettings:
     <Speed>k__BackingField: 4.5
   _groundedSettings:
@@ -189,6 +192,7 @@ MonoBehaviour:
     <Gravity>k__BackingField: -7
   _jumpSettings:
     <Force>k__BackingField: {x: 0, y: 12}
+    <RelativeSelf>k__BackingField: 0
   _pushSettings:
     <Origin>k__BackingField: {fileID: 924219655302976567}
     <Force>k__BackingField: {x: 10, y: 2}
@@ -239,35 +243,6 @@ MonoBehaviour:
   _pushClip: {fileID: 8300000, guid: 3dbd84c2bfae847229cd1013f68c0da7, type: 3}
   _pushFx: {fileID: 6138593199860099477}
   _takeDamageClip: {fileID: 8300000, guid: 32f565ba94f200f49adb407cce64e873, type: 3}
---- !u!114 &2971617375237266723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322474405303096178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eebe1a48d381942d389b028ea42e69bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.HealthViewComponent
-  _renderers:
-  - {fileID: 5204512148407797940}
-  - {fileID: 6219465262073202451}
-  - {fileID: 4422273307610976513}
-  - {fileID: 5250541445880393635}
-  - {fileID: 7160067175672817982}
-  - {fileID: 8684640795848953031}
-  - {fileID: 4299039019413998630}
-  - {fileID: 9165277386506390966}
-  - {fileID: 8595995141096377094}
-  - {fileID: 807937440565741875}
-  - {fileID: 5047525534465335295}
-  - {fileID: 3741408736114512392}
-  - {fileID: 2948770426114850387}
-  _damagedColor: {r: 1, g: 0, b: 0, a: 1}
-  _frequency: 0.2
-  _loops: 3
 --- !u!1 &3661016561165312903
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,79 +618,14 @@ PrefabInstance:
       addedObject: {fileID: 5562747507276943726}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
---- !u!212 &807937440565741875 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 223834710336190528, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2135491237694915492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1553653217405350615, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
   m_PrefabInstance: {fileID: 589240006524367219}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &2948770426114850387 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2360244360732593952, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &3741408736114512392 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4305795036596102011, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &4299039019413998630 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3712135543960796501, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &4422273307610976513 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3851268781964615794, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &5047525534465335295 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 5629797583213850252, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &5204512148407797940 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4618233131673598407, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &5250541445880393635 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 4679465454001970896, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &6219465262073202451 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6801170039318001248, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &7160067175672817982 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 7741913712876640333, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7253450456020995594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7819384111349612409, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &8595995141096377094 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 9180159719939897973, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &8684640795848953031 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8118701928309079476, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
-  m_PrefabInstance: {fileID: 589240006524367219}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &9165277386506390966 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8583013788384967877, guid: f5290832d893c4833b391a956fd20bd1, type: 3}
   m_PrefabInstance: {fileID: 589240006524367219}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1509922481622574971

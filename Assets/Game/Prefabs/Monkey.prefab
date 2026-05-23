@@ -141,18 +141,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.MonkeyInstaller
   _rigidbody: {fileID: 4964224926931193953}
+  _jumpSettings:
+    <Force>k__BackingField: {x: 0, y: 300}
+    <RelativeSelf>k__BackingField: 0
+  _jumpCooldownSettings:
+    <Cooldown>k__BackingField: 3
   _healthSettings:
     <MaxHealth>k__BackingField: 5
   _groundedSettings:
-    <Feet>k__BackingField: {fileID: 8291358922918543851}
+    <Feet>k__BackingField: {fileID: 4238300519197751424}
     <LayerMask>k__BackingField:
       serializedVersion: 2
       m_Bits: 8
-    <Distance>k__BackingField: 1
+    <Distance>k__BackingField: 0.1
   _gravitySettings:
     <Gravity>k__BackingField: -7
-  _jumpSettings:
-    <Force>k__BackingField: {x: 0, y: 300}
   _pushSettings:
     <Origin>k__BackingField: {fileID: 4238300519197751424}
     <Force>k__BackingField: {x: 20, y: 2}
@@ -282,10 +285,5 @@ PrefabInstance:
 --- !u!4 &4238300519197751424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204637747592461190, guid: ce7f63d0c8a9443bdbea77973710fe09, type: 3}
-  m_PrefabInstance: {fileID: 1632659114803643142}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8291358922918543851 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7329764328121271021, guid: ce7f63d0c8a9443bdbea77973710fe09, type: 3}
   m_PrefabInstance: {fileID: 1632659114803643142}
   m_PrefabAsset: {fileID: 0}
