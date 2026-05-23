@@ -30,18 +30,32 @@ namespace Game.Gameplay
         public JToken Serialize(object payload = null)
         {
             var entities = _entityWorld.GetAll();
-            var entitySerializer = _componentSerializers[typeof(Entity)];
             var data = new JArray();
-
+            
             foreach (var entity in entities)
             {
-                var jEntity = entitySerializer.Serialize(entity);
-                var jObject = jEntity as JObject;
+                var jEntity = new JObject();
+                var jComponents = new JObject();
+                var components = entity.GetComponents<Component>();
 
-                jObject.Add("id", entity.Id);
-                jObject.Add("name", entity.Name);
-                jObject.Add("position", JsonConvert.SerializeObject(new SerializedVector3(entity.transform.position)));
-                jObject.Add("rotation", JsonConvert.SerializeObject(new SerializedVector3(entity.transform.eulerAngles)));
+                // Serialize components
+                foreach (var component in components)
+                {
+                    if (!_componentSerializers.TryGetValue(component.GetType(), out var serializer))
+                        continue;
+
+                    var jToken = serializer.Serialize(component);
+
+                    jComponents.Add(serializer.Key, jToken);
+                }
+
+                jEntity.Add("components", jComponents); 
+                
+                // Serialize entity properties
+                jEntity.Add("id", entity.Id);
+                jEntity.Add("name", entity.Name);
+                jEntity.Add("position", JsonConvert.SerializeObject(new SerializedVector3(entity.transform.position)));
+                jEntity.Add("rotation", JsonConvert.SerializeObject(new SerializedVector3(entity.transform.eulerAngles)));
 
                 data.Add(jEntity);
             }
@@ -51,11 +65,11 @@ namespace Game.Gameplay
 
         public void Deserialize(JToken data, object payload = null)
         {
-            var entitySerializer = _componentSerializers[typeof(Entity)];
             var createdEntities = new Dictionary<Entity, JToken>();
 
             _entityWorld.DestroyAll();
 
+            // Spawn entities
             foreach (var jEntity in data)
             {
                 var id = jEntity["id"].Value<int>();
@@ -73,8 +87,22 @@ namespace Game.Gameplay
                 createdEntities.Add(entity, jEntity);
             }
 
+            // Deserialize components
             foreach (var pair in createdEntities)
-                entitySerializer.Deserialize(pair.Value, pair.Key);
+            {
+                var jComponents = pair.Value["components"].Value<JObject>();
+                var components = pair.Key.GetComponents<Component>();
+
+                foreach (Component component in components)
+                {
+                    if (!_componentSerializers.TryGetValue(component.GetType(), out var serializer))
+                        continue;
+
+                    var jComponent = jComponents[serializer.Key];
+
+                    serializer.Deserialize(jComponent, component);
+                }
+            }
         }
     }
 }

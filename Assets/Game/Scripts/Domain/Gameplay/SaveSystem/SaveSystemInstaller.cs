@@ -36,16 +36,13 @@ namespace Game.Gameplay
             {
                 container.Instantiate<EntityWorldSerializer>(new Dictionary<Type, ISaveSerializer>
                 {
-                    { typeof(Entity), container.Instantiate<EntitySerializer>(new Dictionary<Type, ISaveSerializer>
-                    {
-                        { typeof(Countdown), container.Instantiate<CountdownSerializer>() },
-                        { typeof(Health), container.Instantiate<HealthSerializer>() },
-                        { typeof(Team), container.Instantiate<TeamSerializer>() },
-                        { typeof(ResourceBag), container.Instantiate<ResourceBagSerializer>() },
-                        { typeof(DestinationPoint), container.Instantiate<DestinationPointSerializer>() },
-                        { typeof(TargetObject), container.Instantiate<TargetObjectSerializer>() },
-                        { typeof(ProductionOrder), container.Instantiate<ProductionOrderSerializer>() },
-                    }) }
+                    { typeof(Countdown), container.Instantiate<CountdownSerializer>() },
+                    { typeof(Health), container.Instantiate<HealthSerializer>() },
+                    { typeof(Team), container.Instantiate<TeamSerializer>() },
+                    { typeof(ResourceBag), container.Instantiate<ResourceBagSerializer>() },
+                    { typeof(DestinationPoint), container.Instantiate<DestinationPointSerializer>() },
+                    { typeof(TargetObject), container.Instantiate<TargetObjectSerializer>() },
+                    { typeof(ProductionOrder), container.Instantiate<ProductionOrderSerializer>() },
                 })
             };
         }
