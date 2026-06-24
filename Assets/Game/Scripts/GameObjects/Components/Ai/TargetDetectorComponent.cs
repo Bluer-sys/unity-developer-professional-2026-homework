@@ -20,21 +20,21 @@ namespace Game
         public event Action OnLost;
 
         private readonly Settings _settings;
-        private readonly TransformComponent _transformComponent;
+        private readonly Transform _transform;
 
         public Transform Target { get; private set; }
 
         public bool HasTarget => Target != null;
 
-        public TargetDetectorComponent(Settings settings, TransformComponent transformComponent)
+        public TargetDetectorComponent(Settings settings, Transform transform)
         {
             _settings = settings;
-            _transformComponent = transformComponent;
+            _transform = transform;
         }
 
         void IFixedTickable.FixedTick()
         {
-            Vector2 origin = _transformComponent.Transform.position;
+            Vector2 origin = _transform.position;
             Collider2D hit = Physics2D.OverlapCircle(origin, _settings.Radius, _settings.Mask);
             Transform newTarget = hit ? hit.transform : null;
 

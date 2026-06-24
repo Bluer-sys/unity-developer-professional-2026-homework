@@ -18,15 +18,15 @@ namespace Game
         }
 
         private readonly Settings _settings;
-        private readonly TransformComponent _transformComponent;
+        private readonly Transform _transform;
         private ICondition _condition;
 
         public Vector2 MoveDirection { get; private set; }
 
-        public MoveTransformComponent(Settings settings, TransformComponent transformComponent)
+        public MoveTransformComponent(Settings settings, Transform transform)
         {
             _settings = settings;
-            _transformComponent = transformComponent;
+            _transform = transform;
         }
 
         public void SetCondition(ICondition condition)
@@ -42,7 +42,7 @@ namespace Game
                 return;
             }
 
-            _transformComponent.Transform.Translate((Vector3) direction * (_settings.Speed * deltaTime), Space.World);
+            _transform.Translate((Vector3) direction * (_settings.Speed * deltaTime), Space.World);
 
             MoveDirection = direction;
         }
@@ -55,7 +55,7 @@ namespace Game
                 return;
             }
             
-            var direction = (point.position - _transformComponent.Transform.position).normalized;
+            var direction = (point.position - _transform.position).normalized;
             Move(direction, deltaTime);
         }
     }

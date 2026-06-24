@@ -14,13 +14,13 @@ namespace Game
         private readonly GroundedComponent _groundedComponent;
         private readonly TargetDetectorComponent _detectorComponent;
         private readonly HealthComponent _healthComponent;
-        private readonly RigidbodyComponent _rigidbodyComponent;
+        private readonly Rigidbody2D _rigidbody;
         private readonly ForceTargetComponent _jumpComponent;
         private readonly ForceAbilityComponent _pushComponent;
         private readonly CooldownComponent _jumpCooldownComponent;
 
         public Monkey(
-            RigidbodyComponent rigidbodyComponent,
+            Rigidbody2D rigidbody,
             LookComponent lookComponent,
             GroundedComponent groundedComponent,
             TargetDetectorComponent detectorComponent,
@@ -29,7 +29,7 @@ namespace Game
             ForceAbilityComponent pushComponent,
             CooldownComponent jumpCooldownComponent)
         {
-            _rigidbodyComponent = rigidbodyComponent;
+            _rigidbody = rigidbody;
             _jumpComponent = jumpComponent;
             _lookComponent = lookComponent;
             _groundedComponent = groundedComponent;
@@ -64,7 +64,7 @@ namespace Game
             if(!_jumpCooldownComponent.IsExpired)
                 return;
             
-            _jumpComponent.ApplyForce(_rigidbodyComponent.Rigidbody);
+            _jumpComponent.ApplyForce(_rigidbody);
             _jumpCooldownComponent.Reset();
         }
 

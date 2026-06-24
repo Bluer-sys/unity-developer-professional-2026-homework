@@ -16,7 +16,7 @@ namespace Game
         }
 
         private readonly Settings _settings;
-        private readonly TransformComponent _transformComponent;
+        private readonly Transform _transform;
 
         public event Action OnPerformed;
 
@@ -25,10 +25,10 @@ namespace Game
         
         public ForceTargetComponent(
             Settings settings,
-            TransformComponent transformComponent)
+            Transform transform)
         {
             _settings = settings;
-            _transformComponent = transformComponent;
+            _transform = transform;
         }
 
         public void SetCondition(Func<bool> condition)
@@ -45,7 +45,7 @@ namespace Game
             
             if (_settings.RelativeSelf)
             {
-                var self = _transformComponent.Transform;
+                var self = _transform;
                 var dirX = Mathf.Sign(rb.transform.position.x - self.position.x);
                 
                 force = new Vector2(_settings.Force.x * dirX, _settings.Force.y);

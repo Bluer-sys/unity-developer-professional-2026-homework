@@ -18,7 +18,7 @@ namespace Game
 
         private readonly Settings _settings;
         private readonly MoveTransformComponent _moveComponent;
-        private readonly TransformComponent _transformComponent;
+        private readonly Transform _transform;
 
         private bool _enabled = true;
         private Transform _targetPoint;
@@ -26,11 +26,11 @@ namespace Game
         public PatrolComponent(
             Settings settings,
             MoveTransformComponent moveComponent,
-            TransformComponent transformComponent)
+            Transform transform)
         {
             _settings = settings;
             _moveComponent = moveComponent;
-            _transformComponent = transformComponent;
+            _transform = transform;
         }
 
         public void Enable() => _enabled = true;
@@ -48,7 +48,7 @@ namespace Game
 
             _moveComponent.Move(_targetPoint, Time.fixedDeltaTime);
 
-            float sqrMagnitude = (_transformComponent.Transform.position - _targetPoint.position).sqrMagnitude;
+            float sqrMagnitude = (_transform.position - _targetPoint.position).sqrMagnitude;
             
             if(sqrMagnitude < 0.1f)
                 SwitchPoint();

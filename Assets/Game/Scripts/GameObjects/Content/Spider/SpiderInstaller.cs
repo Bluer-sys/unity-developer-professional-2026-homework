@@ -23,8 +23,8 @@ namespace Game
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<Spider>().AsSingle().NonLazy();
 
-            Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
-            Container.Bind<RigidbodyComponent>().AsSingle().WithArguments(_rigidbody);
+            Container.BindInstance(_transform).AsSingle();
+            Container.BindInstance(_rigidbody).AsSingle();
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);

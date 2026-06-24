@@ -15,16 +15,16 @@ namespace Game
 
         private readonly Settings _settings;
         private readonly GroundedComponent _groundedComponent;
-        private readonly RigidbodyComponent _rigidbodyComponent;
+        private readonly Rigidbody2D _rigidbody;
 
         public ExtraGravityComponent(
             Settings settings,
             GroundedComponent groundedComponent,
-            RigidbodyComponent rigidbodyComponent)
+            Rigidbody2D rigidbody)
         {
             _settings = settings;
             _groundedComponent = groundedComponent;
-            _rigidbodyComponent = rigidbodyComponent;
+            _rigidbody = rigidbody;
         }
 
         void IFixedTickable.FixedTick()
@@ -32,8 +32,7 @@ namespace Game
             if (_groundedComponent.IsGrounded)
                 return;
 
-            Rigidbody2D rigidbody = _rigidbodyComponent.Rigidbody;
-            rigidbody.linearVelocity += new Vector2(0, _settings.Gravity * Time.fixedDeltaTime);
+            _rigidbody.linearVelocity += new Vector2(0, _settings.Gravity * Time.fixedDeltaTime);
         }
     }
 }

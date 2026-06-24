@@ -35,7 +35,7 @@ namespace Game
 
         private readonly Settings _settings;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly RigidbodyComponent _rigidbodyComponent;
+        private readonly Rigidbody2D _selfRigidbody;
 
         private Func<bool> _condition;
         private Coroutine _coroutine;
@@ -45,11 +45,11 @@ namespace Game
         public ForceAbilityComponent(
             Settings settings,
             ICoroutineRunner coroutineRunner,
-            RigidbodyComponent rigidbodyComponent)
+            Rigidbody2D selfRigidbody)
         {
             _settings = settings;
             _coroutineRunner = coroutineRunner;
-            _rigidbodyComponent = rigidbodyComponent;
+            _selfRigidbody = selfRigidbody;
         }
 
         public void SetCondition(Func<bool> condition)
@@ -92,7 +92,7 @@ namespace Game
                 var hit = hits[i];
                 var rb = hit?.attachedRigidbody;
 
-                if (rb == null || ReferenceEquals(rb, _rigidbodyComponent.Rigidbody))
+                if (rb == null || ReferenceEquals(rb, _selfRigidbody))
                     continue;
 
                 var dirX = Mathf.Sign(rb.transform.position.x - origin.position.x);

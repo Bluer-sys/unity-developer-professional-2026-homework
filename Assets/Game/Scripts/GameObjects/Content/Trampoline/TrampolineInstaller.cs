@@ -13,7 +13,7 @@ namespace Game
             Container.BindInterfacesAndSelfTo<Trampoline>().AsSingle().NonLazy();
             
             Container.Bind<TriggerComponent>().FromComponentInHierarchy().AsSingle();
-            Container.BindInterfacesAndSelfTo<TransformComponent>().AsSingle().WithArguments(transform);
+            Container.BindInstance(transform).AsSingle();
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsSingle().WithArguments(_forceSettings);
             
             BindView();

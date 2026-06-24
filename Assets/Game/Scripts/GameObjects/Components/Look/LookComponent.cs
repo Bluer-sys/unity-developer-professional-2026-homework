@@ -9,14 +9,14 @@ namespace Game
             bool Evaluate();
         }
         
-        private readonly TransformComponent _transformComponent;
+        private readonly Transform _transform;
         private ICondition _condition;
 
-        public float CurrentDirection => _transformComponent.Transform.localScale.x > 0 ? 1 : -1;
+        public float CurrentDirection => _transform.localScale.x > 0 ? 1 : -1;
         
-        public LookComponent(TransformComponent transformComponent)
+        public LookComponent(Transform transform)
         {
-            _transformComponent = transformComponent;
+            _transform = transform;
         }
 
         public void SetCondition(ICondition condition)
@@ -29,7 +29,7 @@ namespace Game
             if(_condition != null && !_condition.Evaluate())
                 return;
             
-            Vector2 direction = target.position - _transformComponent.Transform.position;
+            Vector2 direction = target.position - _transform.position;
             Look(direction.x);
         }
 
@@ -39,7 +39,7 @@ namespace Game
                 return;
             
             float angle = direction > 0 ? 0 : 180;
-            _transformComponent.Transform.eulerAngles = new Vector3(0, angle, 0);
+            _transform.eulerAngles = new Vector3(0, angle, 0);
         }
     }
 }

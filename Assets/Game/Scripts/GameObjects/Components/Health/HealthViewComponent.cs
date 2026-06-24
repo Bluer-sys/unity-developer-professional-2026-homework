@@ -25,12 +25,12 @@ namespace Game
         public HealthViewComponent(
             Settings settings, 
             HealthComponent healthComponent, 
-            TransformComponent transformComponent)
+            Transform transform)
         {
             _settings = settings;
             _healthComponent = healthComponent;
 
-            _renderers = transformComponent.Transform.GetComponentsInChildren<SpriteRenderer>();
+            _renderers = transform.GetComponentsInChildren<SpriteRenderer>();
         }
 
         public void Initialize()

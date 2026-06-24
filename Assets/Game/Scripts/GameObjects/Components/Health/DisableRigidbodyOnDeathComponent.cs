@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Zenject;
 
 namespace Game
@@ -6,14 +7,14 @@ namespace Game
     public sealed class DisableRigidbodyOnDeathComponent : IInitializable, IDisposable
     {
         private readonly HealthComponent _healthComponent;
-        private readonly RigidbodyComponent _rigidbodyComponent;
+        private readonly Rigidbody2D _rigidbody;
 
         public DisableRigidbodyOnDeathComponent(
             HealthComponent healthComponent,
-            RigidbodyComponent rigidbodyComponent)
+            Rigidbody2D rigidbody)
         {
             _healthComponent = healthComponent;
-            _rigidbodyComponent = rigidbodyComponent;
+            _rigidbody = rigidbody;
         }
 
         void IInitializable.Initialize() =>
@@ -23,6 +24,6 @@ namespace Game
             _healthComponent.OnDied -= OnDied;
 
         private void OnDied() =>
-            _rigidbodyComponent.Rigidbody.simulated = false;
+            _rigidbody.simulated = false;
     }
 }

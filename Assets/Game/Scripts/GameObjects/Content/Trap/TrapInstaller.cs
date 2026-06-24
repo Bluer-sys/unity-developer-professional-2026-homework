@@ -12,8 +12,8 @@ namespace Game
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<Trap>().AsSingle().NonLazy();
-            
-            Container.Bind<TransformComponent>().AsSingle().WithArguments(transform);
+
+            Container.BindInstance(transform).AsSingle();
             Container.Bind<CollisionComponent>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);

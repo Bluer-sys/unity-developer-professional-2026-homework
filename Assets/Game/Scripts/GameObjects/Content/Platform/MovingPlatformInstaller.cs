@@ -13,9 +13,9 @@ namespace Game
         {
             Container.BindInterfacesAndSelfTo<GameEntity>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<MovingPlatform>().AsSingle().NonLazy();
-            
-            Container.Bind<TransformComponent>().AsSingle().WithArguments(_transform);
 
+            Container.BindInstance(_transform).AsSingle();
+            
             Container.BindInterfacesAndSelfTo<MoveTransformComponent>().AsSingle().WithArguments(_moveSettings);
             Container.BindInterfacesAndSelfTo<PatrolComponent>().AsSingle().WithArguments(_patrolSettings);
 

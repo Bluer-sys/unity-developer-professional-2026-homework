@@ -20,7 +20,7 @@ namespace Game
         private readonly LookComponent _lookComponent;
         private readonly GroundedComponent _groundedComponent;
         private readonly ForceTargetComponent _jumpComponent;
-        private readonly RigidbodyComponent _rigidbodyComponent;
+        private readonly Rigidbody2D _rigidbody;
         private readonly ForceAbilityComponent _pushComponent;
         private readonly ForceAbilityComponent _blowUpComponent;
 
@@ -30,7 +30,7 @@ namespace Game
                 LookComponent lookComponent,
                 GroundedComponent groundedComponent,
                 ForceTargetComponent jumpComponent,
-                RigidbodyComponent rigidbodyComponent,
+                Rigidbody2D rigidbody,
                 [Inject(Id = "Push")] ForceAbilityComponent pushComponent,
                 [Inject(Id = "BlowUp")] ForceAbilityComponent blowUpComponent
             )
@@ -40,7 +40,7 @@ namespace Game
             _lookComponent = lookComponent;
             _groundedComponent = groundedComponent;
             _jumpComponent = jumpComponent;
-            _rigidbodyComponent = rigidbodyComponent;
+            _rigidbody = rigidbody;
             _pushComponent = pushComponent;
             _blowUpComponent = blowUpComponent;
         }
@@ -67,7 +67,7 @@ namespace Game
         void ITickable.Tick()
         {
             if (Input.GetKeyDown(KeyCode.Space))
-                _jumpComponent.ApplyForce(_rigidbodyComponent.Rigidbody);
+                _jumpComponent.ApplyForce(_rigidbody);
 
             if (Input.GetMouseButtonDown(0))
                 _pushComponent.Apply();
