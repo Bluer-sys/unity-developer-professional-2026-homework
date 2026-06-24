@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class ForceTargetComponent
+    public class ForceTargetComponent
     {
         [Serializable]
         public class Settings

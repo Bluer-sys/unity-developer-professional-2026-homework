@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class ForceAbilityComponent
+    public class ForceAbilityComponent
     {
         [Serializable]
         public class Settings

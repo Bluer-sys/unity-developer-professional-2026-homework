@@ -19,20 +19,20 @@ namespace Game
         private readonly MoveTransformComponent _moveComponent;
         private readonly LookComponent _lookComponent;
         private readonly GroundedComponent _groundedComponent;
-        private readonly ForceTargetComponent _jumpComponent;
+        private readonly JumpComponent _jumpComponent;
         private readonly Rigidbody2D _rigidbody;
-        private readonly ForceAbilityComponent _pushComponent;
-        private readonly ForceAbilityComponent _blowUpComponent;
+        private readonly PushAbilityComponent _pushComponent;
+        private readonly BlowUpAbilityComponent _blowUpComponent;
 
         public Character(
                 HealthComponent healthComponent,
                 MoveTransformComponent moveComponent,
                 LookComponent lookComponent,
                 GroundedComponent groundedComponent,
-                ForceTargetComponent jumpComponent,
+                JumpComponent jumpComponent,
                 Rigidbody2D rigidbody,
-                [Inject(Id = "Push")] ForceAbilityComponent pushComponent,
-                [Inject(Id = "BlowUp")] ForceAbilityComponent blowUpComponent
+                PushAbilityComponent pushComponent,
+                BlowUpAbilityComponent blowUpComponent
             )
         {
             _healthComponent = healthComponent;

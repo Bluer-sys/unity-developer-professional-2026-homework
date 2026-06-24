@@ -36,7 +36,7 @@ namespace Game
             Container.BindInterfacesAndSelfTo<TargetDetectorComponent>().AsSingle().WithArguments(_detectorSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
             
-            Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);
+            Container.Bind<JumpComponent>().AsSingle().WithArguments(_jumpSettings);
             Container.BindInterfacesAndSelfTo<CooldownComponent>().AsCached().WithArguments(_jumpCooldownSettings);
             
             Container.BindInterfacesAndSelfTo<ForceAbilityComponent>().AsCached().WithArguments(_pushSettings);

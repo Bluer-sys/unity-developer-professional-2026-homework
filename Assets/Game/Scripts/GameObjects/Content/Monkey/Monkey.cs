@@ -15,7 +15,7 @@ namespace Game
         private readonly TargetComponent _targetComponent;
         private readonly HealthComponent _healthComponent;
         private readonly Rigidbody2D _rigidbody;
-        private readonly ForceTargetComponent _jumpComponent;
+        private readonly JumpComponent _jumpComponent;
         private readonly ForceAbilityComponent _pushComponent;
         private readonly CooldownComponent _jumpCooldownComponent;
         private readonly GameEntity _gameEntity;
@@ -26,7 +26,7 @@ namespace Game
             GroundedComponent groundedComponent,
             TargetComponent targetComponent,
             HealthComponent healthComponent,
-            ForceTargetComponent jumpComponent,
+            JumpComponent jumpComponent,
             ForceAbilityComponent pushComponent,
             CooldownComponent jumpCooldownComponent,
             GameEntity gameEntity)

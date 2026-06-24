@@ -15,8 +15,9 @@ namespace Game
         [SerializeField] private ParticleSystem _pushFx;
         [SerializeField] private AudioClip _takeDamageClip;
 
-        private ForceTargetComponent _jumpComponent;
-        private Character _character;
+        private JumpComponent _jumpComponent;
+        private PushAbilityComponent _pushAbilityComponent;
+        private BlowUpAbilityComponent _blowUpAbilityComponent;
         private HealthComponent _healthComponent;
         private LookComponent _lookComponent;
         private Animator _animator;
@@ -24,17 +25,20 @@ namespace Game
 
         [Inject]
         private void Construct(
-            ForceTargetComponent jumpComponent,
-            Character character,
-            HealthComponent healthComponent,
-            GroundedComponent groundedComponent,
-            LookComponent lookComponent,
-            Animator animator,
-            AudioSource audioSource)
+                JumpComponent jumpComponent,
+                HealthComponent healthComponent,
+                GroundedComponent groundedComponent,
+                LookComponent lookComponent,
+                Animator animator,
+                AudioSource audioSource,
+                PushAbilityComponent pushAbilityComponent,
+                BlowUpAbilityComponent blowUpAbilityComponent
+            )
         {
             _lookComponent = lookComponent;
+            _pushAbilityComponent = pushAbilityComponent;
+            _blowUpAbilityComponent = blowUpAbilityComponent;
             _jumpComponent = jumpComponent;
-            _character = character;
             _healthComponent = healthComponent;
             _animator = animator;
             _audioSource = audioSource;
@@ -43,16 +47,16 @@ namespace Game
         private void OnEnable()
         {
             _jumpComponent.OnPerformed += OnJumped;
-            _character.OnPushed += OnPushed;
-            _character.OnBlownUp += OnBlownUp;
+            _pushAbilityComponent.OnPerformed += OnPushed;
+            _blowUpAbilityComponent.OnPerformed += OnBlownUp;
             _healthComponent.OnHealthDecreased += OnHealthDecreased;
         }
 
         private void OnDisable()
         {
             _jumpComponent.OnPerformed -= OnJumped;
-            _character.OnPushed -= OnPushed;
-            _character.OnBlownUp -= OnBlownUp;
+            _pushAbilityComponent.OnPerformed -= OnPushed;
+            _blowUpAbilityComponent.OnPerformed -= OnBlownUp;
             _healthComponent.OnHealthDecreased -= OnHealthDecreased;
         }
 

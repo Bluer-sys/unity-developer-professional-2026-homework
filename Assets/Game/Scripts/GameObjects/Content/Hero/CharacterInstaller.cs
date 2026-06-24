@@ -33,9 +33,9 @@ namespace Game
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
             Container.BindInterfacesTo<StandingPlatformComponent>().AsSingle();
             
-            Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);
-            Container.Bind<ForceAbilityComponent>().WithId("Push").AsCached().WithArguments(_pushSettings);
-            Container.Bind<ForceAbilityComponent>().WithId("BlowUp").AsCached().WithArguments(_blowUpSettings);
+            Container.Bind<JumpComponent>().AsSingle().WithArguments(_jumpSettings);
+            Container.Bind<PushAbilityComponent>().AsSingle().WithArguments(_pushSettings);
+            Container.Bind<BlowUpAbilityComponent>().AsSingle().WithArguments(_blowUpSettings);
 
             BindView();
         }
