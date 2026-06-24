@@ -49,6 +49,7 @@ namespace Game
         {
             _moveComponent.SetCondition(this);
             _lookComponent.SetCondition(this);
+            _healthComponent.OnDied += OnDied;
             
             _jumpComponent.SetCondition(() => _healthComponent.IsAlive && _groundedComponent.IsGrounded);
             _pushComponent.SetCondition(() => _healthComponent.IsAlive && !_blowUpComponent.IsProcessing);
@@ -62,6 +63,7 @@ namespace Game
         {
             _pushComponent.OnPerformed -= OnPushed;
             _blowUpComponent.OnPerformed -= OnBlownUp;
+            _healthComponent.OnDied -= OnDied;
         }
         
         void ITickable.Tick()
@@ -94,5 +96,8 @@ namespace Game
 
         bool MoveTransformComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
         bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
+
+        private void OnDied() =>
+            _rigidbody.simulated = false;
     }
 }

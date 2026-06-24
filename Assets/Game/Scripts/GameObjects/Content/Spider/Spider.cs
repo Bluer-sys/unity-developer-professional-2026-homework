@@ -13,6 +13,7 @@ namespace Game
         private readonly HealthComponent _healthComponent;
         private readonly MoveTransformComponent _moveComponent;
         private readonly GroundedComponent _groundedComponent;
+        private readonly Rigidbody2D _rigidbody;
 
         private float _knockbackCooldownEnd;
 
@@ -23,7 +24,8 @@ namespace Game
             CollisionComponent collisionComponent,
             HealthComponent healthComponent,
             MoveTransformComponent moveComponent,
-            GroundedComponent groundedComponent)
+            GroundedComponent groundedComponent,
+            Rigidbody2D rigidbody)
         {
             _lookComponent = lookComponent;
             _patrolComponent = patrolComponent;
@@ -32,6 +34,7 @@ namespace Game
             _healthComponent = healthComponent;
             _moveComponent = moveComponent;
             _groundedComponent = groundedComponent;
+            _rigidbody = rigidbody;
         }
 
         void IInitializable.Initialize()
@@ -61,6 +64,7 @@ namespace Game
         private void OnDied()
         {
             _patrolComponent.Disable();
+            _rigidbody.simulated = false;
         }
     }
 }

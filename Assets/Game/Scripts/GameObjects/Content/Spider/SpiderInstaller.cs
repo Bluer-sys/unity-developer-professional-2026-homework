@@ -35,7 +35,6 @@ namespace Game
             Container.BindInterfacesAndSelfTo<PatrolComponent>().AsSingle().WithArguments(_patrolSettings);
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
-            Container.BindInterfacesTo<DisableRigidbodyOnDeathComponent>().AsSingle();
 
             BindView();
         }

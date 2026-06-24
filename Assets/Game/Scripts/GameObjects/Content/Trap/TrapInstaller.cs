@@ -18,7 +18,6 @@ namespace Game
 
             Container.BindInterfacesAndSelfTo<HealthComponent>().AsSingle().WithArguments(_healthSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
-            Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
         }
     }
 }

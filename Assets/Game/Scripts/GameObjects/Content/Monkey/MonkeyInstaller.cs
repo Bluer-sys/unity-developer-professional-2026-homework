@@ -34,7 +34,6 @@ namespace Game
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
             Container.BindInterfacesAndSelfTo<TargetDetectorComponent>().AsSingle().WithArguments(_detectorSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
-            Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);
             Container.BindInterfacesAndSelfTo<CooldownComponent>().AsCached().WithArguments(_jumpCooldownSettings);

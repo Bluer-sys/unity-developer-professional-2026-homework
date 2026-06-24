@@ -31,7 +31,6 @@ namespace Game
             Container.BindInterfacesAndSelfTo<LookComponent>().AsSingle();
             Container.BindInterfacesAndSelfTo<GroundedComponent>().AsSingle().WithArguments(_groundedSettings);
             Container.BindInterfacesAndSelfTo<ExtraGravityComponent>().AsSingle().WithArguments(_gravitySettings);
-            Container.BindInterfacesTo<DisableRigidbodyOnDeathComponent>().AsSingle();
             Container.BindInterfacesTo<StandingPlatformComponent>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsCached().WithArguments(_jumpSettings);

@@ -34,7 +34,6 @@ namespace Game
             Container.BindInterfacesAndSelfTo<TargetDetectorComponent>().AsSingle().WithArguments(_detectorSettings);
             Container.BindInterfacesAndSelfTo<ForceTargetComponent>().AsSingle().WithArguments(_pushSettings);
             Container.BindInterfacesAndSelfTo<DamageOnContactComponent>().AsSingle().WithArguments(_damageSettings);
-            Container.BindInterfacesAndSelfTo<DestroyOnDeathComponent>().AsSingle();
 
             BindView();
         }

@@ -18,6 +18,7 @@ namespace Game
         private readonly ForceTargetComponent _jumpComponent;
         private readonly ForceAbilityComponent _pushComponent;
         private readonly CooldownComponent _jumpCooldownComponent;
+        private readonly GameEntity _gameEntity;
 
         public Monkey(
             Rigidbody2D rigidbody,
@@ -27,7 +28,8 @@ namespace Game
             HealthComponent healthComponent,
             ForceTargetComponent jumpComponent,
             ForceAbilityComponent pushComponent,
-            CooldownComponent jumpCooldownComponent)
+            CooldownComponent jumpCooldownComponent,
+            GameEntity gameEntity)
         {
             _rigidbody = rigidbody;
             _jumpComponent = jumpComponent;
@@ -37,12 +39,14 @@ namespace Game
             _healthComponent = healthComponent;
             _pushComponent = pushComponent;
             _jumpCooldownComponent = jumpCooldownComponent;
+            _gameEntity = gameEntity;
         }
 
         void IInitializable.Initialize()
         {
             _groundedComponent.OnGrounded += OnGroundedChanged;
             _detectorComponent.OnDetected += OnDetected;
+            _healthComponent.OnDied += OnDied;
 
             _lookComponent.SetCondition(this);
             _jumpComponent.SetCondition(() => _groundedComponent.IsGrounded);
@@ -52,6 +56,7 @@ namespace Game
         {
             _groundedComponent.OnGrounded -= OnGroundedChanged;
             _detectorComponent.OnDetected -= OnDetected;
+            _healthComponent.OnDied -= OnDied;
         }
 
         void IFixedTickable.FixedTick()
@@ -75,6 +80,9 @@ namespace Game
         }
 
         private void OnDetected(Transform target) => _lookComponent.Look(target);
+
+        private void OnDied() =>
+            UnityEngine.Object.Destroy(_gameEntity.gameObject);
 
         bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
     }
