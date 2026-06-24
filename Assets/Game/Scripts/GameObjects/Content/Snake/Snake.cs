@@ -11,7 +11,7 @@ namespace Game
         LookComponent.ICondition,
         MoveTransformComponent.ICondition
     {
-        private readonly TargetDetectorComponent _detectorComponent;
+        private readonly TargetComponent _targetComponent;
         private readonly LookComponent _lookComponent;
         private readonly ForceTargetComponent _pushComponent;
         private readonly CollisionComponent _collisionComponent;
@@ -22,7 +22,7 @@ namespace Game
         private float _knockbackCooldownEnd;
 
         public Snake(
-            TargetDetectorComponent detectorComponent,
+            TargetComponent targetComponent,
             LookComponent lookComponent,
             ForceTargetComponent pushComponent,
             CollisionComponent collisionComponent,
@@ -30,7 +30,7 @@ namespace Game
             MoveTransformComponent moveComponent,
             GameEntity gameEntity)
         {
-            _detectorComponent = detectorComponent;
+            _targetComponent = targetComponent;
             _lookComponent = lookComponent;
             _pushComponent = pushComponent;
             _collisionComponent = collisionComponent;
@@ -61,8 +61,8 @@ namespace Game
 
         private void FollowTarget()
         {
-            _lookComponent.Look(_detectorComponent.Target);
-            _moveComponent.Move(_detectorComponent.Target, Time.fixedDeltaTime);
+            _lookComponent.Look(_targetComponent.Target);
+            _moveComponent.Move(_targetComponent.Target, Time.fixedDeltaTime);
         }
 
         private void OnCollisionEntered(Collision2D collision)
@@ -73,7 +73,7 @@ namespace Game
         private void OnDied() =>
             UnityEngine.Object.Destroy(_gameEntity.gameObject);
 
-        bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _detectorComponent.HasTarget;
-        bool MoveTransformComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _detectorComponent.HasTarget;
+        bool LookComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _targetComponent.HasTarget;
+        bool MoveTransformComponent.ICondition.Evaluate() => _healthComponent.IsAlive && _targetComponent.HasTarget;
     }
 }

@@ -16,20 +16,18 @@ namespace Game
             public LayerMask Mask { get; private set; }
         }
 
-        public event Action<Transform> OnDetected;
-        public event Action OnLost;
-
         private readonly Settings _settings;
         private readonly Transform _transform;
+        private readonly TargetComponent _targetComponent;
 
-        public Transform Target { get; private set; }
-
-        public bool HasTarget => Target != null;
-
-        public TargetDetectorComponent(Settings settings, Transform transform)
+        public TargetDetectorComponent(
+            Settings settings,
+            Transform transform,
+            TargetComponent targetComponent)
         {
             _settings = settings;
             _transform = transform;
+            _targetComponent = targetComponent;
         }
 
         void IFixedTickable.FixedTick()
@@ -38,20 +36,7 @@ namespace Game
             Collider2D hit = Physics2D.OverlapCircle(origin, _settings.Radius, _settings.Mask);
             Transform newTarget = hit ? hit.transform : null;
 
-            if (newTarget != null && Target == null)
-            {
-                Target = newTarget;
-                OnDetected?.Invoke(Target);
-            }
-            else if (newTarget == null && Target != null)
-            {
-                Target = null;
-                OnLost?.Invoke();
-            }
-            else
-            {
-                Target = newTarget;
-            }
+            _targetComponent.SetTarget(newTarget);
         }
     }
 }

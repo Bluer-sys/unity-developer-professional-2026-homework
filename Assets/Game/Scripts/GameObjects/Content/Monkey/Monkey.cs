@@ -12,7 +12,7 @@ namespace Game
     {
         private readonly LookComponent _lookComponent;
         private readonly GroundedComponent _groundedComponent;
-        private readonly TargetDetectorComponent _detectorComponent;
+        private readonly TargetComponent _targetComponent;
         private readonly HealthComponent _healthComponent;
         private readonly Rigidbody2D _rigidbody;
         private readonly ForceTargetComponent _jumpComponent;
@@ -24,7 +24,7 @@ namespace Game
             Rigidbody2D rigidbody,
             LookComponent lookComponent,
             GroundedComponent groundedComponent,
-            TargetDetectorComponent detectorComponent,
+            TargetComponent targetComponent,
             HealthComponent healthComponent,
             ForceTargetComponent jumpComponent,
             ForceAbilityComponent pushComponent,
@@ -35,7 +35,7 @@ namespace Game
             _jumpComponent = jumpComponent;
             _lookComponent = lookComponent;
             _groundedComponent = groundedComponent;
-            _detectorComponent = detectorComponent;
+            _targetComponent = targetComponent;
             _healthComponent = healthComponent;
             _pushComponent = pushComponent;
             _jumpCooldownComponent = jumpCooldownComponent;
@@ -45,7 +45,7 @@ namespace Game
         void IInitializable.Initialize()
         {
             _groundedComponent.OnGrounded += OnGroundedChanged;
-            _detectorComponent.OnDetected += OnDetected;
+            _targetComponent.OnDetected += OnDetected;
             _healthComponent.OnDied += OnDied;
 
             _lookComponent.SetCondition(this);
@@ -55,7 +55,7 @@ namespace Game
         void IDisposable.Dispose()
         {
             _groundedComponent.OnGrounded -= OnGroundedChanged;
-            _detectorComponent.OnDetected -= OnDetected;
+            _targetComponent.OnDetected -= OnDetected;
             _healthComponent.OnDied -= OnDied;
         }
 
