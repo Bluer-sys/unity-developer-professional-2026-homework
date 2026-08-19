@@ -1,9 +1,9 @@
-namespace SampleGame
+namespace Game
 {
-    public enum TeamType
-    {
-        Blue = 0,
-        Red = 1,
-        Neutral = 2
-    }
+	public enum TeamType
+	{
+		Blue = 0,
+		Red = 1,
+		Neutral = 2
+	}
 }

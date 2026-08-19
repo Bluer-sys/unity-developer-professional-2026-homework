@@ -2,136 +2,130 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace SampleGame
+namespace Game
 {
-    [ExecuteAlways]
-    [HideMonoScript]
-    public abstract class SelectableStateListener<TValue> : MonoBehaviour
-    {
-        [Serializable]
-        private sealed class StateValues
-        {
-            [SerializeField]
-            private TValue _normal;
+	[ExecuteAlways, HideMonoScript]
+	public abstract class SelectableStateListener<TValue> : MonoBehaviour
+	{
+		[Serializable]
+		private sealed class StateValues
+		{
+			[SerializeField]
+			private TValue _normal;
 
-            [SerializeField]
-            private bool _useHover = true;
-            
-            [ShowIf(nameof(_useHover))]
-            [SerializeField]
-            private TValue _hover;
+			[SerializeField]
+			private bool _useHover = true;
 
-            [SerializeField]
-            private bool _usePressed = true;
-            [ShowIf(nameof(_usePressed))]
-            [SerializeField]
-            private TValue _pressed;
+			[ShowIf(nameof(_useHover)), SerializeField]
+			private TValue _hover;
 
-            [SerializeField]
-            private TValue _disabled;
+			[SerializeField]
+			private bool _usePressed = true;
+			[ShowIf(nameof(_usePressed)), SerializeField]
+			private TValue _pressed;
 
-            public TValue Normal
-            {
-                get => _normal;
-                set => _normal = value;
-            }
+			[SerializeField]
+			private TValue _disabled;
 
-            public bool UseHover
-            {
-                get => _useHover;
-                set => _useHover = value;
-            }
+			public TValue Normal
+			{
+				get => _normal;
+				set => _normal = value;
+			}
 
-            public TValue Hover
-            {
-                get => _hover;
-                set => _hover = value;
-            }
+			public bool UseHover
+			{
+				get => _useHover;
+				set => _useHover = value;
+			}
 
-            public bool UsePressed
-            {
-                get => _usePressed;
-                set => _usePressed = value;
-            }
+			public TValue Hover
+			{
+				get => _hover;
+				set => _hover = value;
+			}
 
-            public TValue Pressed
-            {
-                get => _pressed;
-                set => _pressed = value;
-            }
+			public bool UsePressed
+			{
+				get => _usePressed;
+				set => _usePressed = value;
+			}
 
-            public TValue Disabled
-            {
-                get => _disabled;
-                set => _disabled = value;
-            }
+			public TValue Pressed
+			{
+				get => _pressed;
+				set => _pressed = value;
+			}
 
-            public TValue GetValue(SelectableStateTracker.State state)
-            {
-                return state switch
-                {
-                    SelectableStateTracker.State.Normal => Normal,
-                    SelectableStateTracker.State.Hover => UseHover
-                        ? Hover
-                        : GetValue(SelectableStateTracker.State.Normal),
-                    SelectableStateTracker.State.Pressed => UsePressed
-                        ? Pressed
-                        : GetValue(SelectableStateTracker.State.Hover),
-                    SelectableStateTracker.State.Disabled => Disabled,
-                    _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
-                };
-            }
-        }
+			public TValue Disabled
+			{
+				get => _disabled;
+				set => _disabled = value;
+			}
 
-        [Required]
-        [SerializeField]
-        private SelectableStateTracker _tracker;
-     
-        [SerializeField]
-        private StateValues _properties;
+			public TValue GetValue(SelectableStateTracker.State state)
+			{
+				return state switch
+				{
+					SelectableStateTracker.State.Normal => Normal,
+					SelectableStateTracker.State.Hover => UseHover
+															  ? Hover
+															  : GetValue(SelectableStateTracker.State.Normal),
+					SelectableStateTracker.State.Pressed => UsePressed
+																? Pressed
+																: GetValue(SelectableStateTracker.State.Hover),
+					SelectableStateTracker.State.Disabled => Disabled,
+					_ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
+				};
+			}
+		}
 
-        protected virtual void AwakeInternal()
-        {
-        }
+		[Required, SerializeField]
+		private SelectableStateTracker _tracker;
 
-        protected abstract void StateChangedInternal(SelectableStateTracker.State state, TValue value);
+		[SerializeField]
+		private StateValues _properties;
 
-        #region Editor
+		protected virtual void AwakeInternal() {}
+
+		protected abstract void StateChangedInternal(SelectableStateTracker.State state, TValue value);
+
+#region Editor
 
 #if UNITY_EDITOR
 
-        protected virtual void OnValidate()
-        {
-            var state = _tracker != null ? _tracker.CurrentState : default;
-            var value = _properties.GetValue(state);
-            StateChangedInternal(state, value);
-        }
+		protected virtual void OnValidate()
+		{
+			SelectableStateTracker.State state = _tracker != null ? _tracker.CurrentState : default;
+			TValue value = _properties.GetValue(state);
+			StateChangedInternal(state, value);
+		}
 
 #endif
 
-        #endregion
+#endregion
 
-        private void Awake()
-        {
-            if (_tracker == null)
-                return;
+		private void Awake()
+		{
+			if (_tracker == null)
+				return;
 
-            _tracker.OnStateChanged += OnStateChanged;
-            AwakeInternal();
-        }
+			_tracker.OnStateChanged += OnStateChanged;
+			AwakeInternal();
+		}
 
-        private void OnDestroy()
-        {
-            if (_tracker == null)
-                return;
+		private void OnDestroy()
+		{
+			if (_tracker == null)
+				return;
 
-            _tracker.OnStateChanged -= OnStateChanged;
-        }
+			_tracker.OnStateChanged -= OnStateChanged;
+		}
 
-        private void OnStateChanged(SelectableStateTracker.State state)
-        {
-            var value = _properties.GetValue(state);
-            StateChangedInternal(state, value);
-        }
-    }
+		private void OnStateChanged(SelectableStateTracker.State state)
+		{
+			TValue value = _properties.GetValue(state);
+			StateChangedInternal(state, value);
+		}
+	}
 }

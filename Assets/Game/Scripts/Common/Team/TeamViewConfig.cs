@@ -2,47 +2,40 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SampleGame
+namespace Game
 {
-    [CreateAssetMenu(
-        fileName = "TeamViewConfig",
-        menuName = "SampleGame/Common/New TeamViewConfig"
-    )]
-    public sealed class TeamViewConfig : ScriptableObject
-    {
-        [SerializeField]
-        private TeamInfo[] _teams;
+	[CreateAssetMenu(fileName = "TeamViewConfig",
+		menuName = "Game/Common/New TeamViewConfig")]
+	public sealed class TeamViewConfig : ScriptableObject
+	{
+		[SerializeField]
+		private TeamInfo[] _teams;
 
-        public TeamInfo GetTeam(TeamType teamType)
-        {
-            for (int i = 0, count = _teams.Length; i < count; i++)
-            {
-                TeamInfo info = _teams[i];
-                if (info.Type == teamType)
-                    return info;
-            }
+		public TeamInfo GetTeam(TeamType teamType)
+		{
+			for (int i = 0, count = _teams.Length; i < count; i++)
+			{
+				TeamInfo info = _teams[i];
 
-            throw new KeyNotFoundException($"Team of type {teamType} is not found!");
-        }
+				if (info.Type == teamType)
+					return info;
+			}
 
-        [Serializable]
-        public sealed class TeamInfo
-        {
-            [SerializeField]
-            private TeamType type;
+			throw new KeyNotFoundException($"Team of type {teamType} is not found!");
+		}
 
-            [SerializeField]
-            private Material material;
+		[Serializable]
+		public sealed class TeamInfo
+		{
+			[SerializeField]
+			private TeamType type;
 
-            public Material Material
-            {
-                get { return this.material; }
-            }
+			[SerializeField]
+			private Material material;
 
-            public TeamType Type
-            {
-                get { return type; }
-            }
-        }
-    }
+			public Material Material => material;
+
+			public TeamType Type => type;
+		}
+	}
 }
