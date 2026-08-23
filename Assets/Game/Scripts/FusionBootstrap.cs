@@ -1,0 +1,26 @@
+using Fusion;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Game.Scripts
+{
+    public class FusionBootstrap : MonoBehaviour
+    {
+        [SerializeField] private NetworkRunner _runner;
+
+        private async void Start()
+        {
+            var sceneInfo = new NetworkSceneInfo();
+            sceneInfo.AddSceneRef(SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex));
+            
+            await _runner.StartGame(new StartGameArgs
+            {
+                GameMode = GameMode.AutoHostOrClient,
+                SessionName = "SampleSession",
+                PlayerCount = 2,
+                Scene = sceneInfo,
+                SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            });
+        }
+    }
+}

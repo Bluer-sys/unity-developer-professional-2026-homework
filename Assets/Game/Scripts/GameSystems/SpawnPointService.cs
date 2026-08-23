@@ -17,5 +17,10 @@ namespace Game
         {
             return _spawnPoints[Random.Range(0, Count)];
         }
+        
+        public Vector3 GetRandomSpawnPosition()
+        {
+            return GetRandomSpawnPoint().position;
+        }
     }
 }
