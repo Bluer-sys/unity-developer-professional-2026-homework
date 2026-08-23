@@ -6,6 +6,11 @@ namespace Game.Core
 {
     public class MoveComponent : NetworkBehaviour, IBeforeTick
     {
+        public interface ICondition
+        {
+            public bool IsMet();
+        }
+        
         public event Action OnStateChange;
         
         [SerializeField]
@@ -14,11 +19,16 @@ namespace Game.Core
         [SerializeField]
         private float _angularSpeed;
 
+        private ICondition _condition;
+        
         [Networked, OnChangedRender(nameof(StateChanged))]
         public NetworkBool IsMoving { get; private set; }
 
         public void Move(Vector3 direction)
         {
+            if(_condition != null && !_condition.IsMet())
+                return;
+            
             if(direction == Vector3.zero)
                 return;
             
@@ -38,7 +48,12 @@ namespace Game.Core
         {
             Stop();
         }
-        
+
+        public void SetCondition(ICondition condition)
+        {
+            _condition = condition;
+        }
+
         private void UpdateRotation(Vector3 direction, float deltaTime)
         {
             Quaternion current = transform.rotation;
