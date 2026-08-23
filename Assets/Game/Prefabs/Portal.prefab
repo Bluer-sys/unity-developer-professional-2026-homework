@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 1883574040571837546}
   - component: {fileID: 5849631110825285671}
   - component: {fileID: 7559792179628585245}
+  - component: {fileID: 5913591487440583009}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Portal
@@ -277,6 +278,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7559792179628585245}
+  - {fileID: 5913591487440583009}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7559792179628585245
 MonoBehaviour:
@@ -290,5 +292,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21d0eb8dddc449fb10a4773ac148632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpawner: {fileID: 0}
   <Center>k__BackingField: {fileID: 7687135409742009684}
+--- !u!114 &5913591487440583009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2755872164277444644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1bc73338074a9cb79f12525a30f866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Current: 0
+  <Max>k__BackingField: 10

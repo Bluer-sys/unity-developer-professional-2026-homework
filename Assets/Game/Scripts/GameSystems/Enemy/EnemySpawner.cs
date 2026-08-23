@@ -17,6 +17,13 @@ namespace Game
         public override void Spawned()
         {
             ResetTimer();
+            
+            _portal.OnEnemyReached += Despawn;
+        }
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            _portal.OnEnemyReached -= Despawn;
         }
 
         public override void FixedUpdateNetwork()
