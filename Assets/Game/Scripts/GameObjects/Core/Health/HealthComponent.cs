@@ -7,11 +7,14 @@ namespace Game.Core
     public sealed class HealthComponent : NetworkBehaviour
     {
         public event Action<int> OnHealthChanged;
-        public event Action<HealthComponent> OnHealthOver;
+        public event Action<NetworkObject> OnDeath;
 
         [Networked, OnChangedRender(nameof(InvokeHealthChanged))]
         public int Current { get; set; }
 
+        private static PropertyReader<int> HealthReader =
+            GetPropertyReader<int>(typeof(HealthComponent), nameof(Current));
+        
         [field: SerializeField] public int Max { get; set; } = 10;
 
         public bool IsDead => Current <= 0;
@@ -38,17 +41,19 @@ namespace Game.Core
                 Current = Math.Min(Max, Current + heal);
         }
 
-        public void ResetHealth()
+        private void ResetHealth()
         {
             Current = Max;
         }
 
-        private void InvokeHealthChanged()
+        private void InvokeHealthChanged(NetworkBehaviourBuffer previousSnapshot)
         {
+            int previousHealth = HealthReader.Read(previousSnapshot);
+            
             OnHealthChanged?.Invoke(Current);
             
-            if (IsDead)
-                OnHealthOver?.Invoke(this);
+            if (previousHealth > 0 && IsDead)
+                OnDeath?.Invoke(Object);
         }
     }
 }

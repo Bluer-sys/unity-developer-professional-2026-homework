@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 5493230855599609299}
   - component: {fileID: 8690473498211846372}
   - component: {fileID: 6781337426609155563}
+  - component: {fileID: 3390280629269797830}
   - component: {fileID: 1565959980774347864}
   - component: {fileID: 7126057964874750634}
   - component: {fileID: 2215017792765249999}
+  - component: {fileID: 4331103902080330052}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -81,9 +83,11 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 6781337426609155563}
+  - {fileID: 3390280629269797830}
   - {fileID: 1565959980774347864}
   - {fileID: 7126057964874750634}
   - {fileID: 2215017792765249999}
+  - {fileID: 4331103902080330052}
   - {fileID: 2206994415336874507}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &6781337426609155563
@@ -103,6 +107,20 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &3390280629269797830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404067246571692652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd364960a166462aaf99d93d6d10aefd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthComponent: {fileID: 2215017792765249999}
+  _moveComponent: {fileID: 7126057964874750634}
 --- !u!114 &1565959980774347864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +164,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Current: 0
   <Max>k__BackingField: 10
+--- !u!114 &4331103902080330052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404067246571692652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 729a2c3495014b93b1f0bb8f3e58a875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 5493230855599609299}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &2051941622203599037
 GameObject:
   m_ObjectHideFlags: 0

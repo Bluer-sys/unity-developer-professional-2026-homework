@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2234585692980628589}
   - component: {fileID: 2317091048976075927}
   - component: {fileID: 6258167687150630304}
-  - component: {fileID: 658275687689833482}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -82,8 +81,8 @@ MonoBehaviour:
   - {fileID: 2234585692980628589}
   - {fileID: 2317091048976075927}
   - {fileID: 6258167687150630304}
-  - {fileID: 658275687689833482}
   - {fileID: 4784342270040084078}
+  - {fileID: 7736397425498985153}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &4769806894882923294
 MonoBehaviour:
@@ -116,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthComponent: {fileID: 2317091048976075927}
   _moveComponent: {fileID: 6258167687150630304}
+  _attackCooldown: 1
 --- !u!114 &2317091048976075927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,22 +146,6 @@ MonoBehaviour:
   _angularSpeed: 360
   _IsMoving:
     _value: 0
---- !u!114 &658275687689833482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1011030080782938114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0bf3de83ee0fe447bd7e36004c86ba8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _collider: {fileID: 216082409229877555}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &6681128362121645732
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4110996159869562643}
   - component: {fileID: 4784342270040084078}
+  - component: {fileID: 7736397425498985153}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -209,6 +194,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveComponent: {fileID: 6258167687150630304}
   _animator: {fileID: 4406589717366456297}
+--- !u!114 &7736397425498985153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681128362121645732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5a21bf01194212a520370a14e7a5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemy: {fileID: 2234585692980628589}
+  _enemyHealth: {fileID: 2317091048976075927}
+  _deathVfx: {fileID: 8958766866816114753, guid: 9e95494e0642fa34e9fe945ac7b5c5b9, type: 3}
+  _deathVfxOffset: {x: 0, y: 0.6, z: 0}
 --- !u!1 &7136196916883076713
 GameObject:
   m_ObjectHideFlags: 0
