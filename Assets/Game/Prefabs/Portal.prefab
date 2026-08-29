@@ -323,4 +323,4 @@ MonoBehaviour:
   _collider: {fileID: 1883574040571837546}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64

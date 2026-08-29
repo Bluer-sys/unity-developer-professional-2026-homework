@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Fusion;
 using Game.Core;
 using Game.GameObjects;
 using UnityEngine;
+using UnityEngine.Pool;
+using Zenject;
 
 namespace Game
 {
@@ -13,6 +16,8 @@ namespace Game
         [SerializeField] private float _spawnInterval;
         [SerializeField] private Transform _moveTarget;
 
+        private List<NetworkObject> _spawnedEnemies = new();
+
         [Networked] private TickTimer SpawnDelayTimestamp { get; set; }
 
         public override void Spawned()
@@ -22,9 +27,11 @@ namespace Game
 
         public override void FixedUpdateNetwork()
         {
+            TryDespawn();
+            
             if (!SpawnDelayTimestamp.Expired(Runner))
                 return;
-
+            
             Spawn();
             ResetTimer();
         }
@@ -33,26 +40,37 @@ namespace Game
         {
             Vector3 spawnPos = _spawnPointService.GetRandomSpawnPosition();
             
-            NetworkObject networkObj = Runner.Spawn(_enemyPrefab, spawnPos, Quaternion.identity);
-            networkObj.GetComponent<NetworkTransform>().Teleport(spawnPos);
+            NetworkObject obj = Runner.Spawn(_enemyPrefab, spawnPos, Quaternion.identity);
+            obj.GetComponent<NetworkTransform>().Teleport(spawnPos);
             Physics.SyncTransforms();
             
-            var enemy = networkObj.GetBehaviour<Enemy>();
-            var health = networkObj.GetBehaviour<HealthComponent>();
+            var enemy = obj.GetBehaviour<Enemy>();
             var moveDir = (_moveTarget.position - enemy.transform.position).normalized;
             
             enemy.SetMoveDirection(moveDir);
             
-            health.OnDeath += Despawn;
-            enemy.OnPortalReached += Despawn;
+            _spawnedEnemies.Add(obj);
         }
 
-        private void Despawn(NetworkObject obj)
+        private void TryDespawn()
         {
-            obj.GetBehaviour<HealthComponent>().OnDeath -= Despawn;
-            obj.GetBehaviour<Enemy>().OnPortalReached -= Despawn;
+            var orphans = UnityEngine.Pool.ListPool<NetworkObject>.Get();
             
-            Runner.Despawn(obj);
+            foreach (NetworkObject obj in _spawnedEnemies)
+            {
+                if (obj.TryGetBehaviour(out Enemy enemy) && 
+                    obj.TryGetBehaviour(out HealthComponent health) &&
+                    (enemy.IsPortalReached || health.IsDead))
+                {
+                    Runner.Despawn(obj);
+                    orphans.Add(obj);
+                }
+            }
+
+            foreach (NetworkObject obj in orphans)
+                _spawnedEnemies.Remove(obj);
+            
+            UnityEngine.Pool.ListPool<NetworkObject>.Release(orphans);
         }
 
         private void ResetTimer()

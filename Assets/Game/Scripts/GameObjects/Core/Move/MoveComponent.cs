@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Core
 {
-    public class MoveComponent : NetworkBehaviour, IBeforeTick
+    public class MoveComponent : NetworkBehaviour
     {
         public interface ICondition
         {
@@ -27,11 +27,17 @@ namespace Game.Core
         public void Move(Vector3 direction)
         {
             if(_condition != null && !_condition.IsMet())
+            {
+                IsMoving = false;
                 return;
-            
+            }
+
             if(direction == Vector3.zero)
+            {
+                IsMoving = false;
                 return;
-            
+            }
+
             float deltaTime = Time.fixedDeltaTime;
             UpdateRotation(direction, deltaTime);
             UpdatePosition(direction, deltaTime);
@@ -42,11 +48,6 @@ namespace Game.Core
         public void Stop()
         {
             IsMoving = false;
-        }
-
-        public void BeforeTick()
-        {
-            Stop();
         }
 
         public void SetCondition(ICondition condition)

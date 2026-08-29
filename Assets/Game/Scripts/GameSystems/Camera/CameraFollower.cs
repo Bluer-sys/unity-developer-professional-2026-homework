@@ -10,7 +10,7 @@ namespace Game.Camera
         [SerializeField] private float _followSpeed;
         
         private PlayerRef _playerRef;
-        private NetworkObject _player;
+        private CameraTarget _target;
 
         public void PlayerJoined(PlayerRef player)
         {
@@ -26,20 +26,33 @@ namespace Game.Camera
                 return;
             
             _playerRef = default;
-            _player = null;
+            _target = null;
         }
         
         public override void Render()
         {
-            if (_playerRef.IsNone)
+            if(!TrySetTarget())
                 return;
-
-            if (_player == null && !Runner.TryGetPlayerObject(_playerRef, out _player))
-                return;
-
-            Vector3 targetPosition = _player.transform.position + _offset;
+            
+            Vector3 targetPosition = _target.Target.transform.position + _offset;
 
             _camera.transform.position = Vector3.Lerp(_camera.transform.position, targetPosition, _followSpeed * Time.deltaTime);
+        }
+
+        private bool TrySetTarget()
+        {
+            if(_target != null)
+                return true;
+            
+            if (_playerRef.IsNone)
+                return false;
+
+            if (!Runner.TryGetPlayerObject(_playerRef, out var player))
+                return false;
+
+            _target = player.GetComponentInChildren<CameraTarget>();
+
+            return _target != null;
         }
     }
 }

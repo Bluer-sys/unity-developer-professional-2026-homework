@@ -13,7 +13,9 @@ namespace Game.Player
             if(!Runner.IsServer)
                 return;
 
-            NetworkObject character = Runner.Spawn(_characterPrefab, _spawnPointService.GetRandomSpawnPosition(), Quaternion.identity, player);
+            Vector3 spawnPos = _spawnPointService.GetRandomSpawnPosition();
+            NetworkObject character = Runner.Spawn(_characterPrefab, spawnPos, Quaternion.identity, player);
+            
             Runner.SetPlayerObject(player, character);
         }
     }

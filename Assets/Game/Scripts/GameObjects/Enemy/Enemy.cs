@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using Game.Core;
 using UnityEngine;
@@ -7,16 +6,14 @@ namespace Game.GameObjects
 {
     public class Enemy : NetworkBehaviour, MoveComponent.ICondition, IInteractableComponent
     {
-        public event Action<NetworkObject> OnPortalReached;
-
         [SerializeField] private HealthComponent _healthComponent;
         [SerializeField] private MoveComponent _moveComponent;
         [SerializeField] private float _attackCooldown;
 
         private Vector3 _moveDirection;
 
-        [Networked, OnChangedRender(nameof(OnPortalReachedChanged))]
-        private NetworkBool IsPortalReached { get; set; }
+        [Networked]
+        public NetworkBool IsPortalReached { get; private set; }
 
         [Networked]
         private TickTimer AttackTimer { get; set; }
@@ -44,6 +41,9 @@ namespace Game.GameObjects
 
         public void Interact(GameObject interactor)
         {
+            if(!Runner || !Runner.IsRunning)
+                return;
+            
             if (interactor.TryGetComponent(out Portal _) && 
                 interactor.TryGetComponent(out HealthComponent portalHealth))
             {
@@ -57,12 +57,6 @@ namespace Game.GameObjects
                 heroHealth.Decrement(1);
                 ResetTimer();
             }
-        }
-
-        private void OnPortalReachedChanged()
-        {
-            if(IsPortalReached)
-                OnPortalReached?.Invoke(Object);
         }
 
         private void ResetTimer()
