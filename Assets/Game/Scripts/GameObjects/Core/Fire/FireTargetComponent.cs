@@ -26,6 +26,9 @@ namespace Game.Core
             if(Runner == null || !Runner.IsRunning)
                 return;
 
+            if(!HasStateAuthority)
+                return;
+
             if (_condition != null && !_condition.IsMet())
                 return;
             

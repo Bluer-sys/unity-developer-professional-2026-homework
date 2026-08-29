@@ -44,7 +44,7 @@ namespace Game.Projectiles
             float deltaTime = runner.DeltaTime;
             float spawnTime = projectile.StartTick * deltaTime;
 
-            float renderTime = runner.LocalPlayer == player || runner.IsServer
+            float renderTime = runner.IsServer
                                    ? runner.LocalRenderTime + deltaTime
                                    : runner.RemoteRenderTime + deltaTime;
 
