@@ -1,5 +1,6 @@
 using Fusion;
 using Game.Core;
+using SampleGame;
 using UnityEngine;
 
 namespace Game.GameObjects
@@ -51,10 +52,10 @@ namespace Game.GameObjects
                 IsPortalReached = true;
             }
             else if(interactor.TryGetComponent(out Hero _) && 
-                    interactor.TryGetComponent(out HealthComponent heroHealth) && 
+                    interactor.TryGetComponent(out TakeDamageComponent takeDamageComponent) && 
                     AttackTimer.Expired(Runner))
             {
-                heroHealth.Decrement(1);
+                takeDamageComponent.TakeDamage(new TakeDamageArgs(1));
                 ResetTimer();
             }
         }

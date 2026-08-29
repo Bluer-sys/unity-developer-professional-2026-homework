@@ -23,6 +23,9 @@ namespace Game.Core
             if (Runner == null || !Runner.IsRunning)
                 return;
 
+            if(!IsTargetValid(_targetComponent.Target))
+                _targetComponent.Target = null;
+            
             int count = Runner.GetPhysicsScene().OverlapSphere(
                     transform.position,
                     _radius,
@@ -54,14 +57,18 @@ namespace Game.Core
                 return false;
 
             var obj = targetCollider.GetComponentInParent<NetworkObject>();
+            
+            return IsTargetValid(obj);
+        }
 
+        private bool IsTargetValid(NetworkObject obj)
+        {
             if (obj == null || obj.Runner == null || !obj.Runner.IsRunning)
                 return false;
-            
-            return obj.TryGetBehaviour(out HealthComponent targetHealth) && 
-                   targetHealth.IsAlive;
+
+            return obj.TryGetBehaviour(out HealthComponent targetHealth) && targetHealth.IsAlive;
         }
-        
+
         private sealed class DistanceComparer : IComparer<Collider>
         {
             public static readonly DistanceComparer Instance = new();

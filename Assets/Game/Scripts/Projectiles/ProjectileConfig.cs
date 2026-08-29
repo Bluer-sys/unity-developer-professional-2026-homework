@@ -1,4 +1,5 @@
 using Fusion;
+using SampleGame;
 using UnityEngine;
 
 namespace Game.Projectiles
@@ -54,13 +55,14 @@ namespace Game.Projectiles
 
         private bool DealDamage(Collider collider, PlayerRef player)
         {
-            // TODO: implement
-            /*NetworkObject target = collider.GetComponentInParent<NetworkObject>();
+            var target = collider.GetComponentInParent<NetworkObject>();
 
-            if (target == null || target.InputAuthority == player || !target.TryGetBehaviour(out TakeDamageComponent takeDamageComponent))
+            if (target == null ||
+                target.InputAuthority == player || 
+                !target.TryGetBehaviour(out TakeDamageComponent takeDamageComponent))
                 return false;
 
-            takeDamageComponent.TakeDamage(new TakeDamageArgs(player, _damage));*/
+            takeDamageComponent.TakeDamage(new TakeDamageArgs(_damage));
             return true;
         }
     }

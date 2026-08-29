@@ -8,11 +8,8 @@ namespace Game.View.Core
     {
         private static readonly int IsMoving = Animator.StringToHash(nameof(IsMoving));
 
-        [SerializeField]
-        private MoveComponent _moveComponent;
-
-        [SerializeField]
-        private Animator _animator;
+        [SerializeField] private MoveComponent _moveComponent;
+        [SerializeField] private Animator _animator;
         
         public override void Spawned()
         {
