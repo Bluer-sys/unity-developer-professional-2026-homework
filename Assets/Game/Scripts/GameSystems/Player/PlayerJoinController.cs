@@ -7,6 +7,7 @@ namespace Game.Player
     {
         [SerializeField] private GameObject _characterPrefab;
         [SerializeField] private SpawnPointService _spawnPointService;
+        [SerializeField] private PlayersRoom _playersRoom;
         
         public void PlayerJoined(PlayerRef player)
         {
@@ -17,6 +18,7 @@ namespace Game.Player
             NetworkObject character = Runner.Spawn(_characterPrefab, spawnPos, Quaternion.identity, player);
             
             Runner.SetPlayerObject(player, character);
+            _playersRoom.JoinPlayer(character);
         }
     }
 }

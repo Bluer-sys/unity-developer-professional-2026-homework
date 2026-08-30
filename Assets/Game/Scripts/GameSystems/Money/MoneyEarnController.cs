@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Money
 {
-    public class MoneyEarnController : MonoBehaviour, EnemyWorld.IEnemyDeadListener
+    public class MoneyEarnController : MonoBehaviour, EnemyWorld.IEnemyDeadAction
     {
         [SerializeField] private MoneyStorage _moneyStorage;
         [SerializeField] private EnemyWorld _enemyWorld;
@@ -11,10 +11,10 @@ namespace Game.Money
         
         private void Start()
         {
-            _enemyWorld.SetEnemyDeadListener(this);
+            _enemyWorld.SetEnemyDeadAction(this);
         }
 
-        void EnemyWorld.IEnemyDeadListener.Invoke()
+        void EnemyWorld.IEnemyDeadAction.Invoke()
         {
             var reward = Random.Range(_enemyDeadReward.x, _enemyDeadReward.y + 1);
 

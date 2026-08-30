@@ -8,7 +8,7 @@ namespace Game
 {
     public class EnemyWorld : NetworkBehaviour
     {
-        public interface IEnemyDeadListener
+        public interface IEnemyDeadAction
         {
             void Invoke();
         }
@@ -18,13 +18,14 @@ namespace Game
         
         private readonly List<NetworkObject> _spawnedEnemies = new();
 
-        private IEnemyDeadListener _enemyDeadListener;
-        
+        private IEnemyDeadAction _enemyDeadAction;
+        public bool IsEmpty => _spawnedEnemies.Count == 0;
+
         public void Spawn(Vector3 at)
         {
             NetworkObject obj = Runner.Spawn(_enemyPrefab, at, Quaternion.identity);
             obj.GetComponent<NetworkTransform>().Teleport(at);
-            Physics.SyncTransforms();
+            Physics.SyncTransforms(); // Враги спавнились, оказывались в портале в первом кадре (в 0 координат) и сразу умирали. Решение - Teleport() + Physics.SyncTransforms()
 
             var enemy = obj.GetBehaviour<Enemy>();
             var moveDir = (_moveTarget.position - enemy.transform.position).normalized;
@@ -34,7 +35,17 @@ namespace Game
             _spawnedEnemies.Add(obj);
         }
 
-        public void DespawnOrphans()
+        public override void FixedUpdateNetwork()
+        {
+            DespawnOrphans();
+        }
+
+        public void SetEnemyDeadAction(IEnemyDeadAction action)
+        {
+            _enemyDeadAction = action;
+        }
+
+        private void DespawnOrphans()
         {
             var orphans = UnityEngine.Pool.ListPool<NetworkObject>.Get();
 
@@ -45,7 +56,7 @@ namespace Game
                     (enemy.IsPortalReached || health.IsDead))
                 {
                     if(health.IsDead)
-                        _enemyDeadListener?.Invoke();
+                        _enemyDeadAction?.Invoke();
                     
                     Runner.Despawn(obj);
                     orphans.Add(obj);
@@ -56,11 +67,6 @@ namespace Game
                 _spawnedEnemies.Remove(obj);
 
             UnityEngine.Pool.ListPool<NetworkObject>.Release(orphans);
-        }
-
-        public void SetEnemyDeadListener(IEnemyDeadListener listener)
-        {
-            _enemyDeadListener = listener;
         }
     }
 }
