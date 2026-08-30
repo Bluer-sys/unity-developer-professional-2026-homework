@@ -791,6 +791,88 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32769385}
   m_Mesh: {fileID: -8006561941180419209, guid: 5dfbc79951d7a4d45b6b2b1a94cf7318, type: 3}
+--- !u!1 &34478199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34478200}
+  - component: {fileID: 34478204}
+  - component: {fileID: 34478201}
+  - component: {fileID: 34478203}
+  m_Layer: 0
+  m_Name: <MoneyStorage>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &34478200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34478199}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.43676257, y: -2.323532, z: -0.22930527}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &34478201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34478199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7f79d28af7408088a85bba6741f24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startMoney: 120
+  _Current: 0
+--- !u!114 &34478203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34478199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f32848bbe1c34dd688a7ba1ec19a1bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyStorage: {fileID: 34478201}
+  _enemyWorld: {fileID: 1389710742}
+  _enemyDeadReward: {x: 30, y: 50}
+--- !u!114 &34478204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34478199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2034800121
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 34478201}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &39775652
 GameObject:
   m_ObjectHideFlags: 0
@@ -19051,6 +19133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 852186368}
+  - component: {fileID: 852186369}
   m_Layer: 5
   m_Name: Money
   m_TagString: Untagged
@@ -19080,6 +19163,20 @@ RectTransform:
   m_AnchoredPosition: {x: 47, y: -29}
   m_SizeDelta: {x: 333.8, y: 80.3}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &852186369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852186367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 473e44949b9b432c9fc8140017fac3ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyText: {fileID: 1767864885}
+  _moneyStorage: {fileID: 34478201}
 --- !u!1 &857873511
 GameObject:
   m_ObjectHideFlags: 0
@@ -26603,7 +26700,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2078, y: -998}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1166778498
 MonoBehaviour:
@@ -33116,6 +33213,7 @@ GameObject:
   - component: {fileID: 1389710739}
   - component: {fileID: 1389710741}
   - component: {fileID: 1389710740}
+  - component: {fileID: 1389710742}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -33150,10 +33248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715aaeda2fcd4d279697b523e2ebc842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 1011030080782938114, guid: b5e3677b4a8dab949bfca93b64572662, type: 3}
   _spawnPointService: {fileID: 382391469}
+  _enemyWorld: {fileID: 1389710742}
   _spawnInterval: 3
-  _moveTarget: {fileID: 1317087209}
 --- !u!114 &1389710741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33172,7 +33269,22 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 1389710740}
+  - {fileID: 1389710742}
   ForceRemoteRenderTimeframe: 0
+--- !u!114 &1389710742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389710738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1559786049147a58d12802d3eefd48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPrefab: {fileID: 1011030080782938114, guid: b5e3677b4a8dab949bfca93b64572662, type: 3}
+  _moveTarget: {fileID: 1317087209}
 --- !u!1 &1390477072
 GameObject:
   m_ObjectHideFlags: 0
@@ -50617,4 +50729,5 @@ SceneRoots:
   - {fileID: 158099399}
   - {fileID: 556314716}
   - {fileID: 1304025161}
+  - {fileID: 34478200}
   - {fileID: 1415757924}

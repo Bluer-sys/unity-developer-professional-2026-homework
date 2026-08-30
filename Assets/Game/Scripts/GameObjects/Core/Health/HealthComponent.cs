@@ -9,7 +9,7 @@ namespace Game.Core
         public event Action<int> OnHealthChanged;
         public event Action<NetworkObject> OnDeath;
 
-        [Networked, OnChangedRender(nameof(InvokeHealthChanged))]
+        [Networked, OnChangedRender(nameof(InvokeStateChanged))]
         public int Current { get; set; }
 
         private static PropertyReader<int> HealthReader =
@@ -28,6 +28,7 @@ namespace Game.Core
         public override void Spawned()
         {
             ResetHealth();
+            InvokeHealthChanged();
         }
 
         public void Decrement(int damage)
@@ -46,14 +47,19 @@ namespace Game.Core
             Current = Max;
         }
 
-        private void InvokeHealthChanged(NetworkBehaviourBuffer previousSnapshot)
+        private void InvokeStateChanged(NetworkBehaviourBuffer previousSnapshot)
         {
             int previousHealth = HealthReader.Read(previousSnapshot);
-            
-            OnHealthChanged?.Invoke(Current);
+
+            InvokeHealthChanged();
             
             if (previousHealth > 0 && IsDead)
                 OnDeath?.Invoke(Object);
+        }
+
+        private void InvokeHealthChanged()
+        {
+            OnHealthChanged?.Invoke(Current);
         }
     }
 }

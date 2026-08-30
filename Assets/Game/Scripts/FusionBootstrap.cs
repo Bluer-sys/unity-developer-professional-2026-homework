@@ -1,5 +1,6 @@
 using Fusion;
 using Game.Camera;
+using Game.Money;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

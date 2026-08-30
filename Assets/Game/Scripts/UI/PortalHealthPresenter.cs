@@ -12,7 +12,6 @@ namespace Game
         private void OnEnable()
         {
             _portalHealth.OnHealthChanged += UpdateHealth;
-            UpdateHealth(_portalHealth.Current);
         }
 
         private void OnDisable()

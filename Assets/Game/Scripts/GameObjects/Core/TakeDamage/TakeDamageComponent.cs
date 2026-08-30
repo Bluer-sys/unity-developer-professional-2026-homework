@@ -4,7 +4,7 @@ using Game;
 using Game.Core;
 using UnityEngine;
 
-namespace SampleGame
+namespace Game
 {
     public sealed class TakeDamageComponent : NetworkBehaviour
     {
