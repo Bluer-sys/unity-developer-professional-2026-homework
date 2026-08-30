@@ -2,7 +2,7 @@ using Fusion;
 using Game.Core;
 using UnityEngine;
 
-namespace SampleGame
+namespace Game
 {
     public sealed class DeathAnimComponent : NetworkBehaviour
     {

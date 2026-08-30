@@ -1,5 +1,8 @@
-﻿namespace Game
+﻿using System;
+
+namespace Game
 {
+    [Flags]
     public enum PlayerKeys
     {
         Mine = 0,

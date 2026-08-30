@@ -2,27 +2,22 @@ using UnityEngine;
 
 namespace Game.Money
 {
-    public class MoneyEarnController : MonoBehaviour
+    public class MoneyEarnController : MonoBehaviour, EnemyWorld.IEnemyDeadListener
     {
         [SerializeField] private MoneyStorage _moneyStorage;
         [SerializeField] private EnemyWorld _enemyWorld;
 
         [SerializeField] private Vector2Int _enemyDeadReward;
         
-        private void OnEnable()
+        private void Start()
         {
-            _enemyWorld.OnEnemyDead += OnEnemyDead;
+            _enemyWorld.SetEnemyDeadListener(this);
         }
 
-        private void OnDisable()
-        {
-            _enemyWorld.OnEnemyDead -= OnEnemyDead;
-        }
-
-        private void OnEnemyDead()
+        void EnemyWorld.IEnemyDeadListener.Invoke()
         {
             var reward = Random.Range(_enemyDeadReward.x, _enemyDeadReward.y + 1);
-            
+
             _moneyStorage.EarnMoney(reward);
         }
     }

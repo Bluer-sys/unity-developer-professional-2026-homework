@@ -1,5 +1,4 @@
 using Fusion;
-using SampleGame;
 using UnityEngine;
 
 namespace Game.Projectiles

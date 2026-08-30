@@ -59,7 +59,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Size: {x: 1.3, y: 2, z: 1.3}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3274862782639442417
 MonoBehaviour:
@@ -84,7 +84,7 @@ MonoBehaviour:
   - {fileID: 6258167687150630304}
   - {fileID: 1339917866572143382}
   - {fileID: 4784342270040084078}
-  - {fileID: 7736397425498985153}
+  - {fileID: 8102848961478440880}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &4769806894882923294
 MonoBehaviour:
@@ -173,7 +173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4110996159869562643}
   - component: {fileID: 4784342270040084078}
-  - component: {fileID: 7736397425498985153}
+  - component: {fileID: 8102848961478440880}
   m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveComponent: {fileID: 6258167687150630304}
   _animator: {fileID: 4406589717366456297}
---- !u!114 &7736397425498985153
+--- !u!114 &8102848961478440880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,13 +220,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6681128362121645732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5a21bf01194212a520370a14e7a5a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c2098d9430a495d9f30c7a192c955e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 2234585692980628589}
-  _enemyHealth: {fileID: 2317091048976075927}
-  _deathVfx: {fileID: 8958766866816114753, guid: 9e95494e0642fa34e9fe945ac7b5c5b9, type: 3}
-  _deathVfxOffset: {x: 0, y: 0.6, z: 0}
+  _vfxPrefab: {fileID: 8958766866816114753, guid: 9e95494e0642fa34e9fe945ac7b5c5b9, type: 3}
+  _healthComponent: {fileID: 2317091048976075927}
 --- !u!1 &7136196916883076713
 GameObject:
   m_ObjectHideFlags: 0

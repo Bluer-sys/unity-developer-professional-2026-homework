@@ -42,6 +42,11 @@ namespace Game.Core
                 Current = Math.Min(Max, Current + heal);
         }
 
+        public void Die()
+        {
+            Current = 0;
+        }
+
         private void ResetHealth()
         {
             Current = Max;

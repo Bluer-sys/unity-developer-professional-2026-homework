@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Fusion;
 using Game.Core;
@@ -9,12 +8,17 @@ namespace Game
 {
     public class EnemyWorld : NetworkBehaviour
     {
-        public event Action OnEnemyDead;
-        
+        public interface IEnemyDeadListener
+        {
+            void Invoke();
+        }
+
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private Transform _moveTarget;
         
         private readonly List<NetworkObject> _spawnedEnemies = new();
+
+        private IEnemyDeadListener _enemyDeadListener;
         
         public void Spawn(Vector3 at)
         {
@@ -41,7 +45,7 @@ namespace Game
                     (enemy.IsPortalReached || health.IsDead))
                 {
                     if(health.IsDead)
-                        OnEnemyDead?.Invoke();
+                        _enemyDeadListener?.Invoke();
                     
                     Runner.Despawn(obj);
                     orphans.Add(obj);
@@ -52,6 +56,11 @@ namespace Game
                 _spawnedEnemies.Remove(obj);
 
             UnityEngine.Pool.ListPool<NetworkObject>.Release(orphans);
+        }
+
+        public void SetEnemyDeadListener(IEnemyDeadListener listener)
+        {
+            _enemyDeadListener = listener;
         }
     }
 }

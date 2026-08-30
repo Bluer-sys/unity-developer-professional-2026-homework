@@ -1,6 +1,5 @@
 using Fusion;
 using Game.Core;
-using SampleGame;
 using UnityEngine;
 
 namespace Game.GameObjects
@@ -46,17 +45,23 @@ namespace Game.GameObjects
                 return;
             
             if (interactor.TryGetComponent(out Portal _) && 
-                interactor.TryGetComponent(out HealthComponent portalHealth))
+                interactor.TryGetComponent(out TakeDamageComponent portalTakeDamage))
             {
-                portalHealth.Decrement(1);
+                portalTakeDamage.TakeDamage(new TakeDamageArgs(1));
                 IsPortalReached = true;
             }
             else if(interactor.TryGetComponent(out Hero _) && 
-                    interactor.TryGetComponent(out TakeDamageComponent takeDamageComponent) && 
+                    interactor.TryGetComponent(out TakeDamageComponent heroTakeDamage) && 
                     AttackTimer.Expired(Runner))
             {
-                takeDamageComponent.TakeDamage(new TakeDamageArgs(1));
+                heroTakeDamage.TakeDamage(new TakeDamageArgs(1));
                 ResetTimer();
+            }
+            else if(interactor.TryGetComponent(out Mine _) && 
+                    interactor.TryGetComponent(out TakeDamageComponent mineTakeDamage))
+            {
+                mineTakeDamage.TakeDamage(new TakeDamageArgs(1));
+                _healthComponent.Die();
             }
         }
 

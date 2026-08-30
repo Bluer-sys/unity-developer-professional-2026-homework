@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 7559792179628585245}
   - component: {fileID: 5913591487440583009}
   - component: {fileID: -8645433538541993940}
+  - component: {fileID: 5203373141633513016}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Portal
@@ -281,6 +282,7 @@ MonoBehaviour:
   - {fileID: 7559792179628585245}
   - {fileID: 5913591487440583009}
   - {fileID: -8645433538541993940}
+  - {fileID: 5203373141633513016}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7559792179628585245
 MonoBehaviour:
@@ -324,3 +326,16 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &5203373141633513016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2755872164277444644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3092a4cbe54d54a0614960650388f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthComponent: {fileID: 5913591487440583009}
