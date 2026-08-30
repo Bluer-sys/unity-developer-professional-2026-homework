@@ -31219,7 +31219,7 @@ PrefabInstance:
       objectReference: {fileID: 1317087207}
     - target: {fileID: 5913591487440583009, guid: c4c58b8d98fa4874c8902ced03964d3c, type: 3}
       propertyPath: <Max>k__BackingField
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7559792179628585245, guid: c4c58b8d98fa4874c8902ced03964d3c, type: 3}
       propertyPath: _gameResult
@@ -33840,7 +33840,7 @@ MonoBehaviour:
   _enemyWorld: {fileID: 1389710742}
   _gameResult: {fileID: 262610278}
   _spawnInterval: 1
-  _enemyCount: 300
+  _enemyCount: 30
 --- !u!114 &1389710741
 MonoBehaviour:
   m_ObjectHideFlags: 0
