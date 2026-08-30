@@ -8220,7 +8220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 343090203}
   m_Layer: 5
-  m_Name: LosePopup
+  m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8233,7 +8233,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343090202}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8241,12 +8241,12 @@ RectTransform:
   - {fileID: 2031936207}
   - {fileID: 1340969986}
   - {fileID: 1213502216}
-  m_Father: {fileID: 2134370797}
+  m_Father: {fileID: 1166778497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 2077.273, y: 998.2318}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &344369138
 GameObject:
@@ -8628,6 +8628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 363295877}
   - component: {fileID: 363295879}
+  - component: {fileID: 363295880}
   m_Layer: 5
   m_Name: PortalHealthBar
   m_TagString: Untagged
@@ -8674,6 +8675,20 @@ MonoBehaviour:
   _followFiller: {fileID: 118498981}
   _caption: {fileID: 1753714911}
   _smoothDuration: 0.5
+--- !u!114 &363295880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363295876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d3464d4ff84b8cb913b30fd8d04bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _portalHealth: {fileID: 1317087211}
+  _bar: {fileID: 363295879}
 --- !u!1 &365797299
 GameObject:
   m_ObjectHideFlags: 0
@@ -26553,6 +26568,57 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165167548}
   m_Mesh: {fileID: -19793887009534026, guid: 1ead2f8140c012a45a21a853418fa61b, type: 3}
+--- !u!1 &1166778496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166778497}
+  - component: {fileID: 1166778498}
+  m_Layer: 5
+  m_Name: LosePopup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1166778497
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166778496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 343090203}
+  m_Father: {fileID: 2134370797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -2078, y: -998}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1166778498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166778496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b727179d6acc454e81a29b1ee4c60f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _portalHealth: {fileID: 1317087211}
+  _losePopup: {fileID: 343090202}
 --- !u!1 &1168240268
 GameObject:
   m_ObjectHideFlags: 0
@@ -30539,6 +30605,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7687135409742009684, guid: c4c58b8d98fa4874c8902ced03964d3c, type: 3}
   m_PrefabInstance: {fileID: 1317087206}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1317087211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5913591487440583009, guid: c4c58b8d98fa4874c8902ced03964d3c, type: 3}
+  m_PrefabInstance: {fileID: 1317087206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1bc73338074a9cb79f12525a30f866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1321235933
 GameObject:
   m_ObjectHideFlags: 0
@@ -49902,7 +49979,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1138086221}
-  - {fileID: 343090203}
+  - {fileID: 1166778497}
   m_Father: {fileID: 556314716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
