@@ -1,0 +1,11 @@
+{
+    "name": "Game",
+    "rootNamespace": "Game",
+    "references": [
+        "Atomic.Elements",
+        "Atomic.Entities",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "DOTweenModules"
+    ]
+}

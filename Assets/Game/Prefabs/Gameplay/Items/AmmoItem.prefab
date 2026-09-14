@@ -171,6 +171,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6979400397003836636}
   - component: {fileID: 4267398721809954443}
+  - component: {fileID: 9100000000000000001}
+  - component: {fileID: 9100000000000000002}
   m_Layer: 11
   m_Name: AmmoItem
   m_TagString: Untagged
@@ -409,3 +411,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4162591235664616, guid: 7a5dc0c73dd33934e8c72bd06458e20f, type: 3}
   m_PrefabInstance: {fileID: 8953640622513916084}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9100000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332313712654455240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  useUnityLifecycle: 1
+  disposeValues: 0
+  installOnAwake: 1
+  uninstallOnDestroy: 1
+  scriptableInstallers: []
+  sceneInstallers:
+  - {fileID: 9100000000000000002}
+  onlySelectedGizmos: 0
+  onlyEditModeGizmos: 1
+  autoCompile: 0
+  initialTagCapacity: 1
+  initialValueCapacity: 2
+  initialBehaviourCapacity: 0
+--- !u!114 &9100000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332313712654455240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
