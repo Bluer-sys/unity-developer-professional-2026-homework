@@ -14,7 +14,7 @@ namespace Atomic.Entities
             EntityBehaviourSpy spy = new EntityBehaviourSpy();
 
             //Act:
-            SceneEntity entity = SceneEntity.Create(behaviours: new IEntityBehaviour[]
+            MonoEntity entity = MonoEntity.Create(behaviours: new IEntityBehaviour[]
             {
                 spy
             });
@@ -44,7 +44,7 @@ namespace Atomic.Entities
             Assert.IsTrue(spy.LateUpdated);
 
             //Finalize:
-            SceneEntity.Destroy(entity);
+            MonoEntity.Destroy(entity);
             Assert.IsFalse(entity.Enabled);
             Assert.IsTrue(spy.Disabled);
 
@@ -64,7 +64,7 @@ namespace Atomic.Entities
             EntityBehaviourSpy spy = new EntityBehaviourSpy();
 
             //Act:
-            SceneEntity entity = SceneEntity.Create();
+            MonoEntity entity = MonoEntity.Create();
 
             //Wait unity callbacks
             yield return new WaitForEndOfFrame();
@@ -90,7 +90,7 @@ namespace Atomic.Entities
             Assert.IsTrue(spy.LateUpdated);
 
             //Finalize:
-            SceneEntity.Destroy(entity);
+            MonoEntity.Destroy(entity);
         }
 
 
@@ -101,7 +101,7 @@ namespace Atomic.Entities
             EntityBehaviourSpy spy = new EntityBehaviourSpy();
 
             //Act:
-            SceneEntity entity = SceneEntity.Create(behaviours: new IEntityBehaviour[]
+            MonoEntity entity = MonoEntity.Create(behaviours: new IEntityBehaviour[]
             {
                 spy
             }, useUnityLifecycle: true);

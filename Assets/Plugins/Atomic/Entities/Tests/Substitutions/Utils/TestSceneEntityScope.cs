@@ -5,11 +5,11 @@ namespace Atomic.Entities
 {
     public class TestSceneEntityScope : IDisposable
     {
-        private readonly List<SceneEntity> _entities = new();
+        private readonly List<MonoEntity> _entities = new();
         
-        public SceneEntity NewEntity(in SceneEntity.CreateArgs args = default)
+        public MonoEntity NewEntity(in MonoEntity.CreateArgs args = default)
         {
-            SceneEntity entity = SceneEntity.Create(in args);
+            MonoEntity entity = MonoEntity.Create(in args);
             _entities.Add(entity);
             return entity;
         }

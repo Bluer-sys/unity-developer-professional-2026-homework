@@ -598,12 +598,12 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private KeyNotFoundException ValueNotFoundException(int key) =>
-            new($"The given value {EntityNames.IdToName(key)} was not present in the entity: {_name}");
+            new($"The given value {EntityKeyStore.IdToName(key)} was not present in the entity: {_name}");
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Exception ValueAlreadyAddedException(int key) =>
             new ArgumentException(
-                $"A value with the same key {EntityNames.IdToName(key)} already has been added in the entity: {_name}!");
+                $"A value with the same key {EntityKeyStore.IdToName(key)} already has been added in the entity: {_name}!");
 
         public struct ValueEnumerator : IEnumerator<KeyValuePair<int, object>>
         {

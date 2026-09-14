@@ -39,11 +39,11 @@ namespace Atomic.Entities
             get => _name;
             set => _name = value;
         }
-        
+
         /// <summary>
         /// Indicates whether the world is enabled.
         /// </summary>
-        
+
 #if ODIN_INSPECTOR
         [ShowInInspector]
 #endif
@@ -95,13 +95,8 @@ namespace Atomic.Entities
             if (_enabled)
                 return;
 
-            int currentIndex = _head;
-            while (currentIndex != UNDEFINED_INDEX)
-            {
-                ref readonly Slot slot = ref _slots[currentIndex];
-                slot.value.Enable();
-                currentIndex = slot.right;
-            }
+            for (int i = 0; i < _count; i++)
+                _slots[_order[i]].value.Enable();
 
             _enabled = true;
 
@@ -115,13 +110,8 @@ namespace Atomic.Entities
             if (!_enabled)
                 return;
 
-            int currentIndex = _head;
-            while (currentIndex != UNDEFINED_INDEX)
-            {
-                ref readonly Slot slot = ref _slots[currentIndex];
-                slot.value.Disable();
-                currentIndex = slot.right;
-            }
+            for (int i = 0; i < _count; i++)
+                _slots[_order[i]].value.Disable();
 
             _enabled = false;
 
@@ -135,13 +125,8 @@ namespace Atomic.Entities
             if (!_enabled)
                 return;
 
-            int currentIndex = _head;
-            while (currentIndex != UNDEFINED_INDEX)
-            {
-                ref readonly Slot slot = ref _slots[currentIndex];
-                slot.value.Tick(deltaTime);
-                currentIndex = slot.right;
-            }
+            for (int i = 0; i < _count; i++)
+                _slots[_order[i]].value.Tick(deltaTime);
 
             this.OnTicked?.Invoke(deltaTime);
         }
@@ -152,13 +137,8 @@ namespace Atomic.Entities
             if (!_enabled)
                 return;
 
-            int currentIndex = _head;
-            while (currentIndex != UNDEFINED_INDEX)
-            {
-                ref readonly Slot slot = ref _slots[currentIndex];
-                slot.value.FixedTick(deltaTime);
-                currentIndex = slot.right;
-            }
+            for (int i = 0; i < _count; i++)
+                _slots[_order[i]].value.FixedTick(deltaTime);
 
             this.OnFixedTicked?.Invoke(deltaTime);
         }
@@ -169,13 +149,8 @@ namespace Atomic.Entities
             if (!_enabled)
                 return;
 
-            int currentIndex = _head;
-            while (currentIndex != UNDEFINED_INDEX)
-            {
-                ref readonly Slot slot = ref _slots[currentIndex];
-                slot.value.LateTick(deltaTime);
-                currentIndex = slot.right;
-            }
+            for (int i = 0; i < _count; i++)
+                _slots[_order[i]].value.LateTick(deltaTime);
 
             this.OnLateTicked?.Invoke(deltaTime);
         }

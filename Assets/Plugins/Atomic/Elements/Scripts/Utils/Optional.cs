@@ -22,9 +22,9 @@ namespace Atomic.Elements
     {
 #if ODIN_INSPECTOR
         [FoldoutGroup("")]
+        [HideLabel]
 #endif
 #if UNITY_5_3_OR_NEWER
-        [HideLabel]
         [SerializeField]
 #endif
         private bool active;
@@ -33,9 +33,9 @@ namespace Atomic.Elements
         // [HorizontalGroup]
         [FoldoutGroup("")]
         [ShowIf(nameof(active))]
+        [HideLabel]
 #endif
 #if UNITY_5_3_OR_NEWER
-        [HideLabel]
         [SerializeField]
 #endif
         private T value;

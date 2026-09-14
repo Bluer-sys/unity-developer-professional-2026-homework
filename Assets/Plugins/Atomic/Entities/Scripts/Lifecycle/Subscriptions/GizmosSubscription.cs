@@ -5,10 +5,10 @@ namespace Atomic.Entities
 {
     public readonly struct GizmosSubscription : IDisposable
     {
-        private readonly IGizmosLifecycle _source;
+        private readonly IGizmosSource _source;
         private readonly Action _callback;
 
-        public GizmosSubscription(IGizmosLifecycle source, Action callback)
+        public GizmosSubscription(IGizmosSource source, Action callback)
         {
             _source = source ?? throw new ArgumentNullException(nameof(source));
             _callback = callback ?? throw new ArgumentNullException(nameof(callback));

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using static Atomic.Entities.EntityNames;
+using static Atomic.Entities.EntityKeyStore;
 
 namespace Atomic.Entities
 {

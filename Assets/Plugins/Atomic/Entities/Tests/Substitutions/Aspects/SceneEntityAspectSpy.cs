@@ -1,6 +1,6 @@
 namespace Atomic.Entities
 {
-    public class SceneEntityAspectSpy : SceneEntityAspect
+    public class MonoEntityAspectSpy : MonoEntityAspect
     {
         public bool Applied { get; private set; }
         

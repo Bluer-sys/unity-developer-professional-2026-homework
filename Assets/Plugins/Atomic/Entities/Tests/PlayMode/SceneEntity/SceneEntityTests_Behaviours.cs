@@ -4,14 +4,14 @@ using NUnit.Framework;
 
 namespace Atomic.Entities
 {
-    public sealed partial class SceneEntityTests
+    public sealed partial class MonoEntityTests
     {
         #region OnBehaviourAdded
 
         [Test]
         public void OnBehaviourAdded_IsInvoked_WhenBehaviourIsAdded()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var behaviour = new EntityBehaviourSpy();
 
             IEntity calledEntity = null;
@@ -32,7 +32,7 @@ namespace Atomic.Entities
         [Test]
         public void OnBehaviourAdded_IsNotInvoked_WhenBehaviourAlreadyExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var behaviour = new EntityBehaviourSpy();
             entity.AddBehaviour(behaviour);
 
@@ -48,7 +48,7 @@ namespace Atomic.Entities
         [Test]
         public void OnBehaviourAdded_IsNotInvoked_WhenNullBehaviour()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             bool wasCalled = false;
 
             entity.OnBehaviourAdded += (_, _) => wasCalled = true;
@@ -65,7 +65,7 @@ namespace Atomic.Entities
         [Test]
         public void OnBehaviourDeleted_IsInvoked_WhenBehaviourIsDeleted()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var behaviour = new EntityBehaviourSpy();
             entity.AddBehaviour(behaviour);
 
@@ -87,7 +87,7 @@ namespace Atomic.Entities
         [Test]
         public void OnBehaviourDeleted_IsNotInvoked_WhenBehaviourDoesNotExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var behaviour = new EntityBehaviourSpy();
 
             bool wasCalled = false;
@@ -106,7 +106,7 @@ namespace Atomic.Entities
             var b = new EntityBehaviourSpy();
 
             var deleted = new List<IEntityBehaviour>();
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             entity.OnBehaviourDeleted += (_, behaviour) => { deleted.Add(behaviour); };
@@ -123,7 +123,7 @@ namespace Atomic.Entities
         [Test]
         public void BehaviourCount_ReturnsZero_WhenNoBehaviours()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             Assert.AreEqual(0, entity.BehaviourCount);
         }
@@ -131,7 +131,7 @@ namespace Atomic.Entities
         [Test]
         public void BehaviourCount_Increases_WhenBehavioursAdded()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityBehaviourSpy());
             entity.AddBehaviour(new EntityBehaviourSpy());
 
@@ -144,7 +144,7 @@ namespace Atomic.Entities
             var a = new EntityBehaviourSpy();
             var b = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             entity.DelBehaviour(a);
@@ -155,7 +155,7 @@ namespace Atomic.Entities
         [Test]
         public void BehaviourCount_Zero_AfterClear()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityBehaviourSpy());
 
             entity.ClearBehaviours();
@@ -182,7 +182,7 @@ namespace Atomic.Entities
                 behaviourStub
             };
 
-            var entity = SceneEntity.Create(null, null, null, expectedBehaviours);
+            var entity = MonoEntity.Create(null, null, null, expectedBehaviours);
 
             // Act
             var actualBehaviours = entity.GetBehaviours();
@@ -197,7 +197,7 @@ namespace Atomic.Entities
             var a = new EntityBehaviourSpy();
             var b = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             var result = entity.GetBehaviours();
@@ -210,7 +210,7 @@ namespace Atomic.Entities
         [Test]
         public void GetBehaviours_ReturnsEmptyArray_WhenNoBehaviours()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             var result = entity.GetBehaviours();
 
@@ -222,7 +222,7 @@ namespace Atomic.Entities
         public void GetBehaviours_ReturnedArrayIsIndependentCopy()
         {
             var behaviour = new EntityBehaviourSpy();
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(behaviour);
 
             var result = entity.GetBehaviours();
@@ -247,7 +247,7 @@ namespace Atomic.Entities
             var initStub = new EntityInitSpy();
             var behaviourStub = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create(null, null, null, new IEntityBehaviour[]
+            var entity = MonoEntity.Create(null, null, null, new IEntityBehaviour[]
             {
                 updateStub,
                 initStub
@@ -262,7 +262,7 @@ namespace Atomic.Entities
         [Test]
         public void HasBehaviour_ReturnsTrue_WhenBehaviourOfTypeExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityBehaviourSpy());
 
             bool result = entity.HasBehaviour<EntityBehaviourSpy>();
@@ -273,7 +273,7 @@ namespace Atomic.Entities
         [Test]
         public void HasBehaviour_ReturnsFalse_WhenNoBehaviours()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             bool result = entity.HasBehaviour<EntityBehaviourSpy>();
 
@@ -283,7 +283,7 @@ namespace Atomic.Entities
         [Test]
         public void HasBehaviour_ReturnsTrue_WhenMultipleExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[]
             {
                 new EntityBehaviourSpy(),
@@ -298,7 +298,7 @@ namespace Atomic.Entities
         [Test]
         public void HasBehaviour_ReturnsFalse_WhenTypeDoesNotMatch()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityTickSpy());
 
             bool result = entity.HasBehaviour<IEntityInit>();
@@ -317,7 +317,7 @@ namespace Atomic.Entities
             var updateStub = new EntityTickSpy();
             IEntityBehaviour addedBehaviour = null;
 
-            var entity = SceneEntity.Create(null, null, null, new IEntityBehaviour[] {updateStub});
+            var entity = MonoEntity.Create(null, null, null, new IEntityBehaviour[] {updateStub});
             entity.OnBehaviourAdded += (_, b) => addedBehaviour = b;
 
             // Act
@@ -335,7 +335,7 @@ namespace Atomic.Entities
             var initStub = new EntityInitSpy();
             IEntityBehaviour addedBehaviour = null;
 
-            var entity = SceneEntity.Create(null, null, null, new IEntityBehaviour[] {updateStub});
+            var entity = MonoEntity.Create(null, null, null, new IEntityBehaviour[] {updateStub});
             entity.OnBehaviourAdded += (_, b) => addedBehaviour = b;
 
             // Act
@@ -351,7 +351,7 @@ namespace Atomic.Entities
             // Arrange
             IEntityBehaviour addedBehaviour = null;
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.OnBehaviourAdded += (_, b) => addedBehaviour = b;
 
             // Act
@@ -369,7 +369,7 @@ namespace Atomic.Entities
             //Arrange:
             var behaviourStub = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.Init();
 
             //Act
@@ -386,7 +386,7 @@ namespace Atomic.Entities
             //Arrange:
             var behaviourStub = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.Init();
             entity.Enable();
 
@@ -413,7 +413,7 @@ namespace Atomic.Entities
             var initStub = new EntityInitSpy();
             var behaviourStub = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create(null, null, null, new IEntityBehaviour[]
+            var entity = MonoEntity.Create(null, null, null, new IEntityBehaviour[]
             {
                 updateStub,
                 initStub
@@ -437,7 +437,7 @@ namespace Atomic.Entities
         {
             //Arrange:
             var behaviourStub = new EntityBehaviourSpy();
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(behaviourStub);
 
             //Act
@@ -453,7 +453,7 @@ namespace Atomic.Entities
             //Arrange:
             var behaviourStub = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(behaviourStub);
             entity.Init();
             entity.Enable();
@@ -473,7 +473,7 @@ namespace Atomic.Entities
             var behaviour1 = new EntityBehaviourSpy();
             var behaviour2 = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {behaviour1, behaviour2});
 
             var result = entity.DelBehaviour<EntityBehaviourSpy>();
@@ -487,7 +487,7 @@ namespace Atomic.Entities
         [Test]
         public void DelBehaviour_ReturnsFalse_WhenNoMatch()
         {
-            var entity = SceneEntity.Create(); // пусто
+            var entity = MonoEntity.Create(); // пусто
 
             var result = entity.DelBehaviour<EntityBehaviourSpy>();
 
@@ -502,7 +502,7 @@ namespace Atomic.Entities
             var b = new EntityBehaviourSpy();
             var c = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b, c});
 
             entity.DelBehaviour<EntityBehaviourSpy>();
@@ -523,7 +523,7 @@ namespace Atomic.Entities
             var updateStub = new EntityTickSpy();
             var initStub = new EntityInitSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[]
             {
                 updateStub,
@@ -543,7 +543,7 @@ namespace Atomic.Entities
             var updateStub = new EntityTickSpy();
             var initStub = new EntityInitSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var deleted = new List<IEntityBehaviour>();
 
             entity.OnBehaviourDeleted += (e, b) => deleted.Add(b);
@@ -567,7 +567,7 @@ namespace Atomic.Entities
             var stub = new EntityTickSpy();
             var stateChanged = false;
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.OnStateChanged += _ => stateChanged = true;
 
             entity.AddBehaviour(stub);
@@ -582,7 +582,7 @@ namespace Atomic.Entities
         [Test]
         public void ClearBehaviours_DoesNothing_WhenNoBehaviours()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var stateChanged = false;
             var behaviourDeletedCalled = false;
 
@@ -608,7 +608,7 @@ namespace Atomic.Entities
             var a = new EntityBehaviourSpy();
             var b = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             var enumerator = entity.GetBehaviourEnumerator();
@@ -628,7 +628,7 @@ namespace Atomic.Entities
             var a = new EntityBehaviourSpy();
             var b = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             var enumerator = entity.GetBehaviourEnumerator();
@@ -648,7 +648,7 @@ namespace Atomic.Entities
             var a = new EntityBehaviourSpy();
             var b = new EntityBehaviourSpy();
 
-            IEntity entity = SceneEntity.Create();
+            IEntity entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             var list = new List<IEntityBehaviour>();
@@ -669,7 +669,7 @@ namespace Atomic.Entities
             var a = new EntityBehaviourSpy();
             var b = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {a, b});
 
             var target = new IEntityBehaviour[2];
@@ -684,7 +684,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyBehaviours_ReturnsZero_WhenNoBehaviours()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var target = Array.Empty<IEntityBehaviour>();
 
             int count = entity.CopyBehaviours(target);
@@ -695,7 +695,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyBehaviours_ThrowsArgumentNullException_WhenArrayIsNull()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityBehaviourSpy());
 
             Assert.Throws<ArgumentNullException>(() => { entity.CopyBehaviours(null); });
@@ -704,7 +704,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyBehaviours_ThrowsArgumentException_WhenArrayTooSmall()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[]
             {
                 new EntityBehaviourSpy(),
@@ -726,7 +726,7 @@ namespace Atomic.Entities
             var behaviour1 = new EntityBehaviourSpy();
             var behaviour2 = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {behaviour1, behaviour2});
 
             var result0 = entity.GetBehaviourAt(0);
@@ -739,7 +739,7 @@ namespace Atomic.Entities
         [Test]
         public void GetBehaviourAt_Throws_WhenIndexIsNegative()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityBehaviourSpy());
 
             Assert.Throws<IndexOutOfRangeException>(() =>
@@ -752,7 +752,7 @@ namespace Atomic.Entities
         [Test]
         public void GetBehaviourAt_Throws_WhenIndexIsTooLarge()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(new EntityBehaviourSpy());
 
             Assert.Throws<IndexOutOfRangeException>(() =>
@@ -765,7 +765,7 @@ namespace Atomic.Entities
         [Test]
         public void GetBehaviourAt_Throws_WhenEmpty()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             Assert.Throws<IndexOutOfRangeException>(() =>
             {
@@ -782,7 +782,7 @@ namespace Atomic.Entities
         public void TryGetBehaviour_ReturnsTrue_WhenBehaviourExists()
         {
             var behaviour = new EntityBehaviourSpy();
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(behaviour);
 
             var result = entity.TryGetBehaviour<EntityBehaviourSpy>(out var found);
@@ -794,7 +794,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetBehaviour_ReturnsFalse_WhenNoBehaviours()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             var result = entity.TryGetBehaviour<EntityBehaviourSpy>(out var found);
 
@@ -808,7 +808,7 @@ namespace Atomic.Entities
             var first = new EntityBehaviourSpy();
             var second = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {first, second});
 
             var result = entity.TryGetBehaviour<EntityBehaviourSpy>(out var found);
@@ -825,7 +825,7 @@ namespace Atomic.Entities
         public void GetBehaviour_ReturnsInstance_WhenExists()
         {
             var behaviour = new EntityBehaviourSpy();
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviour(behaviour);
 
             var result = entity.GetBehaviour<EntityBehaviourSpy>();
@@ -839,7 +839,7 @@ namespace Atomic.Entities
             var first = new EntityBehaviourSpy();
             var second = new EntityBehaviourSpy();
 
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddBehaviours(new IEntityBehaviour[] {first, second});
 
             var result = entity.GetBehaviour<EntityBehaviourSpy>();
@@ -850,7 +850,7 @@ namespace Atomic.Entities
         [Test]
         public void GetBehaviour_ThrowsException_WhenNotFound()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             var ex = Assert.Throws<Exception>(() => { entity.GetBehaviour<EntityBehaviourSpy>(); });
 

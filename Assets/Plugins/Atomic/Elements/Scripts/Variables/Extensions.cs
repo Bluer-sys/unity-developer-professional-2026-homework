@@ -40,11 +40,19 @@ namespace Atomic.Elements
             new(() => getter.Invoke(it), value => setter.Invoke(it, value));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CopyTo(this IValue it, ISetter target) => 
+        public static void CopyTo(this IValue it, ISetter target) =>
             target.Value = it.Value;
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CopyTo<T>(this IValue<T> it, ISetter<T> target) => 
+        public static void CopyTo<T>(this IValue<T> it, ISetter<T> target) =>
             target.Value = it.Value;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void CopyFrom(this ISetter it, IValue target) =>
+            it.Value = target.Value;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void CopyFrom<T>(this ISetter<T> it, IValue<T> target) =>
+            it.Value = target.Value;
     }
 }

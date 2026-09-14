@@ -4,14 +4,14 @@ using NUnit.Framework;
 
 namespace Atomic.Entities
 {
-    public sealed partial class SceneEntityTests
+    public sealed partial class MonoEntityTests
     {
         #region OnValueAdded
 
         [Test]
         public void OnValueAdded_EventIsInvoked_WhenStructValueIsAdded()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             int? calledKey = null;
             int? calledValue = null;
@@ -34,7 +34,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueAdded_EventIsInvoked_WhenReferenceValueIsAdded()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             int? calledKey = null;
             object calledValue = null;
@@ -57,7 +57,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_ThrowsArgumentNullException_WhenReferenceValueIsNull()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             const int testKey = 1;
             var ex = Assert.Throws<ArgumentNullException>(() => entity.AddValue(testKey, null));
@@ -67,7 +67,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_ThrowsArgumentException_WhenKeyAlreadyExists_ForStruct()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             const int testKey = 5;
             entity.AddValue(testKey, 999);
@@ -79,7 +79,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_ThrowsArgumentException_WhenKeyAlreadyExists_ForReference()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             const int testKey = 7;
             entity.AddValue(testKey, "first");
@@ -95,7 +95,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_EventIsInvoked_WhenValueIsDeleted()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             int key = 101;
             int initialValue = 42;
@@ -121,7 +121,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_EventIsNotInvoked_WhenKeyDoesNotExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             bool eventCalled = false;
             entity.OnValueDeleted += (_, _, _) => eventCalled = true;
@@ -135,7 +135,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_IsInvoked_WhenValueExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int key = 10;
             int value = 123;
 
@@ -160,7 +160,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_IsNotInvoked_WhenValueDoesNotExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             bool wasCalled = false;
 
             entity.OnValueDeleted += (_, _, _) => wasCalled = true;
@@ -174,7 +174,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_IsInvoked_AfterMultipleAdds()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             List<int> deletedKeys = new();
 
             entity.AddValue(1, "a");
@@ -192,7 +192,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_DoesNotThrow_WhenNoSubscribers()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 5);
 
             Assert.DoesNotThrow(() => entity.DelValue(1));
@@ -201,7 +201,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueDeleted_NotifiesOnlyOnce_WhenSameKeyIsDeletedTwice()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int callCount = 0;
 
             entity.AddValue(77, 77);
@@ -220,7 +220,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueChanged_IsInvoked_WhenStructValueIsSet()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int key = 1;
             entity.AddValue(key, 10);
 
@@ -242,7 +242,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueChanged_IsInvoked_WhenReferenceValueIsSet()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int key = 2;
             entity.AddValue(key, "hello");
 
@@ -264,7 +264,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueChanged_IsInvoked_WhenStructValueTypeChanges()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int key = 3;
             entity.AddValue(key, 123);
 
@@ -286,7 +286,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueChanged_IsNotInvoked_WhenReferenceValueIsSame()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int key = 4;
             string value = "repeat";
             entity.AddValue(key, value);
@@ -302,7 +302,7 @@ namespace Atomic.Entities
         [Test]
         public void OnValueChanged_IsNotInvoked_WhenNewKeyIsAddedViaSetValue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             const int key = 5;
 
             int? changedKey = null;
@@ -320,7 +320,7 @@ namespace Atomic.Entities
         [Test]
         public void ValueCount_Increases_WhenValuesAreAdded()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 100);
             entity.AddValue(2, "test");
 
@@ -330,7 +330,7 @@ namespace Atomic.Entities
         [Test]
         public void ValueCount_DoesNotIncrease_WhenAddingDuplicateKey()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 123);
 
             Assert.Throws<ArgumentException>(() => entity.AddValue(1, 456));
@@ -340,7 +340,7 @@ namespace Atomic.Entities
         [Test]
         public void ValueCount_Decreases_WhenValueIsDeleted()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 42);
             entity.AddValue(2, 43);
 
@@ -352,7 +352,7 @@ namespace Atomic.Entities
         [Test]
         public void ValueCount_BecomesZero_WhenAllValuesCleared()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, "a");
             entity.AddValue(2, "b");
 
@@ -364,7 +364,7 @@ namespace Atomic.Entities
         [Test]
         public void ValueCount_ReflectsCurrentState_AfterMixedOperations()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             entity.AddValue(1, 1);
             Assert.AreEqual(1, entity.ValueCount);
@@ -387,7 +387,7 @@ namespace Atomic.Entities
         public void GetTValue_ValueIsAbsent_ThrowsKeyNotFoundException()
         {
             //Arrange:
-            var e = SceneEntity.Create();
+            var e = MonoEntity.Create();
 
             //Act:
             Assert.Catch<KeyNotFoundException>(() => e.GetValue<string>(0));
@@ -396,7 +396,7 @@ namespace Atomic.Entities
         [Test]
         public void GetTValue_ReturnsCorrectStructValue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(10, 42);
 
             int result = entity.GetValue<int>(10);
@@ -407,7 +407,7 @@ namespace Atomic.Entities
         [Test]
         public void GetTValue_ReturnsCorrectReferenceValue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(11, "Hello");
 
             string result = entity.GetValue<string>(11);
@@ -418,7 +418,7 @@ namespace Atomic.Entities
         [Test]
         public void GetTValue_Throws_WhenCollectionEmpty()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             Assert.Throws<KeyNotFoundException>(() => entity.GetValue<int>(1));
         }
@@ -426,7 +426,7 @@ namespace Atomic.Entities
         [Test]
         public void GetTValue_Throws_WhenKeyNotFound()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 10);
 
             Assert.Throws<KeyNotFoundException>(() => entity.GetValue<int>(2));
@@ -435,7 +435,7 @@ namespace Atomic.Entities
         [Test]
         public void GetTValue_Throws_WhenTypeMismatch()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(5, "text");
 
             Assert.Throws<InvalidCastException>(() => entity.GetValue<int>(5));
@@ -448,7 +448,7 @@ namespace Atomic.Entities
             const int key = 1;
             string foo = new string("Foo");
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
             e.AddValues(new Dictionary<int, object>
             {
                 {key, foo}
@@ -468,7 +468,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValue_ReturnsBoxedStruct()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(100, 123);
 
             object value = entity.GetValue(100);
@@ -480,7 +480,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValue_ReturnsReferenceType()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(101, "test");
 
             object value = entity.GetValue(101);
@@ -492,7 +492,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValue_Throws_WhenNoValuesExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             Assert.Throws<KeyNotFoundException>(() => entity.GetValue(1));
         }
@@ -500,7 +500,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValue_Throws_WhenKeyNotFound()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 10);
 
             Assert.Throws<KeyNotFoundException>(() => entity.GetValue(999));
@@ -509,7 +509,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValue_ReturnsCorrectObject_ForCustomStruct()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var data = new TestPoint {X = 1, Y = 2};
             entity.AddValue(77, data);
 
@@ -526,7 +526,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetTValue_ReturnsTrue_AndOutputsStruct()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 123);
 
             bool found = entity.TryGetValue<int>(1, out var result);
@@ -538,7 +538,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetTValue_ReturnsTrue_AndOutputsReference()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(2, "hello");
 
             bool found = entity.TryGetValue<string>(2, out var result);
@@ -550,7 +550,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetTValue_ReturnsFalse_WhenEmpty()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             bool found = entity.TryGetValue<int>(1, out var result);
 
@@ -561,7 +561,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetTValue_ReturnsFalse_WhenKeyNotFound()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(3, 55);
 
             bool found = entity.TryGetValue<int>(4, out var result);
@@ -573,7 +573,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetTValue_Throws_WhenWrongGenericType()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(5, "text");
 
             Assert.Throws<InvalidCastException>(() => entity.TryGetValue<int>(5, out _));
@@ -586,7 +586,7 @@ namespace Atomic.Entities
             const int key = 1;
             string foo = new string("Foo");
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
             e.AddValues(new Dictionary<int, object>
             {
                 {key, foo}
@@ -604,7 +604,7 @@ namespace Atomic.Entities
         public void TryGetTValue_ValueIsAbsent_ReturnFalse()
         {
             //Arrange:
-            var e = SceneEntity.Create();
+            var e = MonoEntity.Create();
 
             //Act:
             bool success = e.TryGetValue(0, out string foo);
@@ -621,7 +621,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValue_ReturnsTrue_AndBoxedStruct()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 123);
 
             bool found = entity.TryGetValue(1, out var result);
@@ -634,7 +634,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValue_ReturnsTrue_AndReference()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(2, "data");
 
             bool found = entity.TryGetValue(2, out var result);
@@ -647,7 +647,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValue_ReturnsFalse_WhenEmpty()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             bool found = entity.TryGetValue(3, out var result);
 
@@ -658,7 +658,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValue_ReturnsFalse_WhenKeyNotFound()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(4, 99);
 
             bool found = entity.TryGetValue(999, out var result);
@@ -670,7 +670,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValue_ReturnsStruct_AsBoxedObject()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var expected = new TestStruct {A = 1, B = 2};
             entity.AddValue(5, expected);
 
@@ -688,7 +688,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValueUnsafe_ReturnsTrue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, "999");
 
             bool result = entity.TryGetValueUnsafe(1, out string value);
@@ -700,7 +700,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValueUnsafe_ReturnsFalse_WhenEmpty()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             bool result = entity.TryGetValueUnsafe(10, out string value);
             Assert.IsFalse(result);
             Assert.IsNull(value);
@@ -709,7 +709,7 @@ namespace Atomic.Entities
         [Test]
         public void TryGetValueUnsafe_ReturnsFalse_WhenKeyNotFound()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(5, 500);
 
             bool result = entity.TryGetValueUnsafe(99, out string value);
@@ -725,7 +725,7 @@ namespace Atomic.Entities
         [Test]
         public void HasValue_ReturnsTrue_IfKeyExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 123);
 
             Assert.IsTrue(entity.HasValue(1));
@@ -734,7 +734,7 @@ namespace Atomic.Entities
         [Test]
         public void HasValue_ReturnsFalse_IfKeyNotExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, "hello");
 
             Assert.IsFalse(entity.HasValue(2));
@@ -743,7 +743,7 @@ namespace Atomic.Entities
         [Test]
         public void HasValue_ReturnsTrue_ForMultipleKeys()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(10, "A");
             entity.AddValue(20, "B");
 
@@ -754,7 +754,7 @@ namespace Atomic.Entities
         [Test]
         public void HasValue_ReturnsFalse_AfterDeletion()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(99, 5);
             entity.DelValue(99);
 
@@ -764,7 +764,7 @@ namespace Atomic.Entities
         [Test]
         public void HasValue_ReturnsFalse_IfEntityIsEmpty()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             Assert.IsFalse(entity.HasValue(42));
         }
@@ -784,7 +784,7 @@ namespace Atomic.Entities
             int addedKey = -1;
 
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
 
             e.OnValueAdded += (_, k, v) =>
             {
@@ -811,7 +811,7 @@ namespace Atomic.Entities
             string foo1 = new string("Foo1");
             string foo2 = new string("Foo2");
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
             e.AddValue(key, foo1);
 
             //Act:
@@ -829,7 +829,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_AddsStructSuccessfully()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 42);
 
             int value = entity.GetValue<int>(1);
@@ -839,7 +839,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_ThrowsIfKeyAlreadyExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 100);
 
             var ex = Assert.Throws<ArgumentException>(() => entity.AddValue(1, 200));
@@ -849,7 +849,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_CallsOnValueAddedEvent()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             int? capturedKey = null;
             object capturedValue = null;
@@ -869,7 +869,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_ValueCanBeFoundInGetValues()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(10, 777);
 
             var values = entity.GetValues();
@@ -881,7 +881,7 @@ namespace Atomic.Entities
         [Test]
         public void AddValue_UpdatesValueCount()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 5);
             entity.AddValue(2, 10);
 
@@ -895,7 +895,7 @@ namespace Atomic.Entities
         [Test]
         public void DelValue_ReturnsTrue_WhenKeyExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 123);
 
             bool result = entity.DelValue(1);
@@ -906,7 +906,7 @@ namespace Atomic.Entities
         [Test]
         public void DelValue_RemovesValueCompletely()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(2, 456);
             entity.DelValue(2);
 
@@ -917,7 +917,7 @@ namespace Atomic.Entities
         [Test]
         public void DelValue_ReturnsFalse_WhenKeyDoesNotExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             bool result = entity.DelValue(99);
 
@@ -927,7 +927,7 @@ namespace Atomic.Entities
         [Test]
         public void DelValue_InvokesOnValueDeletedEvent()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(5, 777);
 
             int? deletedKey = null;
@@ -948,7 +948,7 @@ namespace Atomic.Entities
         [Test]
         public void DelValue_DecreasesValueCount()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 10);
             entity.AddValue(2, 20);
 
@@ -968,7 +968,7 @@ namespace Atomic.Entities
             object foo2 = new object();
 
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
             e.AddValues(new Dictionary<int, object>
             {
                 {key1, foo1},
@@ -991,7 +991,7 @@ namespace Atomic.Entities
             //Arrange:
             const int key1 = 1;
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
 
             //Act:
             bool success = e.DelValue(key1);
@@ -1007,7 +1007,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_AddsValue_IfKeyDoesNotExist()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, "Hello");
 
             var result = entity.GetValue(1);
@@ -1017,7 +1017,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_UpdatesExistingValue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, "Old");
             entity.SetValue(1, "New");
 
@@ -1028,7 +1028,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_SameValue_DoesNotTriggerChange()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, "Same");
 
             bool called = false;
@@ -1042,7 +1042,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_TriggersOnValueChanged_IfDifferent()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, "A");
 
             int? changedKey = null;
@@ -1063,7 +1063,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_ThrowsIfNull()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             Assert.Throws<ArgumentNullException>(() => entity.SetValue(1, null));
         }
 
@@ -1074,7 +1074,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_AddsStructValue_IfNotExists()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(100, 42);
 
             int result = entity.GetValue<int>(100);
@@ -1084,7 +1084,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_UpdatesValue_SameType()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 5);
             entity.SetValue(1, 99);
 
@@ -1094,7 +1094,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_UpdatesValue_DifferentType()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 5); // int
             entity.SetValue(1, 5f); // float
 
@@ -1104,7 +1104,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_ReplacesReferenceWithStruct()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, "hello"); // reference type
             entity.SetValue(1, 123); // struct
 
@@ -1115,7 +1115,7 @@ namespace Atomic.Entities
         [Test]
         public void SetValue_InvokesOnValueChanged()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             int? changedKey = null;
             int? newValue = null;
 
@@ -1137,7 +1137,7 @@ namespace Atomic.Entities
         {
             const int key = 1;
             string foo = new string("Foo");
-            var e = SceneEntity.Create();
+            var e = MonoEntity.Create();
 
             var wasChangeEvent = false;
             int addedKey = -1;
@@ -1172,7 +1172,7 @@ namespace Atomic.Entities
             var changedKey = -1;
             object changedValue = null;
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
             e.AddValue(key, foo);
 
             e.OnValueAdded += (_, _, _) => { wasAddEvent = true; };
@@ -1198,7 +1198,7 @@ namespace Atomic.Entities
         [Test]
         public void ClearValues_RemovesAllEntries()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 10);
             entity.SetValue(2, "hello");
 
@@ -1212,7 +1212,7 @@ namespace Atomic.Entities
         [Test]
         public void ClearValues_InvokesOnValueDeleted_ForEachKey()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var deleted = new List<int>();
 
             entity.OnValueDeleted += (_, key, _) => deleted.Add(key);
@@ -1228,7 +1228,7 @@ namespace Atomic.Entities
         [Test]
         public void ClearValues_InvokesOnStateChanged()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             bool changed = false;
             entity.OnStateChanged += _ => changed = true;
 
@@ -1241,7 +1241,7 @@ namespace Atomic.Entities
         [Test]
         public void ClearValues_WhenEmpty_DoesNothing()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             // Should not throw
             Assert.DoesNotThrow(() => entity.ClearValues());
@@ -1250,7 +1250,7 @@ namespace Atomic.Entities
         [Test]
         public void ClearValues_ValueCountIsZero()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 100);
             entity.SetValue(2, 200);
             entity.ClearValues();
@@ -1267,7 +1267,7 @@ namespace Atomic.Entities
             object foo1 = new object();
             object foo2 = new object();
 
-            IEntity e = SceneEntity.Create();
+            IEntity e = MonoEntity.Create();
             e.AddValues(new Dictionary<int, object>
             {
                 { key1, foo1 },
@@ -1295,7 +1295,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_ReturnsAllKeyValuePairs()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 100);
             entity.SetValue(2, "hello");
             entity.SetValue(3, true);
@@ -1315,7 +1315,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_ReturnsEmptyArray_WhenNoValues()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
 
             var result = entity.GetValues();
 
@@ -1326,7 +1326,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_ReturnsCorrectCount()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 42);
             entity.SetValue(2, 84);
 
@@ -1338,7 +1338,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_DoesNotThrowWithMixedTypes()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.SetValue(1, 123);
             entity.SetValue(2, "test");
             entity.SetValue(3, 3.14f);
@@ -1353,7 +1353,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_ReturnsStructValueAddedByAddValue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var value = new TestStruct {A = 1, B = 2};
 
             entity.AddValue(1, value);
@@ -1367,7 +1367,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_ReturnsStructValueAddedBySetValue()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var value = new TestStruct {A = 3, B = 1};
 
             entity.SetValue(5, value);
@@ -1381,7 +1381,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_StructValueIsBoxedCorrectly()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var value = new TestStruct {A = 10, B = 3};
 
             entity.AddValue(2, value);
@@ -1395,7 +1395,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValues_StructValueCanBeUnboxedSafely()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var value = new TestStruct {A = 7, B = 8};
 
             entity.AddValue(4, value);
@@ -1414,7 +1414,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyValues_SingleStruct_WritesCorrectly()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 42);
 
             var buffer = new KeyValuePair<int, object>[1];
@@ -1428,7 +1428,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyValues_SingleReference_WritesCorrectly()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(5, "hello");
 
             var buffer = new KeyValuePair<int, object>[1];
@@ -1442,7 +1442,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyValues_MultipleEntries_CorrectCountAndValues()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 1.5f);
             entity.AddValue(2, "test");
             entity.AddValue(3, true);
@@ -1465,7 +1465,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyValues_IgnoresDeletedSlots()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, 10);
             entity.AddValue(2, 20);
             entity.DelValue(1);
@@ -1481,7 +1481,7 @@ namespace Atomic.Entities
         [Test]
         public void CopyValues_NullBuffer_ThrowsArgumentNullException()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             Assert.Throws<ArgumentNullException>(() => { entity.CopyValues(null); });
         }
 
@@ -1492,14 +1492,14 @@ namespace Atomic.Entities
         [Test]
         public void GetValueEnumerator_ReturnsAllAddedValues()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, "one");
             entity.AddValue(2, 2);
             entity.AddValue(3, true);
 
             var results = new List<KeyValuePair<int, object>>();
 
-            SceneEntity.ValueEnumerator valueEnumerator = entity.GetValueEnumerator();
+            MonoEntity.ValueEnumerator valueEnumerator = entity.GetValueEnumerator();
             while (valueEnumerator.MoveNext())
                 results.Add(valueEnumerator.Current);
 
@@ -1514,13 +1514,13 @@ namespace Atomic.Entities
         [Test]
         public void GetValueEnumerator_IgnoresDeletedValues()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, "alive");
             entity.AddValue(2, "dead");
             entity.DelValue(2);
 
             var results = new List<KeyValuePair<int, object>>();
-            SceneEntity.ValueEnumerator valueEnumerator = entity.GetValueEnumerator();
+            MonoEntity.ValueEnumerator valueEnumerator = entity.GetValueEnumerator();
             while (valueEnumerator.MoveNext())
                 results.Add(valueEnumerator.Current);
 
@@ -1532,7 +1532,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValueEnumerator_EmptyEntity_ReturnsNothing()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             var enumerator = ((IEntity) entity).GetValueEnumerator();
 
             Assert.IsFalse(enumerator.MoveNext());
@@ -1541,7 +1541,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValueEnumerator_MoveNext_CyclesCorrectly()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(10, 99);
 
             var enumerator = ((IEntity) entity).GetValueEnumerator();
@@ -1556,7 +1556,7 @@ namespace Atomic.Entities
         [Test]
         public void GetValueEnumerator_Reset_RewindsToStart()
         {
-            var entity = SceneEntity.Create();
+            var entity = MonoEntity.Create();
             entity.AddValue(1, "reset");
 
             var enumerator = entity.GetValueEnumerator();

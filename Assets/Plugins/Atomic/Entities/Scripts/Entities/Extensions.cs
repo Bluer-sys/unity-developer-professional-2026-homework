@@ -64,7 +64,7 @@ namespace Atomic.Entities
 
 #if UNITY_5_3_OR_NEWER
         /// <summary>
-        /// Installs logic from all <see cref="SceneEntityInstaller"/> components found in the specified scene.
+        /// Installs logic from all <see cref="MonoEntityInstaller"/> components found in the specified scene.
         /// </summary>
         /// <param name="entity">The entity to install the logic into.</param>
         /// <param name="scene">The scene in which to search for installers.</param>
@@ -72,7 +72,7 @@ namespace Atomic.Entities
         /// If <c>true</c>, installers on inactive GameObjects will also be included; otherwise only active installers are considered.
         /// </param>
         /// <remarks>
-        /// This method iterates over all root GameObjects in the scene and applies each found <see cref="SceneEntityInstaller"/> to the entity.
+        /// This method iterates over all root GameObjects in the scene and applies each found <see cref="MonoEntityInstaller"/> to the entity.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void InstallFromScene(this IEntity entity, Scene scene, bool includeInactive = true)
@@ -81,17 +81,17 @@ namespace Atomic.Entities
             for (int g = 0, goCount = gameObjects.Length; g < goCount; g++)
             {
                 GameObject go = gameObjects[g];
-                var installers = go.GetComponentsInChildren<SceneEntityInstaller>(includeInactive);
+                var installers = go.GetComponentsInChildren<MonoEntityInstaller>(includeInactive);
                 for (int i = 0, installerCount = installers.Length; i < installerCount; i++)
                 {
-                    SceneEntityInstaller installer = installers[i];
+                    MonoEntityInstaller installer = installers[i];
                     installer.Install(entity);
                 }
             }
         }
 
         /// <summary>
-        /// Installs logic from all <see cref="SceneEntityInstaller{T}"/> components found in the specified scene for a generic entity type.
+        /// Installs logic from all <see cref="MonoEntityInstaller{E}"/> components found in the specified scene for a generic entity type.
         /// </summary>
         /// <typeparam name="T">The entity type that implements <see cref="IEntity"/>.</typeparam>
         /// <param name="entity">The entity to install the logic into.</param>
@@ -100,7 +100,7 @@ namespace Atomic.Entities
         /// If <c>true</c>, installers on inactive GameObjects will also be included; otherwise only active installers are considered.
         /// </param>
         /// <remarks>
-        /// This method iterates over all root GameObjects in the scene and applies each found <see cref="SceneEntityInstaller{T}"/> to the entity.
+        /// This method iterates over all root GameObjects in the scene and applies each found <see cref="MonoEntityInstaller{E}"/> to the entity.
         /// Useful for generic entities or strongly-typed scenarios.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -111,11 +111,11 @@ namespace Atomic.Entities
             for (int g = 0, count = gameObjects.Length; g < count; g++)
             {
                 GameObject go = gameObjects[g];
-                var installers = go.GetComponentsInChildren<SceneEntityInstaller<T>>(includeInactive);
+                var installers = go.GetComponentsInChildren<MonoEntityInstaller<T>>(includeInactive);
 
                 for (int i = 0, installerCount = installers.Length; i < installerCount; i++)
                 {
-                    SceneEntityInstaller<T> installer = installers[i];
+                    MonoEntityInstaller<T> installer = installers[i];
                     installer.Install(entity);
                 }
             }
@@ -205,5 +205,13 @@ namespace Atomic.Entities
 #endif
 
         #endregion
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawGizmos(this IEntity entity)
+        {
+            for (int i = 0; i < entity.BehaviourCount; i++)
+                if (entity.GetBehaviourAt(i) is IEntityGizmos gizmos) 
+                    gizmos.DrawGizmos(entity);
+        }
     }
 }

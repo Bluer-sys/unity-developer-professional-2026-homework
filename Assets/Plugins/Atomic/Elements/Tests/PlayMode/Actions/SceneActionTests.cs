@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Atomic.Elements
 {
     [TestFixture]
-    public sealed class SceneActionDefaultTests
+    public sealed class MonoActionConfigurableTests
     {
         [Test]
         public void InvokeWhenSomeActionsAreNull()
@@ -13,7 +13,7 @@ namespace Atomic.Elements
             var a2 = new ActionSpy();
             var a1 = new ActionSpy();
 
-            var sceneAction = new GameObject().AddComponent<SceneActionDefault>();
+            var sceneAction = new GameObject().AddComponent<MonoActionConfigurable>();
             sceneAction.actions = new IAction[]{null, a2, null, a1};
 
             //Act:
@@ -28,7 +28,7 @@ namespace Atomic.Elements
         public void InvokeWhenActionsNull()
         {
             //Arrange:
-            var sceneAction = new GameObject().AddComponent<SceneActionDefault>();
+            var sceneAction = new GameObject().AddComponent<MonoActionConfigurable>();
             sceneAction.actions = new IAction[] {null};
 
             //Act:

@@ -5,13 +5,16 @@ namespace Atomic.Entities
     public partial class Extensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void BindTo<E>(this IEntityWorld<E> world, IEntity entity) where E : IEntity
+        public static void BindTo<E>(this IEntityWorld<E> world, IEntity source) where E : IEntity
         {
-            entity.WhenEnable(world.Enable);
-            entity.WhenDisable(world.Disable);
-            entity.WhenTick(world.Tick);
-            entity.WhenFixedTick(world.FixedTick);
-            entity.WhenLateTick(world.LateTick);
+            source.WhenInit(world.InitEntities);
+            source.WhenEnable(world.Enable);
+            source.WhenTick(world.Tick);
+            source.WhenFixedTick(world.FixedTick);
+            source.WhenLateTick(world.LateTick);
+            source.WhenDisable(world.Disable);
+            source.WhenDispose(world.DisposeEntities);
+            source.WhenDispose(world.Dispose);
         }
     }
 }

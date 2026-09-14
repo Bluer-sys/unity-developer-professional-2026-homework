@@ -7,16 +7,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 #endif
 
-public interface IMoveable
-{
-    
-}
-
-public interface IFlyable
-{
-    
-}
-
 namespace Atomic.Elements
 {
     /// <summary>
