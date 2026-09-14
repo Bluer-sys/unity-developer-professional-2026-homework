@@ -6,25 +6,22 @@ namespace Game.UI
 {
     public sealed class StatView : MonoBehaviour
     {
-        [SerializeField]
-        private TMP_Text valueText;
-        
-        [SerializeField]
-        private Image progressBar;
+        [SerializeField] private TMP_Text _valueText;
+        [SerializeField] private Image _progressBar;
 
         public void SetText(string health)
         {
-            this.valueText.text = health;
+            _valueText.text = health;
         }
         
         public void SetProgress(float progress)
         {
-            this.progressBar.fillAmount = progress;
+            _progressBar.fillAmount = progress;
         }
 
         public void SetVisible(bool visible)
         {
-            this.gameObject.SetActive(visible);
+            gameObject.SetActive(visible);
         }
     }
 }

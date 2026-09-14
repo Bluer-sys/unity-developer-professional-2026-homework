@@ -240,6 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2f9d9673434683b8d81a39b490c15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staticIndication: {fileID: 1662961120376883893}
-  dynamicIndication: {fileID: 2072141730}
-  takeDamageView: {fileID: 1417707065}
+  _staticIndication: {fileID: 1662961120376883893}
+  _dynamicIndication: {fileID: 2072141730}
+  _takeDamageView: {fileID: 1417707065}
