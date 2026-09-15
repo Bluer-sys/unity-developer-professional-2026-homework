@@ -576,6 +576,8 @@ GameObject:
   - component: {fileID: 3115307619230652578}
   - component: {fileID: 9100000000000000001}
   - component: {fileID: 9100000000000000002}
+  - component: {fileID: 9100000000000000010}
+  - component: {fileID: 9100000000000000011}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Range
@@ -1248,12 +1250,14 @@ MonoBehaviour:
   scriptableInstallers: []
   sceneInstallers:
   - {fileID: 9100000000000000002}
+  - {fileID: 9100000000000000010}
+  - {fileID: 9100000000000000011}
   onlySelectedGizmos: 0
   onlyEditModeGizmos: 1
   autoCompile: 0
   initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 0
+  initialValueCapacity: 6
+  initialBehaviourCapacity: 2
 --- !u!114 &9100000000000000002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,3 +1270,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
   m_Name:
   m_EditorClassIdentifier:
+--- !u!114 &9100000000000000010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2555051196878869353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc07b8503c74683af1572ea0e22d5fc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _firePoint: {fileID: 2679439196154746750}
+  _ammo: 8
+  _cooldown: 1
+  _spreadAngle: 0.25
+--- !u!114 &9100000000000000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2555051196878869353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52e22c6b91d4305bdd91412a990c1d9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _fireEffect: {fileID: 9100000000000000012}
+  _audioSource: {fileID: 2458806991490565756}
+  _pitchRange: {x: 0.9, y: 1.1}
+--- !u!198 &9100000000000000012 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19801142, guid: c83fb3ef04bb383408bb2064b89690b2, type: 3}
+  m_PrefabInstance: {fileID: 5064070444627275890}
+  m_PrefabAsset: {fileID: 0}

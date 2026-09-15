@@ -45,13 +45,14 @@ GameObject:
   - component: {fileID: 2852948263122311593}
   - component: {fileID: 9100000000000000001}
   - component: {fileID: 9100000000000000002}
+  - component: {fileID: 9100000000000000010}
   m_Layer: 12
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6795422085097260040
 Transform:
   m_ObjectHideFlags: 0
@@ -91,9 +92,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &2852948263122311593
 SphereCollider:
@@ -110,12 +111,70 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9100000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8829669804357326195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useUnityLifecycle: 1
+  disposeValues: 0
+  installOnAwake: 1
+  uninstallOnDestroy: 1
+  scriptableInstallers: []
+  sceneInstallers:
+  - {fileID: 9100000000000000002}
+  - {fileID: 9100000000000000010}
+  onlySelectedGizmos: 0
+  onlyEditModeGizmos: 1
+  autoCompile: 0
+  initialTagCapacity: 1
+  initialValueCapacity: 9
+  initialBehaviourCapacity: 1
+--- !u!114 &9100000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8829669804357326195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9100000000000000010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8829669804357326195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7243e81566548ab8dcba4da0b06d71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 2293162354956507346}
+  _collider: {fileID: 2852948263122311593}
+  _damage: 1
+  _speed: 45
+  _lifetime: 3
+  _collisionMask:
+    serializedVersion: 2
+    m_Bits: 3707
 --- !u!1001 &2426699191576222108
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,40 +257,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 52d0bd6e4aee00143b33fe29c6913b38, type: 3}
   m_PrefabInstance: {fileID: 2426699191576222108}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9100000000000000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8829669804357326195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  useUnityLifecycle: 1
-  disposeValues: 0
-  installOnAwake: 1
-  uninstallOnDestroy: 1
-  scriptableInstallers: []
-  sceneInstallers:
-  - {fileID: 9100000000000000002}
-  onlySelectedGizmos: 0
-  onlyEditModeGizmos: 1
-  autoCompile: 0
-  initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 0
---- !u!114 &9100000000000000002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8829669804357326195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:

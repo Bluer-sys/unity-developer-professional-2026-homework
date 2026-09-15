@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public sealed class MovementAnimationBehaviour : IEntityInit<IGameEntity>, IEntityEnable<IGameEntity>,
-        IEntityDisable<IGameEntity>, IEntityFixedTick<IGameEntity>
+    public sealed class MovementAnimationBehaviour : 
+        IEntityInit<IGameEntity>,
+        IEntityEnable<IGameEntity>,
+        IEntityDisable<IGameEntity>, 
+        IEntityFixedTick<IGameEntity>
     {
-        private static readonly int _isMoving = Animator.StringToHash("IsMoving");
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         private IValue<int> _health;
         private IValue<Vector3> _movementDirection;
@@ -27,7 +30,7 @@ namespace Game.Gameplay
 
         public void Disable(IGameEntity entity)
         {
-            _animator.SetBool(_isMoving, false);
+            _animator.SetBool(IsMoving, false);
         }
 
         public void FixedTick(IGameEntity entity, float deltaTime)
@@ -37,7 +40,7 @@ namespace Game.Gameplay
 
         private void UpdateAnimation()
         {
-            _animator.SetBool(_isMoving, _health.Value > 0 && _movementDirection.Value != Vector3.zero);
+            _animator.SetBool(IsMoving, _health.Value > 0 && _movementDirection.Value != Vector3.zero);
         }
     }
 }

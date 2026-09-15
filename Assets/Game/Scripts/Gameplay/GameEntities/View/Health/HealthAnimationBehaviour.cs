@@ -4,13 +4,15 @@ using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public sealed class HealthAnimationBehaviour : IEntityInit<IGameEntity>, IEntityEnable<IGameEntity>,
+    public sealed class HealthAnimationBehaviour : 
+        IEntityInit<IGameEntity>,
+        IEntityEnable<IGameEntity>,
         IEntityDisable<IGameEntity>
     {
-        private static readonly int _takeDamage = Animator.StringToHash("TakeDamage");
-        private static readonly int _death = Animator.StringToHash("Death");
-        private static readonly int _attack = Animator.StringToHash("Attack");
-        private static readonly int _isMoving = Animator.StringToHash("IsMoving");
+        private static readonly int TakeDamage = Animator.StringToHash("TakeDamage");
+        private static readonly int Death = Animator.StringToHash("Death");
+        private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         private IValue<int> _health;
         private ISignal<DamageArgs> _takeDamageEvent;
@@ -31,9 +33,7 @@ namespace Game.Gameplay
             _deathEvent.OnEvent += OnDeath;
 
             if (_health.Value == 0)
-            {
                 ShowDeath();
-            }
         }
 
         public void Disable(IGameEntity entity)
@@ -45,9 +45,7 @@ namespace Game.Gameplay
         private void OnTakeDamage(DamageArgs damage)
         {
             if (_health.Value > 0)
-            {
-                _animator.SetTrigger(_takeDamage);
-            }
+                _animator.SetTrigger(TakeDamage);
         }
 
         private void OnDeath(DamageArgs damage)
@@ -57,10 +55,10 @@ namespace Game.Gameplay
 
         private void ShowDeath()
         {
-            _animator.ResetTrigger(_attack);
-            _animator.ResetTrigger(_takeDamage);
-            _animator.SetBool(_isMoving, false);
-            _animator.SetTrigger(_death);
+            _animator.ResetTrigger(Attack);
+            _animator.ResetTrigger(TakeDamage);
+            _animator.SetBool(IsMoving, false);
+            _animator.SetTrigger(Death);
         }
     }
 }

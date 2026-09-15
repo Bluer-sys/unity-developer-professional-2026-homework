@@ -12,6 +12,7 @@ namespace Game.Gameplay
                 return current;
 
             Quaternion target = Quaternion.LookRotation(direction);
+            
             return Quaternion.RotateTowards(current, target, speed * deltaTime);
         }
     }

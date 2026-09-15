@@ -4,12 +4,15 @@ using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public sealed class CharacterAimingAnimationBehaviour : IEntityInit<IGameEntity>, IEntityEnable<IGameEntity>,
-        IEntityDisable<IGameEntity>, IEntityFixedTick<IGameEntity>
+    public sealed class CharacterAimingAnimationBehaviour : 
+        IEntityInit<IGameEntity>, 
+        IEntityEnable<IGameEntity>,
+        IEntityDisable<IGameEntity>, 
+        IEntityFixedTick<IGameEntity>
     {
-        private static readonly int _isAimingParameter = Animator.StringToHash("IsAiming");
-        private static readonly int _aimX = Animator.StringToHash("AimX");
-        private static readonly int _aimZ = Animator.StringToHash("AimZ");
+        private static readonly int IsAimingParameter = Animator.StringToHash("IsAiming");
+        private static readonly int AimX = Animator.StringToHash("AimX");
+        private static readonly int AimZ = Animator.StringToHash("AimZ");
 
         private IValue<int> _health;
         private IValue<bool> _isAiming;
@@ -33,9 +36,9 @@ namespace Game.Gameplay
 
         public void Disable(IGameEntity entity)
         {
-            _animator.SetBool(_isAimingParameter, false);
-            _animator.SetFloat(_aimX, 0);
-            _animator.SetFloat(_aimZ, 0);
+            _animator.SetBool(IsAimingParameter, false);
+            _animator.SetFloat(AimX, 0);
+            _animator.SetFloat(AimZ, 0);
         }
 
         public void FixedTick(IGameEntity entity, float deltaTime)
@@ -50,9 +53,9 @@ namespace Game.Gameplay
                 ? Quaternion.Inverse(_rigidbody.rotation) * _movementDirection.Value
                 : Vector3.zero;
 
-            _animator.SetBool(_isAimingParameter, isAiming);
-            _animator.SetFloat(_aimX, direction.x);
-            _animator.SetFloat(_aimZ, direction.z);
+            _animator.SetBool(IsAimingParameter, isAiming);
+            _animator.SetFloat(AimX, direction.x);
+            _animator.SetFloat(AimZ, direction.z);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Game.Gameplay
         {
             entity.AddHealth(new ReactiveVariable<int>(_maxHealth));
             entity.AddMaxHealth(new Const<int>(_maxHealth));
-            entity.AddTakeDamageEvent(new Atomic.Elements.Event<DamageArgs>());
-            entity.AddDeathEvent(new Atomic.Elements.Event<DamageArgs>());
+            entity.AddTakeDamageEvent(new Event<DamageArgs>());
+            entity.AddDeathEvent(new Event<DamageArgs>());
         }
     }
 }

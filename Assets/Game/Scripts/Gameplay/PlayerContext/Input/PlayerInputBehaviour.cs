@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public sealed class PlayerInputBehaviour : IEntityInit<IPlayerContext>, IEntityEnable<IPlayerContext>,
-        IEntityDisable<IPlayerContext>, IEntityTick<IPlayerContext>
+    public sealed class PlayerInputBehaviour :
+        IEntityInit<IPlayerContext>, 
+        IEntityEnable<IPlayerContext>,
+        IEntityDisable<IPlayerContext>, 
+        IEntityTick<IPlayerContext>
     {
         private IValue<Vector2> _moveInput;
         private IValue<Vector2> _aimInput;
