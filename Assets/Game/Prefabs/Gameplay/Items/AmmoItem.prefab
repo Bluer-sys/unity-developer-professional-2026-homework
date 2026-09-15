@@ -173,6 +173,10 @@ GameObject:
   - component: {fileID: 4267398721809954443}
   - component: {fileID: 9100000000000000001}
   - component: {fileID: 9100000000000000002}
+  - component: {fileID: 9100000000000000003}
+  - component: {fileID: 9100000000000000004}
+  - component: {fileID: 9100000000000000005}
+  - component: {fileID: 9100000000000000006}
   m_Layer: 11
   m_Name: AmmoItem
   m_TagString: Untagged
@@ -315,6 +319,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6296879df197c4623a6fb41f63a1905d, type: 2}
+    - target: {fileID: 6737246192286470331, guid: 65cb20f8c841b431b82ba08ed45644e1, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -430,12 +438,15 @@ MonoBehaviour:
   scriptableInstallers: []
   sceneInstallers:
   - {fileID: 9100000000000000002}
+  - {fileID: 9100000000000000004}
+  - {fileID: 9100000000000000005}
+  - {fileID: 9100000000000000006}
   onlySelectedGizmos: 0
   onlyEditModeGizmos: 1
   autoCompile: 0
   initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 0
+  initialValueCapacity: 6
+  initialBehaviourCapacity: 2
 --- !u!114 &9100000000000000002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,3 +459,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
   m_Name:
   m_EditorClassIdentifier:
+--- !u!114 &9100000000000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332313712654455240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11f7caf293d4158bfbb8855eade79be, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+--- !u!114 &9100000000000000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332313712654455240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b031b6dc08b34c25a25abe05730ac358, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _triggerEvents: {fileID: 9100000000000000003}
+--- !u!114 &9100000000000000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332313712654455240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78511f0568b8448198d769f92387a079, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _amount: 10
+--- !u!114 &9100000000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332313712654455240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2453c4867e475694b52e16498303b9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _visual: {fileID: 2349997754461001400}
+  _effect: {fileID: 9100000000000000007}
+  _audioSource: {fileID: 411501554367385950}
+--- !u!198 &9100000000000000007 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6591815806074881312, guid: 65cb20f8c841b431b82ba08ed45644e1, type: 3}
+  m_PrefabInstance: {fileID: 6949304866171931853}
+  m_PrefabAsset: {fileID: 0}

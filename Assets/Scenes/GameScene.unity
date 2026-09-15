@@ -28186,7 +28186,7 @@ MonoBehaviour:
   autoCompile: 0
   initialTagCapacity: 1
   initialValueCapacity: 3
-  initialBehaviourCapacity: 1
+  initialBehaviourCapacity: 4
 --- !u!114 &9100000000000001018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28214,6 +28214,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveJoystick: {fileID: 9100000000000001008}
   _aimJoystick: {fileID: 9100000000000001009}
+  _gameContext: {fileID: 9100000000000001012}
+  _healthView: {fileID: 7160444056652517396}
+  _ammoView: {fileID: 7160444056652517395}
+  _killCountView: {fileID: 9100000000000001300}
 --- !u!114 &9100000000000001020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28468,3 +28472,14 @@ SceneRoots:
   - {fileID: 548618061}
   - {fileID: 5764159610076527034}
   - {fileID: 9100000000000001011}
+--- !u!114 &9100000000000001300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9100000000000000001, guid: 69a29ff4468e6456e888262b30735f8c, type: 3}
+  m_PrefabInstance: {fileID: 2928555308454414446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64be081300794ee3b9150a062c2e6443, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:

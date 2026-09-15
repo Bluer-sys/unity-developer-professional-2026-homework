@@ -49,5 +49,10 @@ namespace Game.Gameplay
         public static readonly ValueKey<IGameEntity, IValue<float>> BulletRadius = new(nameof(BulletRadius));
         public static readonly ValueKey<IGameEntity, ICooldown> Lifetime = new(nameof(Lifetime));
         public static readonly ValueKey<IGameEntity, IVariable<bool>> IsFlying = new(nameof(IsFlying));
+        public static readonly ValueKey<IGameEntity, IVariable<bool>> IsCollected = new(nameof(IsCollected));
+        public static readonly ValueKey<IGameEntity, IExpression<IGameEntity, bool>> PickupCondition = new(nameof(PickupCondition));
+        public static readonly ValueKey<IGameEntity, IAction<IGameEntity>> PickupAction = new(nameof(PickupAction));
+        public static readonly ValueKey<IGameEntity, IEvent> PickupEvent = new(nameof(PickupEvent));
+        public static readonly ValueKey<IGameEntity, IValue<int>> PickupAmount = new(nameof(PickupAmount));
     }
 }
