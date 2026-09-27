@@ -58,9 +58,11 @@ namespace Game.Gameplay
                 return;
 
             foreach (Collider current in _triggerEvents.CurrentColliders)
+            {
                 if (current != collider && 
                     ReferenceEquals(current.GetComponentInParent<GameEntity>(), target))
                     return;
+            }
 
             SetTarget(null);
         }

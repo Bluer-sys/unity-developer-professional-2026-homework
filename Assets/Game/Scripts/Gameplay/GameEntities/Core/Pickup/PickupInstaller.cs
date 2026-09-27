@@ -10,7 +10,7 @@ namespace Game.Gameplay
 
         public override void Install(IGameEntity entity)
         {
-            AndExpression<IGameEntity> condition = new AndExpression<IGameEntity>();
+            var condition = new AndExpression<IGameEntity>();
             condition.Add(target => target.HasPlayerTag());
             condition.Add(target => target.IsAlive());
 

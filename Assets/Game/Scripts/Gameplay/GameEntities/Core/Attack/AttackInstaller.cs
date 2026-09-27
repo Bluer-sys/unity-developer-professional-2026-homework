@@ -11,7 +11,7 @@ namespace Game.Gameplay
 
         public override void Install(IGameEntity entity)
         {
-            var condition = new AndExpression();
+            AndExpression condition = new AndExpression();
             condition.Add(entity.IsAlive);
 
             entity.AddAttackRequest(new Request());

@@ -11,9 +11,8 @@ namespace Game.Gameplay
         public override void Install(IGameEntity entity)
         {
             entity.AddPickupAmount(new Const<int>(_amount));
-            entity.GetPickupCondition().Add(target => AmmoUseCase.HasAmmoWeapon(target));
-            entity.AddPickupAction(new InlineAction<IGameEntity>(target =>
-                AmmoUseCase.AddAmmo(target, entity.GetPickupAmount().Value)));
+            entity.GetPickupCondition().Add(AmmoUseCase.HasAmmoWeapon);
+            entity.AddPickupAction(new InlineAction<IGameEntity>(target => AmmoUseCase.AddAmmo(target, entity.GetPickupAmount().Value)));
         }
     }
 }

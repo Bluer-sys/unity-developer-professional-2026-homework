@@ -39,7 +39,7 @@ namespace Game.Gameplay
             Vector3 position = _rigidbody.position;
             Vector3 direction = _rigidbody.rotation * Vector3.forward;
 
-            if (BulletCollisionUseCase.TryFindHit(
+            if (BulletUseCase.TryFindHit(
                     position, 
                     direction, 
                     distance, 

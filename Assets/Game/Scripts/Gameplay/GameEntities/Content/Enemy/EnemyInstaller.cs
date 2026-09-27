@@ -13,8 +13,7 @@ namespace Game.Gameplay
         {
             entity.AddWeapon(_weapon);
             entity.AddTarget(new Variable<IGameEntity>());
-            entity.AddTargetPredicate(new InlinePredicate<IGameEntity>(target =>
-                target.HasPlayerTag() && target.IsAlive()));
+            entity.AddTargetPredicate(new InlinePredicate<IGameEntity>(target => target.HasPlayerTag() && target.IsAlive()));
             entity.GetAttackCondition().Add(() => TargetUseCase.HasTarget(entity));
             entity.GetAttackCondition().Add(() => MeleeWeaponUseCase.CanAttack(_weapon));
             entity.AddAttackAction(new InlineAction(() => MeleeWeaponUseCase.TryHit(_weapon, entity)));

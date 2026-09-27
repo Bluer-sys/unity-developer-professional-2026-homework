@@ -47,10 +47,8 @@ namespace Game.Gameplay
         {
             UpdateAttack(entity, deltaTime);
 
-            if (_request.Consume() &&
-                AttackUseCase.TryStart(entity) &&
-                _delay.IsCompleted())
-                OnDelayCompleted();
+            if (_request.Consume())
+                AttackUseCase.TryStart(entity);
         }
 
         private void UpdateAttack(IGameEntity entity, float deltaTime)
