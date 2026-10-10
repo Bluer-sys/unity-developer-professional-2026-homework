@@ -5,9 +5,9 @@ using Game.Gameplay;
 namespace Game.UI
 {
     public sealed class KillCountPresenter :
-        IEntityInit<IPlayerContext>,
-        IEntityEnable<IPlayerContext>,
-        IEntityDisable<IPlayerContext>
+        IEntityInit<IGameUIContext>,
+        IEntityEnable<IGameUIContext>,
+        IEntityDisable<IGameUIContext>
     {
         private readonly KillCountView _view;
         private readonly IGameContext _gameContext;
@@ -20,17 +20,17 @@ namespace Game.UI
             _gameContext = gameContext;
         }
 
-        public void Init(IPlayerContext context)
+        public void Init(IGameUIContext context)
         {
             _killCount = _gameContext.GetKillCount();
         }
 
-        public void Enable(IPlayerContext context)
+        public void Enable(IGameUIContext context)
         {
             _subscription = _killCount.Observe(UpdateView);
         }
 
-        public void Disable(IPlayerContext context)
+        public void Disable(IGameUIContext context)
         {
             _subscription.Dispose();
         }

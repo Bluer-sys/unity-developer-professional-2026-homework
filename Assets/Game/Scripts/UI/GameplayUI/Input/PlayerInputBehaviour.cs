@@ -1,15 +1,17 @@
 using Atomic.Elements;
 using Atomic.Entities;
+using Game.Gameplay;
 using UnityEngine;
 
-namespace Game.Gameplay
+namespace Game.UI
 {
     public sealed class PlayerInputBehaviour :
-        IEntityInit<IPlayerContext>, 
-        IEntityEnable<IPlayerContext>,
-        IEntityDisable<IPlayerContext>, 
-        IEntityTick<IPlayerContext>
+        IEntityInit<IGameUIContext>,
+        IEntityEnable<IGameUIContext>,
+        IEntityDisable<IGameUIContext>,
+        IEntityTick<IGameUIContext>
     {
+        private readonly IGameContext _gameContext;
         private IValue<Vector2> _moveInput;
         private IValue<Vector2> _aimInput;
         private IValue<int> _health;
@@ -18,9 +20,14 @@ namespace Game.Gameplay
         private IVariable<Vector3> _rotationDirection;
         private IVariable<bool> _isAiming;
 
-        public void Init(IPlayerContext context)
+        public PlayerInputBehaviour(IGameContext gameContext)
         {
-            IGameEntity character = context.GetCharacter();
+            _gameContext = gameContext;
+        }
+
+        public void Init(IGameUIContext context)
+        {
+            IGameEntity character = _gameContext.GetCharacter();
             _moveInput = context.GetMoveInput();
             _aimInput = context.GetAimInput();
             _health = character.GetHealth();
@@ -30,18 +37,18 @@ namespace Game.Gameplay
             _isAiming = character.GetIsAiming();
         }
 
-        public void Enable(IPlayerContext context)
+        public void Enable(IGameUIContext context)
         {
             _deathEvent.OnEvent += OnDeath;
         }
 
-        public void Disable(IPlayerContext context)
+        public void Disable(IGameUIContext context)
         {
             _deathEvent.OnEvent -= OnDeath;
             ResetInput();
         }
 
-        public void Tick(IPlayerContext context, float deltaTime)
+        public void Tick(IGameUIContext context, float deltaTime)
         {
             if (_health.Value == 0)
             {

@@ -5,30 +5,32 @@ using Game.Gameplay;
 namespace Game.UI
 {
     public sealed class AmmoStatPresenter :
-        IEntityInit<IPlayerContext>,
-        IEntityEnable<IPlayerContext>,
-        IEntityDisable<IPlayerContext>
+        IEntityInit<IGameUIContext>,
+        IEntityEnable<IGameUIContext>,
+        IEntityDisable<IGameUIContext>
     {
         private readonly StatView _view;
+        private readonly IGameContext _gameContext;
         private IReactiveValue<int> _ammo;
         private Subscription<int> _subscription;
 
-        public AmmoStatPresenter(StatView view)
+        public AmmoStatPresenter(StatView view, IGameContext gameContext)
         {
             _view = view;
+            _gameContext = gameContext;
         }
 
-        public void Init(IPlayerContext context)
+        public void Init(IGameUIContext context)
         {
-            _ammo = context.GetCharacter().GetWeapon().GetAmmo();
+            _ammo = _gameContext.GetCharacter().GetWeapon().GetAmmo();
         }
 
-        public void Enable(IPlayerContext context)
+        public void Enable(IGameUIContext context)
         {
             _subscription = _ammo.Observe(UpdateView);
         }
 
-        public void Disable(IPlayerContext context)
+        public void Disable(IGameUIContext context)
         {
             _subscription.Dispose();
         }

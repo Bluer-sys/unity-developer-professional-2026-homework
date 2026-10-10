@@ -5,33 +5,35 @@ using Game.Gameplay;
 namespace Game.UI
 {
     public sealed class HealthStatPresenter :
-        IEntityInit<IPlayerContext>,
-        IEntityEnable<IPlayerContext>,
-        IEntityDisable<IPlayerContext>
+        IEntityInit<IGameUIContext>,
+        IEntityEnable<IGameUIContext>,
+        IEntityDisable<IGameUIContext>
     {
         private readonly StatView _view;
+        private readonly IGameContext _gameContext;
         private IReactiveValue<int> _health;
         private IValue<int> _maxHealth;
         private Subscription<int> _subscription;
 
-        public HealthStatPresenter(StatView view)
+        public HealthStatPresenter(StatView view, IGameContext gameContext)
         {
             _view = view;
+            _gameContext = gameContext;
         }
 
-        public void Init(IPlayerContext context)
+        public void Init(IGameUIContext context)
         {
-            IGameEntity character = context.GetCharacter();
+            IGameEntity character = _gameContext.GetCharacter();
             _health = character.GetHealth();
             _maxHealth = character.GetMaxHealth();
         }
 
-        public void Enable(IPlayerContext context)
+        public void Enable(IGameUIContext context)
         {
             _subscription = _health.Observe(UpdateView);
         }
 
-        public void Disable(IPlayerContext context)
+        public void Disable(IGameUIContext context)
         {
             _subscription.Dispose();
         }
