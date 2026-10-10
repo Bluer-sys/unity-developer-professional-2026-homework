@@ -21,6 +21,8 @@ namespace Game.Gameplay
             entity.AddHitMask(new Const<LayerMask>(_hitMask));
             entity.AddDamage(new Const<int>(_damage));
             entity.AddFireCooldown(new Cooldown(_cooldown, 0));
+            entity.AddWeaponCondition(new InlinePredicate<IGameEntity>(TargetUseCase.HasTarget));
+            entity.AddWeaponAction(new MeleeWeaponAction(entity));
             entity.AddBehaviour(new WeaponCooldownBehaviour());
         }
     }

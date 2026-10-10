@@ -1256,7 +1256,7 @@ MonoBehaviour:
   onlyEditModeGizmos: 1
   autoCompile: 0
   initialTagCapacity: 1
-  initialValueCapacity: 6
+  initialValueCapacity: 8
   initialBehaviourCapacity: 2
 --- !u!114 &9100000000000000002
 MonoBehaviour:
@@ -1282,6 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc07b8503c74683af1572ea0e22d5fc, type: 3}
   m_Name:
   m_EditorClassIdentifier:
+  _gameContext: {fileID: 0}
   _firePoint: {fileID: 2679439196154746750}
   _ammo: 8
   _cooldown: 1

@@ -6,6 +6,7 @@ namespace Game.Gameplay
 {
     public sealed class ProjectileWeaponInstaller : MonoEntityInstaller<IGameEntity>
     {
+        [SerializeField] private GameContext _gameContext;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private int _ammo = 8;
         [SerializeField] private float _cooldown = 1;
@@ -13,11 +14,15 @@ namespace Game.Gameplay
 
         public override void Install(IGameEntity entity)
         {
+            var ammo = new ReactiveVariable<int>(_ammo);
+
             entity.AddFirePoint(_firePoint);
-            entity.AddAmmo(new ReactiveVariable<int>(_ammo));
+            entity.AddAmmo(ammo);
             entity.AddFireCooldown(new Cooldown(_cooldown, 0));
             entity.AddSpreadAngle(new Const<float>(_spreadAngle));
             entity.AddFireEvent(new Atomic.Elements.Event());
+            entity.AddWeaponCondition(new InlinePredicate<IGameEntity>(_ => ammo.Value > 0));
+            entity.AddWeaponAction(new ProjectileWeaponAction(entity, _gameContext, new AmmoConsumptionAction(ammo)));
             entity.AddBehaviour(new WeaponCooldownBehaviour());
         }
     }

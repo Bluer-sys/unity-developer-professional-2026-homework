@@ -59,7 +59,7 @@ MonoBehaviour:
   onlyEditModeGizmos: 1
   autoCompile: 0
   initialTagCapacity: 1
-  initialValueCapacity: 7
+  initialValueCapacity: 9
   initialBehaviourCapacity: 1
 --- !u!114 &9100000000000000002
 MonoBehaviour:

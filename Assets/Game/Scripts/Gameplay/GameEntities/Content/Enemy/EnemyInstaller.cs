@@ -15,8 +15,8 @@ namespace Game.Gameplay
             entity.AddTarget(new Variable<IGameEntity>());
             entity.AddTargetPredicate(new InlinePredicate<IGameEntity>(target => target.HasPlayerTag() && target.IsAlive()));
             entity.GetAttackCondition().Add(() => TargetUseCase.HasTarget(entity));
-            entity.GetAttackCondition().Add(() => MeleeWeaponUseCase.CanAttack(_weapon));
-            entity.AddAttackAction(new InlineAction(() => MeleeWeaponUseCase.TryHit(_weapon, entity)));
+            entity.GetAttackCondition().Add(() => WeaponUseCase.CanAttack(_weapon, entity));
+            entity.AddAttackAction(new InlineAction(() => WeaponUseCase.TryAttack(_weapon, entity)));
             entity.AddBehaviour(new EnemyBehaviour());
             entity.AddBehaviour(new EnemyKillCountBehaviour(_gameContext));
         }

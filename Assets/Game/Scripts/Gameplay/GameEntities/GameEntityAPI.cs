@@ -25,6 +25,8 @@ namespace Game.Gameplay
         public static readonly ValueKey<IGameEntity, IValue<float>> RotationSpeed = new(nameof(RotationSpeed));
         public static readonly ValueKey<IGameEntity, IReactiveVariable<bool>> IsAiming = new(nameof(IsAiming));
         public static readonly ValueKey<IGameEntity, IGameEntity> Weapon = new(nameof(Weapon));
+        public static readonly ValueKey<IGameEntity, IPredicate<IGameEntity>> WeaponCondition = new(nameof(WeaponCondition));
+        public static readonly ValueKey<IGameEntity, IAction<IGameEntity>> WeaponAction = new(nameof(WeaponAction));
         public static readonly ValueKey<IGameEntity, IRequest> AttackRequest = new(nameof(AttackRequest));
         public static readonly ValueKey<IGameEntity, ICooldown> AttackDelay = new(nameof(AttackDelay));
         public static readonly ValueKey<IGameEntity, ICooldown> AttackDuration = new(nameof(AttackDuration));
