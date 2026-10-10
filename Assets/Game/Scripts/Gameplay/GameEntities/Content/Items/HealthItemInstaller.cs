@@ -10,9 +10,8 @@ namespace Game.Gameplay
 
         public override void Install(IGameEntity entity)
         {
-            entity.AddPickupAmount(new Const<int>(_amount));
             entity.GetPickupCondition().Add(target => target.GetHealth().Value < target.GetMaxHealth().Value);
-            entity.AddPickupAction(new InlineAction<IGameEntity>(target => target.TryHeal(entity.GetPickupAmount().Value)));
+            entity.AddPickupAction(new InlineAction<IGameEntity>(target => target.TryHeal(_amount)));
         }
     }
 }
