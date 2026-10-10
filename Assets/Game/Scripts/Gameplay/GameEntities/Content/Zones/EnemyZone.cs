@@ -1,31 +1,16 @@
-using System.Collections.Generic;
 using Atomic.Elements;
-using Atomic.Entities;
 using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public sealed class EnemyZoneBehaviour :
-        IEntityInit<IGameEntity>,
-        IEntityEnable<IGameEntity>,
-        IEntityDisable<IGameEntity>
+    public sealed class EnemyZone : MonoBehaviour
     {
-        private readonly TriggerEvents _triggerEvents;
-        private readonly IReadOnlyList<GameEntity> _enemies;
-        private IVariable<IGameEntity> _target;
+        [SerializeField] private TriggerEvents _triggerEvents;
+        [SerializeField] private GameEntity[] _enemies;
 
-        public EnemyZoneBehaviour(TriggerEvents triggerEvents, IReadOnlyList<GameEntity> enemies)
-        {
-            _triggerEvents = triggerEvents;
-            _enemies = enemies;
-        }
+        private IGameEntity _target;
 
-        public void Init(IGameEntity entity)
-        {
-            _target = entity.GetTarget();
-        }
-
-        public void Enable(IGameEntity entity)
+        private void OnEnable()
         {
             _triggerEvents.OnEntered += OnEntered;
             _triggerEvents.OnExited += OnExited;
@@ -34,11 +19,11 @@ namespace Game.Gameplay
                 OnEntered(collider);
         }
 
-        public void Disable(IGameEntity entity)
+        private void OnDisable()
         {
             _triggerEvents.OnEntered -= OnEntered;
             _triggerEvents.OnExited -= OnExited;
-            
+
             SetTarget(null);
         }
 
@@ -52,14 +37,14 @@ namespace Game.Gameplay
 
         private void OnExited(Collider collider)
         {
-            IGameEntity target = _target.Value;
+            IGameEntity target = _target;
 
             if (target == null || !ReferenceEquals(collider.GetComponentInParent<GameEntity>(), target))
                 return;
 
             foreach (Collider current in _triggerEvents.CurrentColliders)
             {
-                if (current != collider && 
+                if (current != collider &&
                     ReferenceEquals(current.GetComponentInParent<GameEntity>(), target))
                     return;
             }
@@ -74,7 +59,7 @@ namespace Game.Gameplay
 
         private void SetTarget(IGameEntity target)
         {
-            IGameEntity previousTarget = _target.Value;
+            IGameEntity previousTarget = _target;
 
             if (ReferenceEquals(previousTarget, target))
                 return;
@@ -82,7 +67,7 @@ namespace Game.Gameplay
             if (previousTarget != null)
                 previousTarget.GetDeathEvent().OnEvent -= OnDeath;
 
-            _target.Value = target;
+            _target = target;
 
             if (target != null)
                 target.GetDeathEvent().OnEvent += OnDeath;

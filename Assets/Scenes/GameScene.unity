@@ -1282,8 +1282,6 @@ GameObject:
   m_Component:
   - component: {fileID: 76841824}
   - component: {fileID: 76841826}
-  - component: {fileID: 76841825}
-  - component: {fileID: 9100000000000001001}
   - component: {fileID: 9100000000000001206}
   - component: {fileID: 9100000000000001207}
   m_Layer: 0
@@ -1308,32 +1306,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 279650649}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &76841825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76841823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useUnityLifecycle: 1
-  disposeValues: 0
-  installOnAwake: 1
-  uninstallOnDestroy: 1
-  scriptableInstallers: []
-  sceneInstallers:
-  - {fileID: 9100000000000001001}
-  - {fileID: 9100000000000001207}
-  onlySelectedGizmos: 0
-  onlyEditModeGizmos: 1
-  autoCompile: 0
-  initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 1
 --- !u!65 &76841826
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2005,8 +1977,6 @@ GameObject:
   m_Component:
   - component: {fileID: 137928204}
   - component: {fileID: 137928206}
-  - component: {fileID: 137928205}
-  - component: {fileID: 9100000000000001002}
   - component: {fileID: 9100000000000001200}
   - component: {fileID: 9100000000000001201}
   m_Layer: 0
@@ -2031,32 +2001,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 279650649}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &137928205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137928203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useUnityLifecycle: 1
-  disposeValues: 0
-  installOnAwake: 1
-  uninstallOnDestroy: 1
-  scriptableInstallers: []
-  sceneInstallers:
-  - {fileID: 9100000000000001002}
-  - {fileID: 9100000000000001201}
-  onlySelectedGizmos: 0
-  onlyEditModeGizmos: 1
-  autoCompile: 0
-  initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 1
 --- !u!65 &137928206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9861,8 +9805,6 @@ GameObject:
   m_Component:
   - component: {fileID: 680947262}
   - component: {fileID: 680947264}
-  - component: {fileID: 680947263}
-  - component: {fileID: 9100000000000001003}
   - component: {fileID: 9100000000000001202}
   - component: {fileID: 9100000000000001203}
   m_Layer: 0
@@ -9887,32 +9829,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 279650649}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &680947263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680947261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useUnityLifecycle: 1
-  disposeValues: 0
-  installOnAwake: 1
-  uninstallOnDestroy: 1
-  scriptableInstallers: []
-  sceneInstallers:
-  - {fileID: 9100000000000001003}
-  - {fileID: 9100000000000001203}
-  onlySelectedGizmos: 0
-  onlyEditModeGizmos: 1
-  autoCompile: 0
-  initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 1
 --- !u!65 &680947264
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26023,8 +25939,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2117813608}
   - component: {fileID: 2117813610}
-  - component: {fileID: 2117813609}
-  - component: {fileID: 9100000000000001004}
   - component: {fileID: 9100000000000001204}
   - component: {fileID: 9100000000000001205}
   m_Layer: 0
@@ -26049,32 +25963,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 279650649}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2117813609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117813607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47402e0c8994c2248b6c480798b98ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useUnityLifecycle: 1
-  disposeValues: 0
-  installOnAwake: 1
-  uninstallOnDestroy: 1
-  scriptableInstallers: []
-  sceneInstallers:
-  - {fileID: 9100000000000001004}
-  - {fileID: 9100000000000001205}
-  onlySelectedGizmos: 0
-  onlyEditModeGizmos: 1
-  autoCompile: 0
-  initialTagCapacity: 1
-  initialValueCapacity: 2
-  initialBehaviourCapacity: 1
 --- !u!65 &2117813610
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27974,54 +27862,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25ded69825984498db7dacfedbed37a1, type: 3}
---- !u!114 &9100000000000001001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76841823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9100000000000001002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137928203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9100000000000001003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680947261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9100000000000001004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117813607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1ae0f9e5461934cb1cd7191f9ddfb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9100000000000001007 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9100000000000000001, guid: 25ded69825984498db7dacfedbed37a1, type: 3}
