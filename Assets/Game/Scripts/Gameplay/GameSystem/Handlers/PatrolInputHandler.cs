@@ -1,43 +1,44 @@
+using Modules.AI;
 using UnityEngine;
 
 namespace SampleGame
 {
-    public sealed class PatrolInputHandler : InputHandler
-    {
-        [SerializeField]
-        private KeyCode _keyCode = KeyCode.P;
-        
-        [SerializeField]
-        private GameObject _character;
+	public sealed class PatrolInputHandler : InputHandler
+	{
+		[SerializeField]
+		private KeyCode _keyCode = KeyCode.P;
 
-        [SerializeField]
-        private InputHandler _next;
+		[SerializeField]
+		private StateMachine _stateMachine;
 
-        public override void Handle(ref InputContext context)
-        {
-            if (Input.GetKey(_keyCode) && context.leftClick)
-            {
-              
-                if (context.point != null)
-                {
-                    // TODO: Point destination
-                }
-                else if (context.target != null && context.target != _character)
-                {
-                    // TODO: Target destination
-                }
+		[SerializeField]
+		private Blackboard _blackboard;
 
-                if (context.enqueueCommand)
-                {
-                    // TODO: If current command is patrol the add waypoint else enqueue command
-                }
-                else
-                {
-                    // TODO: Switch to patrol
-                }
-            }
-            else if (_next)
-                _next.Handle(ref context);
-        }
-    }
+		[SerializeField]
+		private CommandMarkerView _markers;
+
+		[SerializeField]
+		private InputHandler _next;
+
+		public override void Handle(ref InputContext context)
+		{
+			if (Input.GetKey(_keyCode) && context.leftClick)
+			{
+				if (context.point.HasValue)
+				{
+					Vector3 point = context.point.Value;
+					_stateMachine.ChangeState(StateName.Patrol, () =>
+					{
+						Vector3[] waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
+						waypoints[0] = _blackboard.GetValue(BlackboardAPI.Character).transform.position;
+						waypoints[1] = point;
+						_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 1);
+					});
+					_markers.ShowPatrolMarker(point);
+				}
+			}
+			else if (_next)
+				_next.Handle(ref context);
+		}
+	}
 }

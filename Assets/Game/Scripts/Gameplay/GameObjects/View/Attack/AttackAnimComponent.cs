@@ -2,29 +2,29 @@ using UnityEngine;
 
 namespace SampleGame
 {
-    public sealed class AttackAnimComponent : MonoBehaviour
-    {
-        private static readonly int Fire = Animator.StringToHash(nameof(Fire));
+	public sealed class AttackAnimComponent : MonoBehaviour
+	{
+		private static readonly int Fire = Animator.StringToHash(nameof(Fire));
 
-        [SerializeField]
-        private Animator _animator;
+		[SerializeField]
+		private Animator _animator;
 
-        [SerializeField]
-        private AttackComponent _attackComponent;
+		[SerializeField]
+		private AttackComponent _attackComponent;
 
-        private void OnEnable()
-        {
-            _attackComponent.OnFire += this.OnFire;
-        }
+		private void OnEnable()
+		{
+			_attackComponent.OnFire += OnFire;
+		}
 
-        private void OnDisable()
-        {
-            _attackComponent.OnFire -= this.OnFire;
-        }
+		private void OnDisable()
+		{
+			_attackComponent.OnFire -= OnFire;
+		}
 
-        private void OnFire()
-        {
-            _animator.SetTrigger(Fire);
-        }
-    }
+		private void OnFire()
+		{
+			_animator.SetTrigger(Fire);
+		}
+	}
 }

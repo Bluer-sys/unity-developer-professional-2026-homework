@@ -207,6 +207,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.TakeDamageBloodComponent
   _bloodVfx: {fileID: 3044493049963992671}
+  _bloodParticles:
+  - {fileID: 3044493049963992671}
+  - {fileID: 3044493049963992672}
   _teamConfig: {fileID: 11400000, guid: 2a25c920b71554345892bc87c758c68d, type: 2}
   _takeDamageComponent: {fileID: 8686341370957588940}
   _teamComponent: {fileID: 5312956498513726121}
@@ -526,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22eefc2ed9824a98aa8302287babbd0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.TakeDamageComponent
+  _healthComponent: {fileID: 1250729887255155407}
 --- !u!114 &5312956498513726121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,9 +820,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3980785111768640906, guid: 4fcf519da2849493db5e23699c167770, type: 3}
-      propertyPath: _owner
+      propertyPath: _ownerTeamComponent
       value: 
-      objectReference: {fileID: 7896759888454424343}
+      objectReference: {fileID: 5312956498513726121}
     - target: {fileID: 5928359936344331354, guid: 4fcf519da2849493db5e23699c167770, type: 3}
       propertyPath: m_Name
       value: <Weapon>
@@ -928,4 +932,9 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5354369774238046159, guid: 579a707b6198dfb4e8d0a06c0f797c7e, type: 3}
   m_PrefabInstance: {fileID: 7171994086018862181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3044493049963992672 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19851746, guid: 120d855bc18f7fa4f8c46575d5629105, type: 3}
+  m_PrefabInstance: {fileID: 3044493049977684955}
   m_PrefabAsset: {fileID: 0}

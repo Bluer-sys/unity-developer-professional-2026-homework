@@ -209,9 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08bd54e6206c4c11a3d580c7fb70e049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.ProjectileWeapon
-  _owner: {fileID: 0}
+  _ownerTeamComponent: {fileID: 0}
   _firePoint: {fileID: 141701125346755904}
-  _bulletPrefab: {fileID: 2714759441127867601, guid: 44d7f33a7783a417cad58172de548646, type: 3}
+  _bulletPrefab: {fileID: 2433638040389632663, guid: 44d7f33a7783a417cad58172de548646, type: 3}
   _cooldown: 0.6
 --- !u!114 &6705936357030979894
 MonoBehaviour:

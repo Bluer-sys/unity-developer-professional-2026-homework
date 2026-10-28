@@ -31,6 +31,7 @@ namespace Modules.FSM
 
         [LabelText("States")]
         [HideInPlayMode]
+        [SerializeField]
         private StateInfo[] _initialStates;
         
         public event Action<TKey> OnStateChanged;

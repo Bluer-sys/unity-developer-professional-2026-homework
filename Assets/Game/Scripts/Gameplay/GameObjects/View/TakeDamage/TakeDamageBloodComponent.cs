@@ -2,40 +2,44 @@ using UnityEngine;
 
 namespace SampleGame
 {
-    public sealed class TakeDamageBloodComponent : MonoBehaviour
-    {
-        [SerializeField]
-        private ParticleSystem _bloodVfx;
+	public sealed class TakeDamageBloodComponent : MonoBehaviour
+	{
+		[SerializeField]
+		private ParticleSystem _bloodVfx;
 
-        [SerializeField]
-        private TeamConfig _teamConfig;
+		[SerializeField]
+		private ParticleSystem[] _bloodParticles;
 
-        [SerializeField]
-        private TakeDamageComponent _takeDamageComponent;
+		[SerializeField]
+		private TeamConfig _teamConfig;
 
-        [SerializeField]
-        private TeamComponent _teamComponent;
+		[SerializeField]
+		private TakeDamageComponent _takeDamageComponent;
 
-        private void OnEnable()
-        {
-            _takeDamageComponent.OnDamageTaken += this.OnDamageTaken;
-        }
+		[SerializeField]
+		private TeamComponent _teamComponent;
 
-        private void OnDisable()
-        {
-            _takeDamageComponent.OnDamageTaken += this.OnDamageTaken;
-        }
-        
-        private void OnDamageTaken(TakeDamageArgs obj)
-        {
-            Color color = _teamConfig.GetTeam(_teamComponent.Team).Material.color;
-            foreach (ParticleSystem particle in _bloodVfx.GetComponentsInChildren<ParticleSystem>())
-            {
-                ParticleSystem.MainModule particleMain = particle.main;
-                particleMain.startColor = color;
-            }
+		private void OnEnable()
+		{
+			_takeDamageComponent.OnDamageTaken += OnDamageTaken;
+		}
 
-            _bloodVfx.Play(withChildren: true);
-        }
-    }
+		private void OnDisable()
+		{
+			_takeDamageComponent.OnDamageTaken += OnDamageTaken;
+		}
+
+		private void OnDamageTaken(TakeDamageArgs obj)
+		{
+			Color color = _teamConfig.GetTeam(_teamComponent.Team).Material.color;
+
+			foreach (ParticleSystem particle in _bloodParticles)
+			{
+				ParticleSystem.MainModule particleMain = particle.main;
+				particleMain.startColor = color;
+			}
+
+			_bloodVfx.Play(withChildren: true);
+		}
+	}
 }
