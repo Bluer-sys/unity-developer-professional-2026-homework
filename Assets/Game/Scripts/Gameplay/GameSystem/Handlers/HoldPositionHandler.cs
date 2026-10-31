@@ -24,7 +24,8 @@ namespace SampleGame
 		{
 			if (Input.GetKeyDown(_keyCode))
 			{
-				_stateMachine.ChangeState(StateName.HoldPosition);
+				_stateMachine.ChangeState(StateName.HoldPosition, () =>
+					_blackboard.DelValue(BlackboardAPI.Target));
 				_markers.ShowHoldPositionMarker(_blackboard.GetValue(BlackboardAPI.Character).transform.position);
 			}
 			else if (_next)

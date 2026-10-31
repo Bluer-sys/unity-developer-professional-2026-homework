@@ -12,7 +12,7 @@ namespace SampleGame
 				   health.IsAlive;
         }
 
-        public static Vector3 GetDistanceVector(Vector3 from, Vector3 to)
+        public static Vector3 GetDistanceV3(Vector3 from, Vector3 to)
         {
             Vector3 distance = to - from;
             distance.y = 0;

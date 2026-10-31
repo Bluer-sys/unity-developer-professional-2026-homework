@@ -16,7 +16,7 @@ namespace SampleGame
 		{
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
 			GameObject target = _blackboard.GetValue(BlackboardAPI.Target);
-			Vector3 distance = AIUtility.GetDistanceVector(character.transform.position, target.transform.position);
+			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, target.transform.position);
 			float stoppingDistance = _blackboard.GetValue<float>(_distanceKey);
 
 			if (distance.sqrMagnitude > stoppingDistance * stoppingDistance)

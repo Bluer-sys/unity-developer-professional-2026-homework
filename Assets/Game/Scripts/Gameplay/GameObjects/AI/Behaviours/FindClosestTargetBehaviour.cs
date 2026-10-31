@@ -11,15 +11,15 @@ namespace SampleGame
 		private void FixedUpdate()
 		{
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
-			float radius = _blackboard.GetValue(BlackboardAPI.AttackDistance);
+			float radius = _blackboard.GetValue(BlackboardAPI.SightDistance);
 			Collider[] buffer = _blackboard.GetValue(BlackboardAPI.ColliderBuffer);
 
 			GameObject target = FindClosestTarget(character, radius, buffer);
 
 			if (target)
-				_blackboard.SetReferenceValue(BlackboardAPI.DetectedTarget, target);
+				_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
 			else
-				_blackboard.DelValue(BlackboardAPI.DetectedTarget);
+				_blackboard.DelValue(BlackboardAPI.Target);
 		}
 
 		private GameObject FindClosestTarget(GameObject character, float radius, Collider[] buffer)
@@ -42,7 +42,7 @@ namespace SampleGame
 					!_teamComponent.IsEnemy(other))
 					continue;
 
-				Vector3 distance = AIUtility.GetDistanceVector(character.transform.position, other.transform.position);
+				Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, other.transform.position);
 				float sqrDistance = distance.sqrMagnitude;
 
 				if (sqrDistance <= minDistance)

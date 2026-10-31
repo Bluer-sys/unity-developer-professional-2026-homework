@@ -18,7 +18,7 @@ namespace SampleGame
 				return false;
 
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
-			Vector3 distance = AIUtility.GetDistanceVector(character.transform.position, target.transform.position);
+			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, target.transform.position);
 			float targetDistance = _blackboard.GetValue<float>(_distanceKey);
 			
 			return distance.sqrMagnitude <= targetDistance * targetDistance;

@@ -1,3 +1,4 @@
+using Modules.AI;
 using UnityEngine;
 
 namespace SampleGame
@@ -11,13 +12,20 @@ namespace SampleGame
 		private StateMachine _stateMachine;
 
 		[SerializeField]
+		private Blackboard _blackboard;
+
+		[SerializeField]
 		private InputHandler _next;
 
 		public override void Handle(ref InputContext context)
 		{
 			if (Input.GetKeyDown(_keyCode))
 			{
-				_stateMachine.ChangeState(StateName.Idle);
+				_stateMachine.ChangeState(StateName.Idle, () =>
+				{
+					GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
+					_blackboard.SetPrimitiveValue(BlackboardAPI.Position, character.transform.position);
+				});
 			}
 			else if (_next)
 				_next.Handle(ref context);

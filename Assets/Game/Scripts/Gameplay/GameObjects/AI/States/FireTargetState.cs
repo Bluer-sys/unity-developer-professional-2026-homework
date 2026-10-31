@@ -8,17 +8,16 @@ namespace SampleGame
 	{
 		[SerializeField] private Blackboard _blackboard;
 		[SerializeField] private AttackComponent _attackComponent;
-		[SerializeField] private string _targetKey = nameof(BlackboardAPI.Target);
 
 		public override void OnEnter() {}
 
 		public override void OnUpdate(float deltaTime)
 		{
-			if (!_blackboard.TryGetValue(_targetKey, out GameObject target) || !AIUtility.IsAlive(target))
+			if (!_blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) || !AIUtility.IsAlive(target))
 				return;
 
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
-			Vector3 distance = AIUtility.GetDistanceVector(character.transform.position, target.transform.position);
+			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, target.transform.position);
 			float attackDistance = _blackboard.GetValue(BlackboardAPI.AttackDistance);
 
 			if (distance.sqrMagnitude <= attackDistance * attackDistance)

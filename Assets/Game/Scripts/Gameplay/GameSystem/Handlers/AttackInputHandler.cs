@@ -31,7 +31,10 @@ namespace SampleGame
 				if (AIUtility.IsAlive(target) && _teamComponent.IsEnemy(target))
 				{
 					_stateMachine.ChangeState(StateName.Attack, () =>
-						_blackboard.SetReferenceValue(BlackboardAPI.Target, target));
+					{
+						_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
+						_blackboard.SetPrimitiveValue(BlackboardAPI.ChaseDistance, float.PositiveInfinity);
+					});
 					_markers.ShowAttackMarker(target.transform);
 				}
 			}

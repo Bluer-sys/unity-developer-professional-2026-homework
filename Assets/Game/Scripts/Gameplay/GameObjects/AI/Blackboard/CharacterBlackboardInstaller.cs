@@ -9,6 +9,7 @@ namespace SampleGame
 	{
 		[SerializeField] private GameObject _character;
 		[SerializeField] private float _attackDistance = 6.5f;
+		[SerializeField] private float _sightDistance = 10f;
 		[SerializeField] private float _stoppingDistance = 0.25f;
 		[SerializeField] private int _colliderBufferSize = 32;
 
@@ -16,9 +17,12 @@ namespace SampleGame
 		{
 			blackboard.SetReferenceValue(BlackboardAPI.Character, _character);
 			blackboard.SetPrimitiveValue(BlackboardAPI.Destination, _character.transform.position);
+			blackboard.SetPrimitiveValue(BlackboardAPI.Position, _character.transform.position);
 			blackboard.SetReferenceValue(BlackboardAPI.Waypoints, new Vector3[2]);
 			blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 0);
 			blackboard.SetPrimitiveValue(BlackboardAPI.AttackDistance, _attackDistance);
+			blackboard.SetPrimitiveValue(BlackboardAPI.SightDistance, _sightDistance);
+			blackboard.SetPrimitiveValue(BlackboardAPI.ChaseDistance, _sightDistance);
 			blackboard.SetPrimitiveValue(BlackboardAPI.StoppingDistance, _stoppingDistance);
 			blackboard.SetPrimitiveValue(BlackboardAPI.FollowDistance, _stoppingDistance);
 			blackboard.SetReferenceValue(BlackboardAPI.ColliderBuffer, new Collider[_colliderBufferSize]);

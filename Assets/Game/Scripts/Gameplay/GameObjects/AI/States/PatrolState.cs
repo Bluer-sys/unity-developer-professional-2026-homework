@@ -17,7 +17,7 @@ namespace SampleGame
 			Vector3[] waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
 			int index = _blackboard.GetValue(BlackboardAPI.WaypointIndex);
 			float stoppingDistance = _blackboard.GetValue(BlackboardAPI.StoppingDistance);
-			Vector3 distance = AIUtility.GetDistanceVector(character.transform.position, waypoints[index]);
+			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, waypoints[index]);
 
 			if (distance.sqrMagnitude <= stoppingDistance * stoppingDistance)
 				_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, (index + 1) % waypoints.Length);
