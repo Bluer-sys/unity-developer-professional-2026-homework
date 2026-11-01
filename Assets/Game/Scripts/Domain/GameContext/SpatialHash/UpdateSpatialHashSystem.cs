@@ -13,6 +13,7 @@ namespace Game
 
 		public void OnCreate(ref SystemState state)
 		{
+			state.RequireForUpdate<GameState>();
 			state.RequireForUpdate<SpatialHashData>();
 
 			_unitQuery = SystemAPI.QueryBuilder()
@@ -23,6 +24,9 @@ namespace Game
 		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
+			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
+				return;
+
 			state.Dependency.Complete();
 
 			var spatialHashData = SystemAPI.GetSingleton<SpatialHashData>();

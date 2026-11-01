@@ -8,9 +8,17 @@ namespace Game
 	[BurstCompile, UpdateAfter(typeof(AttackTargetSystem))]
 	public partial struct UnitMoveSystem : ISystem
 	{
+		public void OnCreate(ref SystemState state)
+		{
+			state.RequireForUpdate<GameState>();
+		}
+
 		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
+			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
+				return;
+
 			state.Dependency = new MoveJob
 			{
 				DeltaTime = SystemAPI.Time.DeltaTime

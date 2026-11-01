@@ -15,6 +15,8 @@ namespace Game
 
 		public void OnCreate(ref SystemState state)
 		{
+			state.RequireForUpdate<GameState>();
+
 			_transformLookup = state.GetComponentLookup<LocalTransform>(true);
 			_teamLookup = state.GetComponentLookup<Team>(true);
 			_healthLookup = state.GetComponentLookup<Health>(true);
@@ -25,6 +27,9 @@ namespace Game
 		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
+			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
+				return;
+
 			_transformLookup.Update(ref state);
 			_teamLookup.Update(ref state);
 			_healthLookup.Update(ref state);

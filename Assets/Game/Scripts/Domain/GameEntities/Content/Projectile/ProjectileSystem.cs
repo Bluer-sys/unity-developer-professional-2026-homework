@@ -13,6 +13,7 @@ namespace Game
 
 		public void OnCreate(ref SystemState state)
 		{
+			state.RequireForUpdate<GameState>();
 			state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
 			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true);
 			_takeDamageRequests = SystemAPI.GetBufferLookup<TakeDamageRequest>();
@@ -21,6 +22,9 @@ namespace Game
 		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
+			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
+				return;
+
 			state.Dependency.Complete();
 			_transformLookup.Update(ref state);
 			_takeDamageRequests.Update(ref state);

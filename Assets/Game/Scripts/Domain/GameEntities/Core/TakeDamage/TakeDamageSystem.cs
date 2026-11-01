@@ -7,9 +7,17 @@ namespace Game
 	[BurstCompile, UpdateAfter(typeof(SwordsmanMeleeFireSystem)), UpdateAfter(typeof(ProjectileSystem))]
 	public partial struct TakeDamageSystem : ISystem
 	{
+		public void OnCreate(ref SystemState state)
+		{
+			state.RequireForUpdate<GameState>();
+		}
+
 		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
+			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
+				return;
+
 			foreach ((
 						 RefRW<Health> health,
 						 DynamicBuffer<TakeDamageRequest> requests,

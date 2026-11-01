@@ -28,6 +28,9 @@ namespace Game
 			_entityManager = _world.EntityManager;
 			_entity = _entityManager.CreateEntity();
 			_entityManager.SetName(_entity, "GameContext");
+			_entityManager.AddComponentData(_entity, new GameState { value = GameStatus.Running });
+			_entityManager.AddComponent<GameOverEvent>(_entity);
+			_entityManager.SetComponentEnabled<GameOverEvent>(_entity, false);
 
 			_spatialHashInstaller.Install(_entity, _entityManager);
 		}

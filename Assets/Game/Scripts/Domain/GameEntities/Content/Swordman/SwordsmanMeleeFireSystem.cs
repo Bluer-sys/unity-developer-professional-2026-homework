@@ -15,6 +15,8 @@ namespace Game
 
 		public void OnCreate(ref SystemState state)
 		{
+			state.RequireForUpdate<GameState>();
+
 			_teamLookup = SystemAPI.GetComponentLookup<Team>(true);
 			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(false);
 			_attackDistanceLookup = SystemAPI.GetComponentLookup<AttackDistance>(true);
@@ -24,6 +26,9 @@ namespace Game
 		[BurstCompile]
 		public void OnUpdate(ref SystemState state)
 		{
+			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
+				return;
+
 			_teamLookup.Update(ref state);
 			_transformLookup.Update(ref state);
 			_attackDistanceLookup.Update(ref state);
