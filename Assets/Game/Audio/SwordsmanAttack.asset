@@ -15,14 +15,19 @@ MonoBehaviour:
   _poolable: 1
   output: {fileID: 0}
   loop: 0
-  startTime: {rid: 1001}
-  duration: 1
+  startTime:
+    rid: 1001
+  duration: 1.584
   overrideDuration: 0
   spatialBlend: 1
-  clip: {rid: 1002}
-  pitch: {rid: 1003}
-  volume: {rid: 1004}
-  reverbZoneMix: {rid: 1005}
+  clip:
+    rid: 1002
+  pitch:
+    rid: 1003
+  volume:
+    rid: 1004
+  reverbZoneMix:
+    rid: 1005
   rolloffMode: 0
   rolloffCurve:
     serializedVersion: 2
@@ -30,10 +35,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  minDistance: {rid: 1006}
-  maxDistance: {rid: 1007}
-  dopplerLevel: {rid: 1008}
-  spread: {rid: 1009}
+  minDistance:
+    rid: 1006
+  maxDistance:
+    rid: 1007
+  dopplerLevel:
+    rid: 1008
+  spread:
+    rid: 1009
   behaviours: []
   actions: []
   references:
@@ -41,29 +50,37 @@ MonoBehaviour:
     RefIds:
     - rid: 1001
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 0}
+      data:
+        value: 0
     - rid: 1002
       type: {class: ClipConst, ns: Modules.AudioEvents, asm: AudioEngine}
       data:
         clip: {fileID: 8300000, guid: 770df82df61f09e47b1335b927390e4a, type: 3}
     - rid: 1003
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 1}
+      data:
+        value: 1
     - rid: 1004
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 0.8}
+      data:
+        value: 0.8
     - rid: 1005
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 1}
+      data:
+        value: 1
     - rid: 1006
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 1}
+      data:
+        value: 1
     - rid: 1007
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 50}
+      data:
+        value: 50
     - rid: 1008
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 0}
+      data:
+        value: 0
     - rid: 1009
       type: {class: FloatConst, ns: Modules.AudioEvents, asm: AudioEngine}
-      data: {value: 0}
+      data:
+        value: 0
