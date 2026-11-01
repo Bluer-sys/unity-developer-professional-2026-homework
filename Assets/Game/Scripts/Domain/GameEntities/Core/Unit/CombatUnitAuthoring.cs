@@ -57,6 +57,7 @@ namespace Game
 				AddComponent(entity, new AttackDistance { value = authoring._attackDistance });
 				AddComponent(entity, new DetectionRadius { value = authoring._detectionRadius });
 				AddComponent(entity, new TargetEntity { value = Entity.Null });
+				AddComponent(entity, new EnemyBaseTarget { value = Entity.Null });
 
 				AddComponent(entity, new FireCooldown
 				{

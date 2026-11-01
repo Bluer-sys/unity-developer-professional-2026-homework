@@ -9,6 +9,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6854243942854037326}
+  - component: {fileID: 610100000000000101}
+  - component: {fileID: 610100000000000102}
+  - component: {fileID: 610100000000000103}
+  - component: {fileID: 610100000000000104}
+  - component: {fileID: 610100000000000105}
+  - component: {fileID: 610100000000000106}
+  - component: {fileID: 610100000000000107}
+  - component: {fileID: 610100000000000108}
+  - component: {fileID: 610100000000000109}
+  - component: {fileID: 610100000000000110}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -16,6 +26,132 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &610100000000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61b0000000000000000000000000002, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.BaseAuthoring
+--- !u!114 &610100000000000102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10fb236a28bb745e78c6595ad608552f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.HealthAuthoring
+  _current: 300
+  _max: 300
+--- !u!114 &610100000000000103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11de2b94211164aeb8810e1d379d59e1, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.TeamAuthoring
+  _teamType: 0
+--- !u!114 &610100000000000104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe15c43cb1cd04754b26207d1b580e60, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ArmorMultiplierAuthoring
+  Value: 0
+--- !u!114 &610100000000000105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed260e1f095714cf0b3fa1ecaf6eb7b4, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.TakeDamageRequestAuthoring
+--- !u!114 &610100000000000106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c6e231936f84444be63269af2b925d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.TakeDamageEventAuthoring
+--- !u!114 &610100000000000107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76ae63fa1c8d408892b39fce18fd402, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.DeadCooldownAuthoring
+  Duration: 0
+--- !u!114 &610100000000000108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b3c3a9ad2c94f19aecf2921494a507, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.DeathEventAuthoring
+--- !u!114 &610100000000000109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16549610bfe4458aa9389201d072bb6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Unity.Entities.Hybrid::Unity.Entities.Hybrid.Baking.LinkedEntityGroupAuthoring
+--- !u!114 &610100000000000110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981802089077454633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61b0000000000000000000000000004, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.TakeDamageSfxAuthoring
+  _value: Combat.BaseTakeDamage
 --- !u!4 &6854243942854037326
 Transform:
   m_ObjectHideFlags: 0

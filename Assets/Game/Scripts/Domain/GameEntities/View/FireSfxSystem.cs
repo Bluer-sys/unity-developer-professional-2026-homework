@@ -7,7 +7,7 @@ namespace Game
 	[UpdateInGroup(typeof(PresentationSystemGroup))]
 	public partial struct FireSfxSystem : ISystem
 	{
-		private const float FIRE_THRESHOLD = 0.1f;
+		private const float FireThreshold = 0.1f;
 
 		public void OnUpdate(ref SystemState state)
 		{
@@ -24,7 +24,7 @@ namespace Game
 				audioSystem.PlayEvent(sfx.ValueRO.value,
 					transform.ValueRO.Position,
 					transform.ValueRO.Rotation,
-					FIRE_THRESHOLD);
+					FireThreshold);
 		}
 	}
 }

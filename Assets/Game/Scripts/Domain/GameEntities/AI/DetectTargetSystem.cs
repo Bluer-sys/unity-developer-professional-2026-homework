@@ -38,7 +38,7 @@ namespace Game
 			}.ScheduleParallel(state.Dependency);
 		}
 
-		[BurstCompile]
+		[BurstCompile, WithAll(typeof(Unit))]
 		public partial struct DetectJob : IJobEntity
 		{
 			[NativeDisableUnsafePtrRestriction]
@@ -58,6 +58,7 @@ namespace Game
 					in LocalTransform transform,
 					in Team team,
 					in DetectionRadius detectionRadius,
+					in EnemyBaseTarget enemyBaseTarget,
 					ref TargetEntity target
 				)
 			{
@@ -70,6 +71,14 @@ namespace Game
 					detectionRadius.value,
 					in condition,
 					TransformLookup);
+
+				if (target.value != Entity.Null)
+					return;
+
+				Entity baseEntity = enemyBaseTarget.value;
+
+				if (baseEntity != Entity.Null && HealthLookup.TryGetComponent(baseEntity, out Health health) && health.IsAlive() && TransformLookup.HasComponent(baseEntity))
+					target.value = baseEntity;
 			}
 		}
 	}

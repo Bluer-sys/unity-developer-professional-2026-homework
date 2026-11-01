@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6638863398131917904}
+  - component: {fileID: 610100000000000001}
   - component: {fileID: 8667156460619915840}
   - component: {fileID: 887732369143325276}
   m_Layer: 0
@@ -18,6 +19,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &610100000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883565171892982307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b00000000000000000000000000002, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ProjectileCombatAuthoring
+  _moveSpeed: 20
+  _stoppingDistance: 0.35
+  _damage: 3
+  _lifetime: 3
+  _targetOffset: {x: 0, y: 1, z: 0}
 --- !u!4 &6638863398131917904
 Transform:
   m_ObjectHideFlags: 0
