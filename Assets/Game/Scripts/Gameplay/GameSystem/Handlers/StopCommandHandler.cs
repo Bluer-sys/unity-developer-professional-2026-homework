@@ -9,7 +9,7 @@ namespace SampleGame
 		private KeyCode _keyCode = KeyCode.S;
 
 		[SerializeField]
-		private StateMachine _stateMachine;
+		private SequencedStateMachine _stateMachine;
 
 		[SerializeField]
 		private Blackboard _blackboard;
@@ -21,11 +21,11 @@ namespace SampleGame
 		{
 			if (Input.GetKeyDown(_keyCode))
 			{
-				_stateMachine.ChangeState(StateName.Idle, () =>
+				_stateMachine.Submit(new StateMachineCommand(StateName.Idle, () =>
 				{
 					GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
 					_blackboard.SetPrimitiveValue(BlackboardAPI.Position, character.transform.position);
-				});
+				}), false);
 			}
 			else if (_next)
 				_next.Handle(ref context);

@@ -9,7 +9,7 @@ namespace SampleGame
 		private KeyCode _keyCode = KeyCode.A;
 
 		[SerializeField]
-		private StateMachine _stateMachine;
+		private SequencedStateMachine _stateMachine;
 
 		[SerializeField]
 		private Blackboard _blackboard;
@@ -28,15 +28,12 @@ namespace SampleGame
 			if (Input.GetKey(_keyCode) && context.leftClick)
 			{
 				GameObject target = context.target;
-				if (AIUtility.IsAlive(target) && _teamComponent.IsEnemy(target))
+				_stateMachine.Submit(new StateMachineCommand(StateName.Attack, () =>
 				{
-					_stateMachine.ChangeState(StateName.Attack, () =>
-					{
-						_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
-						_blackboard.SetPrimitiveValue(BlackboardAPI.ChaseDistance, float.PositiveInfinity);
-					});
+					_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
+					_blackboard.SetPrimitiveValue(BlackboardAPI.ChaseDistance, float.PositiveInfinity);
 					_markers.ShowAttackMarker(target.transform);
-				}
+				}, () => AIUtility.IsAlive(target) && _teamComponent.IsEnemy(target)), context.enqueueCommand);
 			}
 			else if (_next)
 				_next.Handle(ref context);

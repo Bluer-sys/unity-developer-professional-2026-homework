@@ -9,7 +9,7 @@ namespace SampleGame
 		private KeyCode _keyCode = KeyCode.P;
 
 		[SerializeField]
-		private StateMachine _stateMachine;
+		private SequencedStateMachine _stateMachine;
 
 		[SerializeField]
 		private Blackboard _blackboard;
@@ -27,18 +27,30 @@ namespace SampleGame
 				if (context.point.HasValue)
 				{
 					Vector3 point = context.point.Value;
-					_stateMachine.ChangeState(StateName.Patrol, () =>
+					if (context.enqueueCommand && _stateMachine.CurrentState == StateName.Patrol)
+					{
+						SetPatrolPoint(point);
+						return;
+					}
+
+					_stateMachine.Submit(new StateMachineCommand(StateName.Patrol, () =>
 					{
 						Vector3[] waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
 						waypoints[0] = _blackboard.GetValue(BlackboardAPI.Character).transform.position;
-						waypoints[1] = point;
-						_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 1);
-					});
-					_markers.ShowPatrolMarker(point);
+						SetPatrolPoint(point);
+					}), context.enqueueCommand);
 				}
 			}
 			else if (_next)
 				_next.Handle(ref context);
+		}
+
+		private void SetPatrolPoint(Vector3 point)
+		{
+			Vector3[] waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
+			waypoints[1] = point;
+			_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 1);
+			_markers.ShowPatrolMarker(point);
 		}
 	}
 }

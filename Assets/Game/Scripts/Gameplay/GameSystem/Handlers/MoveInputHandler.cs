@@ -9,7 +9,7 @@ namespace SampleGame
 		private KeyCode _keyCode = KeyCode.M;
 
 		[SerializeField]
-		private StateMachine _stateMachine;
+		private SequencedStateMachine _stateMachine;
 
 		[SerializeField]
 		private Blackboard _blackboard;
@@ -27,9 +27,11 @@ namespace SampleGame
 				if (context.point.HasValue)
 				{
 					Vector3 point = context.point.Value;
-					_stateMachine.ChangeState(StateName.Move, () =>
-						_blackboard.SetPrimitiveValue(BlackboardAPI.Destination, point));
-					_markers.ShowMoveMarker(point);
+					_stateMachine.Submit(new StateMachineCommand(StateName.Move, () =>
+					{
+						_blackboard.SetPrimitiveValue(BlackboardAPI.Destination, point);
+						_markers.ShowMoveMarker(point);
+					}), context.enqueueCommand);
 				}
 			}
 			else if (_next)

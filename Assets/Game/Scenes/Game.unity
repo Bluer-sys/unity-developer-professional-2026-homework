@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.MoveInputHandler
   _keyCode: 109
-  _stateMachine: {fileID: 3100000012}
+  _stateMachine: {fileID: 3100000013}
   _blackboard: {fileID: 3100000002}
   _markers: {fileID: 1366347856}
   _next: {fileID: 0}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.FollowInputHandler
   _keyCode: 102
-  _stateMachine: {fileID: 3100000012}
+  _stateMachine: {fileID: 3100000013}
   _blackboard: {fileID: 3100000002}
   _radiusComponent: {fileID: 3100000093}
   _markers: {fileID: 1366347856}
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.PatrolInputHandler
   _keyCode: 112
-  _stateMachine: {fileID: 3100000012}
+  _stateMachine: {fileID: 3100000013}
   _blackboard: {fileID: 3100000002}
   _markers: {fileID: 1366347856}
   _next: {fileID: 513256918}
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.AttackInputHandler
   _keyCode: 97
-  _stateMachine: {fileID: 3100000012}
+  _stateMachine: {fileID: 3100000013}
   _blackboard: {fileID: 3100000002}
   _teamComponent: {fileID: 3100000092}
   _markers: {fileID: 1366347856}
@@ -876,7 +876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.RaycastInputHandler
   _camera: {fileID: 385911208}
-  _next: {fileID: 2024489237}
+  _next: {fileID: 781432834}
 --- !u!1 &1288575412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2968069809420515332, guid: 07ccefa6ad3464845b205908b98b4a8e, type: 3}
@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.HoldPositionHandler
   _keyCode: 104
-  _stateMachine: {fileID: 3100000012}
+  _stateMachine: {fileID: 3100000013}
   _blackboard: {fileID: 3100000002}
   _markers: {fileID: 1366347856}
   _next: {fileID: 504420566}
@@ -1225,7 +1225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SampleGame.StopCommandHandler
   _keyCode: 115
-  _stateMachine: {fileID: 3100000012}
+  _stateMachine: {fileID: 3100000013}
   _blackboard: {fileID: 3100000002}
   _next: {fileID: 1820899027}
 --- !u!1001 &2044366344
@@ -1386,6 +1386,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0275c6d507364cc5941abfcdcd6998ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Modules.AI.Blackboard::Modules.AI.Blackboard
+--- !u!114 &3100000013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3100000013, guid: f82db08d1eee94b9791aca8b635c4482, type: 3}
+  m_PrefabInstance: {fileID: 7613773963679934943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8230f40d7c4b7fac2ad0d97e82d7d4, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SampleGame.SequencedStateMachine
 --- !u!114 &3100000012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3100000012, guid: f82db08d1eee94b9791aca8b635c4482, type: 3}

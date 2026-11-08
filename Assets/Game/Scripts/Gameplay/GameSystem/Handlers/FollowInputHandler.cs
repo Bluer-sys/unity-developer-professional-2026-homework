@@ -9,7 +9,7 @@ namespace SampleGame
 		private KeyCode _keyCode = KeyCode.F;
 
 		[SerializeField]
-		private StateMachine _stateMachine;
+		private SequencedStateMachine _stateMachine;
 
 		[SerializeField]
 		private Blackboard _blackboard;
@@ -29,10 +29,7 @@ namespace SampleGame
 			{
 				GameObject target = context.target;
 
-				if (target == _blackboard.GetValue(BlackboardAPI.Character) || !AIUtility.IsAlive(target))
-					return;
-
-				_stateMachine.ChangeState(StateName.Follow, () =>
+				_stateMachine.Submit(new StateMachineCommand(StateName.Follow, () =>
 				{
 					float distance = _radiusComponent.Value + 
 									 target.GetComponent<UnitRadiusComponent>().Value + 
@@ -40,9 +37,9 @@ namespace SampleGame
 						
 					_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
 					_blackboard.SetPrimitiveValue(BlackboardAPI.FollowDistance, distance);
-				});
-				
-				_markers.ShowFollowMarker(target.transform);
+					_markers.ShowFollowMarker(target.transform);
+				}, () => target != _blackboard.GetValue(BlackboardAPI.Character) && AIUtility.IsAlive(target)),
+					context.enqueueCommand);
 			}
 			else if (_next)
 				_next.Handle(ref context);

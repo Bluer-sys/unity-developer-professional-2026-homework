@@ -1,0 +1,87 @@
+using System.Collections.Generic;
+using Modules.FSM;
+using UnityEngine;
+
+namespace SampleGame
+{
+	public sealed class SequencedStateMachine : State
+	{
+		[SerializeField] private StateMachine _stateMachine;
+		[SerializeField] private HealthComponent _healthComponent;
+
+		private readonly Queue<ICommand> _commands = new();
+		private ICommand _currentCommand;
+
+		public StateName CurrentState => _stateMachine.CurrentState;
+
+		public override void OnEnter()
+		{
+			_stateMachine.OnStateChanged += OnStateChanged;
+			_healthComponent.OnDeath += OnDeath;
+			_stateMachine.OnEnter();
+		}
+
+		public override void OnUpdate(float deltaTime)
+		{
+			_stateMachine.OnUpdate(deltaTime);
+
+			if (_currentCommand == null && _healthComponent.IsAlive)
+				ExecuteNext();
+		}
+
+		public override void OnExit()
+		{
+			_stateMachine.OnStateChanged -= OnStateChanged;
+			_healthComponent.OnDeath -= OnDeath;
+			_stateMachine.OnExit();
+		}
+
+		public void Submit(ICommand command, bool enqueue)
+		{
+			if (_healthComponent.IsDead || !command.CanExecute())
+				return;
+
+			if (enqueue && _currentCommand != null)
+			{
+				_commands.Enqueue(command);
+				return;
+			}
+
+			if (!enqueue)
+				_commands.Clear();
+
+			Execute(command);
+		}
+
+		private void ExecuteNext()
+		{
+			while (_commands.Count > 0)
+			{
+				ICommand command = _commands.Dequeue();
+				if (!command.CanExecute())
+					continue;
+
+				Execute(command);
+				return;
+			}
+		}
+
+		private void Execute(ICommand command)
+		{
+			_currentCommand = command;
+			command.Execute(_stateMachine);
+		}
+
+		private void OnStateChanged(StateName state)
+		{
+			if (state == StateName.Idle)
+				_currentCommand = null;
+		}
+
+		private void OnDeath()
+		{
+			_commands.Clear();
+			_currentCommand = null;
+		}
+	}
+}
