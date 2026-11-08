@@ -38,7 +38,7 @@ namespace SampleGame
 					_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
 					_blackboard.SetPrimitiveValue(BlackboardAPI.FollowDistance, distance);
 					_markers.ShowFollowMarker(target.transform);
-				}, () => target != _blackboard.GetValue(BlackboardAPI.Character) && AIUtility.IsAlive(target)),
+				}, () => target != _blackboard.GetValue(BlackboardAPI.Character) && target.IsAlive()),
 					context.enqueueCommand);
 			}
 			else if (_next)

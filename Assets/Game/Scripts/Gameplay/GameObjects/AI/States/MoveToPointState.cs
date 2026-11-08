@@ -15,7 +15,7 @@ namespace SampleGame
 		{
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
 			Vector3 destination = _blackboard.GetValue(BlackboardAPI.Destination);
-			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, destination);
+			Vector3 distance = character.transform.position.GetDistanceXZ(destination);
 			
 			_moveComponent.MoveStep(distance.normalized, deltaTime);
 		}
@@ -24,7 +24,7 @@ namespace SampleGame
 		{
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
 			Vector3 destination = _blackboard.GetValue(BlackboardAPI.Destination);
-			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, destination);
+			Vector3 distance = character.transform.position.GetDistanceXZ(destination);
 			float stoppingDistance = _blackboard.GetValue(BlackboardAPI.StoppingDistance);
 
 			if (distance.sqrMagnitude <= stoppingDistance * stoppingDistance)

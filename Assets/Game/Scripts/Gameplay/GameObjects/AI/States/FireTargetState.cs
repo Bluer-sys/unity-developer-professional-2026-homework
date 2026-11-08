@@ -13,11 +13,11 @@ namespace SampleGame
 
 		public override void OnUpdate(float deltaTime)
 		{
-			if (!_blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) || !AIUtility.IsAlive(target))
+			if (!_blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) || !target.IsAlive())
 				return;
 
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
-			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, target.transform.position);
+			Vector3 distance = character.transform.position.GetDistanceXZ(target.transform.position);
 			float attackDistance = _blackboard.GetValue(BlackboardAPI.AttackDistance);
 
 			if (distance.sqrMagnitude <= attackDistance * attackDistance)

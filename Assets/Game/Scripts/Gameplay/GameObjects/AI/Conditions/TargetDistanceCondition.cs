@@ -14,11 +14,11 @@ namespace SampleGame
 
 		public bool Invoke()
 		{
-			if (!_blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) || !AIUtility.IsAlive(target))
+			if (!_blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) || !target.IsAlive())
 				return false;
 
 			GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
-			Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, target.transform.position);
+			Vector3 distance = character.transform.position.GetDistanceXZ(target.transform.position);
 			float targetDistance = _blackboard.GetValue<float>(_distanceKey);
 			
 			return distance.sqrMagnitude <= targetDistance * targetDistance;

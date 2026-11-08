@@ -11,7 +11,7 @@ namespace SampleGame
 
 		public bool Invoke()
 		{
-			return _blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) && AIUtility.IsAlive(target);
+			return _blackboard.TryGetValue(BlackboardAPI.Target, out GameObject target) && target.IsAlive();
 		}
 	}
 }

@@ -38,11 +38,11 @@ namespace SampleGame
 				GameObject other = buffer[i].gameObject;
 
 				if (other == character || 
-					!AIUtility.IsAlive(other) || 
+					!other.IsAlive() ||
 					!_teamComponent.IsEnemy(other))
 					continue;
 
-				Vector3 distance = AIUtility.GetDistanceV3(character.transform.position, other.transform.position);
+				Vector3 distance = character.transform.position.GetDistanceXZ(other.transform.position);
 				float sqrDistance = distance.sqrMagnitude;
 
 				if (sqrDistance <= minDistance)

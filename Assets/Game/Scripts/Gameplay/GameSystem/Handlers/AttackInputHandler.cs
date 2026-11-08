@@ -33,7 +33,7 @@ namespace SampleGame
 					_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
 					_blackboard.SetPrimitiveValue(BlackboardAPI.ChaseDistance, float.PositiveInfinity);
 					_markers.ShowAttackMarker(target.transform);
-				}, () => AIUtility.IsAlive(target) && _teamComponent.IsEnemy(target)), context.enqueueCommand);
+				}, () => target.IsAlive() && _teamComponent.IsEnemy(target)), context.enqueueCommand);
 			}
 			else if (_next)
 				_next.Handle(ref context);
