@@ -24,11 +24,7 @@ namespace SampleGame
 		{
 			if (Input.GetKeyDown(_keyCode))
 			{
-				_stateMachine.Submit(new StateMachineCommand(StateName.HoldPosition, () =>
-				{
-					_blackboard.DelValue(BlackboardAPI.Target);
-					_markers.ShowHoldPositionMarker(_blackboard.GetValue(BlackboardAPI.Character).transform.position);
-				}), context.enqueueCommand);
+				_stateMachine.Submit(new HoldPositionCommand(_blackboard, _markers), context.enqueueCommand);
 			}
 			else if (_next)
 				_next.Handle(ref context);

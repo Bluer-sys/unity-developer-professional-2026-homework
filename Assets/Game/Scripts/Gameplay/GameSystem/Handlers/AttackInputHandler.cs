@@ -27,13 +27,8 @@ namespace SampleGame
 		{
 			if (Input.GetKey(_keyCode) && context.leftClick)
 			{
-				GameObject target = context.target;
-				_stateMachine.Submit(new StateMachineCommand(StateName.Attack, () =>
-				{
-					_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
-					_blackboard.SetPrimitiveValue(BlackboardAPI.ChaseDistance, float.PositiveInfinity);
-					_markers.ShowAttackMarker(target.transform);
-				}, () => target.IsAlive() && _teamComponent.IsEnemy(target)), context.enqueueCommand);
+				_stateMachine.Submit(new AttackCommand(_blackboard, _markers, _teamComponent, context.target),
+					context.enqueueCommand);
 			}
 			else if (_next)
 				_next.Handle(ref context);

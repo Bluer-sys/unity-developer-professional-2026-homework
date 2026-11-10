@@ -21,11 +21,7 @@ namespace SampleGame
 		{
 			if (Input.GetKeyDown(_keyCode))
 			{
-				_stateMachine.Submit(new StateMachineCommand(StateName.Idle, () =>
-				{
-					GameObject character = _blackboard.GetValue(BlackboardAPI.Character);
-					_blackboard.SetPrimitiveValue(BlackboardAPI.Position, character.transform.position);
-				}), false);
+				_stateMachine.Submit(new StopCommand(_blackboard), false);
 			}
 			else if (_next)
 				_next.Handle(ref context);

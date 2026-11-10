@@ -27,18 +27,7 @@ namespace SampleGame
 		{
 			if (Input.GetKey(_keyCode) && context.leftClick)
 			{
-				GameObject target = context.target;
-
-				_stateMachine.Submit(new StateMachineCommand(StateName.Follow, () =>
-				{
-					float distance = _radiusComponent.Value + 
-									 target.GetComponent<UnitRadiusComponent>().Value + 
-									 _blackboard.GetValue(BlackboardAPI.StoppingDistance);
-						
-					_blackboard.SetReferenceValue(BlackboardAPI.Target, target);
-					_blackboard.SetPrimitiveValue(BlackboardAPI.FollowDistance, distance);
-					_markers.ShowFollowMarker(target.transform);
-				}, () => target != _blackboard.GetValue(BlackboardAPI.Character) && target.IsAlive()),
+				_stateMachine.Submit(new FollowCommand(_blackboard, _markers, _radiusComponent, context.target),
 					context.enqueueCommand);
 			}
 			else if (_next)

@@ -24,7 +24,7 @@ namespace SampleGame
 
 			if (CurrentState == StateName.Idle)
 				_currentCommand = null;
-			
+
 			if (_currentCommand == null)
 				ExecuteNext();
 		}
@@ -70,6 +70,9 @@ namespace SampleGame
 		{
 			_currentCommand = command;
 			command.Execute(_stateMachine);
+
+			if (CurrentState == StateName.Idle)
+				_currentCommand = null;
 		}
 	}
 }

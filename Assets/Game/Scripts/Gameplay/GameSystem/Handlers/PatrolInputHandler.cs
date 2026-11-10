@@ -34,15 +34,8 @@ namespace SampleGame
 						return;
 					}
 
-					_stateMachine.Submit(new StateMachineCommand(StateName.Patrol, () =>
-					{
-						List<Vector3> waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
-						Vector3 position = _blackboard.GetValue(BlackboardAPI.Character).transform.position;
-						waypoints.Clear();
-						waypoints.Add(position);
-						AddPatrolPoint(point);
-						_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 1);
-					}), context.enqueueCommand);
+					_stateMachine.Submit(new PatrolCommand(_blackboard, _markers, point),
+						context.enqueueCommand);
 				}
 			}
 			else if (_next)

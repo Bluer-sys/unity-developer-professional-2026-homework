@@ -26,12 +26,8 @@ namespace SampleGame
 			{
 				if (context.point.HasValue)
 				{
-					Vector3 point = context.point.Value;
-					_stateMachine.Submit(new StateMachineCommand(StateName.Move, () =>
-					{
-						_blackboard.SetPrimitiveValue(BlackboardAPI.Destination, point);
-						_markers.ShowMoveMarker(point);
-					}), context.enqueueCommand);
+					_stateMachine.Submit(new MoveCommand(_blackboard, _markers, context.point.Value),
+						context.enqueueCommand);
 				}
 			}
 			else if (_next)
