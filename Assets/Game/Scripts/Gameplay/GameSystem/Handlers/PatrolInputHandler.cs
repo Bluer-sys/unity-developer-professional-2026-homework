@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Modules.AI;
 using UnityEngine;
 
@@ -29,15 +30,18 @@ namespace SampleGame
 					Vector3 point = context.point.Value;
 					if (context.enqueueCommand && _stateMachine.CurrentState == StateName.Patrol)
 					{
-						SetPatrolPoint(point);
+						AddPatrolPoint(point);
 						return;
 					}
 
 					_stateMachine.Submit(new StateMachineCommand(StateName.Patrol, () =>
 					{
-						Vector3[] waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
-						waypoints[0] = _blackboard.GetValue(BlackboardAPI.Character).transform.position;
-						SetPatrolPoint(point);
+						List<Vector3> waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
+						Vector3 position = _blackboard.GetValue(BlackboardAPI.Character).transform.position;
+						waypoints.Clear();
+						waypoints.Add(position);
+						AddPatrolPoint(point);
+						_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 1);
 					}), context.enqueueCommand);
 				}
 			}
@@ -45,11 +49,10 @@ namespace SampleGame
 				_next.Handle(ref context);
 		}
 
-		private void SetPatrolPoint(Vector3 point)
+		private void AddPatrolPoint(Vector3 point)
 		{
-			Vector3[] waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
-			waypoints[1] = point;
-			_blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 1);
+			List<Vector3> waypoints = _blackboard.GetValue(BlackboardAPI.Waypoints);
+			waypoints.Add(point);
 			_markers.ShowPatrolMarker(point);
 		}
 	}

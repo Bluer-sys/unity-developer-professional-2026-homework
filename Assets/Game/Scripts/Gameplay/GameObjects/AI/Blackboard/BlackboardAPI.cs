@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Modules.AI;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace SampleGame
 		public static readonly BlackboardValueKey<Vector3> Destination = new(nameof(Destination));
 		public static readonly BlackboardValueKey<Vector3> Position = new(nameof(Position));
 		
-		public static readonly BlackboardValueKey<Vector3[]> Waypoints = new(nameof(Waypoints));
+		public static readonly BlackboardValueKey<List<Vector3>> Waypoints = new(nameof(Waypoints));
 		public static readonly BlackboardValueKey<int> WaypointIndex = new(nameof(WaypointIndex));
 		
 		public static readonly BlackboardValueKey<float> AttackDistance = new(nameof(AttackDistance));

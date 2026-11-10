@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Modules.AI;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace SampleGame
 			blackboard.SetReferenceValue(BlackboardAPI.Character, _character);
 			blackboard.SetPrimitiveValue(BlackboardAPI.Destination, _character.transform.position);
 			blackboard.SetPrimitiveValue(BlackboardAPI.Position, _character.transform.position);
-			blackboard.SetReferenceValue(BlackboardAPI.Waypoints, new Vector3[2]);
+			blackboard.SetReferenceValue(BlackboardAPI.Waypoints, new List<Vector3>());
 			blackboard.SetPrimitiveValue(BlackboardAPI.WaypointIndex, 0);
 			blackboard.SetPrimitiveValue(BlackboardAPI.AttackDistance, _attackDistance);
 			blackboard.SetPrimitiveValue(BlackboardAPI.SightDistance, _sightDistance);
