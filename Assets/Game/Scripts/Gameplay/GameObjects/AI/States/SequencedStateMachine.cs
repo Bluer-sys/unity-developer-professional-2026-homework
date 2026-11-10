@@ -15,7 +15,6 @@ namespace SampleGame
 
 		public override void OnEnter()
 		{
-			_stateMachine.OnStateChanged += OnStateChanged;
 			_stateMachine.OnEnter();
 		}
 
@@ -23,13 +22,15 @@ namespace SampleGame
 		{
 			_stateMachine.OnUpdate(deltaTime);
 
+			if (CurrentState == StateName.Idle)
+				_currentCommand = null;
+			
 			if (_currentCommand == null)
 				ExecuteNext();
 		}
 
 		public override void OnExit()
 		{
-			_stateMachine.OnStateChanged -= OnStateChanged;
 			_stateMachine.OnExit();
 			_commands.Clear();
 			_currentCommand = null;
@@ -69,12 +70,6 @@ namespace SampleGame
 		{
 			_currentCommand = command;
 			command.Execute(_stateMachine);
-		}
-
-		private void OnStateChanged(StateName state)
-		{
-			if (state == StateName.Idle)
-				_currentCommand = null;
 		}
 	}
 }
