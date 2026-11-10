@@ -7,7 +7,6 @@ namespace SampleGame
 	public sealed class SequencedStateMachine : State
 	{
 		[SerializeField] private StateMachine _stateMachine;
-		[SerializeField] private HealthComponent _healthComponent;
 
 		private readonly Queue<ICommand> _commands = new();
 		private ICommand _currentCommand;
@@ -17,7 +16,6 @@ namespace SampleGame
 		public override void OnEnter()
 		{
 			_stateMachine.OnStateChanged += OnStateChanged;
-			_healthComponent.OnDeath += OnDeath;
 			_stateMachine.OnEnter();
 		}
 
@@ -25,20 +23,21 @@ namespace SampleGame
 		{
 			_stateMachine.OnUpdate(deltaTime);
 
-			if (_currentCommand == null && _healthComponent.IsAlive)
+			if (_currentCommand == null)
 				ExecuteNext();
 		}
 
 		public override void OnExit()
 		{
 			_stateMachine.OnStateChanged -= OnStateChanged;
-			_healthComponent.OnDeath -= OnDeath;
 			_stateMachine.OnExit();
+			_commands.Clear();
+			_currentCommand = null;
 		}
 
 		public void Submit(ICommand command, bool enqueue)
 		{
-			if (_healthComponent.IsDead || !command.CanExecute())
+			if (!isActiveAndEnabled || !command.CanExecute())
 				return;
 
 			if (enqueue && _currentCommand != null)
@@ -76,12 +75,6 @@ namespace SampleGame
 		{
 			if (state == StateName.Idle)
 				_currentCommand = null;
-		}
-
-		private void OnDeath()
-		{
-			_commands.Clear();
-			_currentCommand = null;
 		}
 	}
 }
