@@ -17,7 +17,7 @@ MonoBehaviour:
   loop: 0
   startTime:
     rid: 1001
-  duration: 1
+  duration: 1.515102
   overrideDuration: 0
   spatialBlend: 1
   clip:

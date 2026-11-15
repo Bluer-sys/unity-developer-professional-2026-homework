@@ -12,12 +12,6 @@ namespace Game
 		[SerializeField]
 		private SpatialHashInstaller _spatialHashInstaller;
 
-		// Inventory Installer
-
-		// Camera Installer
-
-		// Another installer
-
 		private void Awake()
 		{
 			_world = World.DefaultGameObjectInjectionWorld;
