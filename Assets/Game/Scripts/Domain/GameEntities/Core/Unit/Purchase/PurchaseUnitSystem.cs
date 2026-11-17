@@ -36,14 +36,14 @@ namespace Game
 			{
 				for (var i = 0; i < requests.Length; i++)
 				{
-					if (!isRunning || !TryGetItem(catalog, requests[i].unitType, out UnitCatalogItem item))
+					if (!isRunning || !catalog.TryGetItem(requests[i].unitType, out UnitCatalogItem item))
 						continue;
 
-					if (item.price < 0 || money.ValueRO.value < item.price)
+					if (money.ValueRO.value < item.price)
 						continue;
 
-					if (!UnitSpawnUseCase.CanSpawn(state.EntityManager,
-							item.prefab, item.unitType, team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value))
+					if (!UnitUseCase.CanSpawn(state.EntityManager,
+							team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value))
 						continue;
 
 					money.ValueRW.value -= item.price;
@@ -57,21 +57,6 @@ namespace Game
 
 				requests.Clear();
 			}
-		}
-
-		private static bool TryGetItem(DynamicBuffer<UnitCatalogItem> catalog, CombatUnitType unitType, out UnitCatalogItem item)
-		{
-			for (var i = 0; i < catalog.Length; i++)
-			{
-				if (catalog[i].unitType != unitType)
-					continue;
-
-				item = catalog[i];
-				return true;
-			}
-
-			item = default;
-			return false;
 		}
 	}
 }

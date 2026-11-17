@@ -48,8 +48,8 @@ namespace Game
 				{
 					SpawnUnitRequest request = requests[i];
 
-					if (!isRunning || !UnitSpawnUseCase.CanSpawn(state.EntityManager,
-							request.prefab, request.unitType, team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value))
+					if (!isRunning || !UnitUseCase.CanSpawn(state.EntityManager,
+							team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value))
 					{
 						money.ValueRW.value += request.price;
 						continue;

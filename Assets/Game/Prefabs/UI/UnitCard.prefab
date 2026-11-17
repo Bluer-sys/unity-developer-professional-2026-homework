@@ -86,8 +86,6 @@ GameObject:
   - component: {fileID: 1017894304152855374}
   - component: {fileID: 7978213583582761291}
   - component: {fileID: 6035518790237702073}
-  - component: {fileID: 1004058209433697478}
-  - component: {fileID: 4169132942762085436}
   - component: {fileID: 3347215499923613401}
   m_Layer: 5
   m_Name: Background
@@ -159,7 +157,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2740764034811606553}
+  m_GameObject: {fileID: 6993229125741468533}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -203,7 +201,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2740764034811606553}
+  m_GameObject: {fileID: 6993229125741468533}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f8fc8b0f87b454aa0d40b76760d6622, type: 3}
@@ -244,7 +242,6 @@ GameObject:
   - component: {fileID: 770237682441342267}
   - component: {fileID: 5784599859623762194}
   - component: {fileID: 1253994963634713156}
-  - component: {fileID: 7893530848984403542}
   m_Layer: 5
   m_Name: NameBack
   m_TagString: Untagged
@@ -310,50 +307,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3
---- !u!114 &7893530848984403542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3117810934627658954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 0
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1253994963634713156}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3595282595008027130
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +489,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3620062264570538200}
+  - component: {fileID: 1004058209433697478}
+  - component: {fileID: 4169132942762085436}
   - component: {fileID: 6172936870883116238}
+  - component: {fileID: 660200000000000001}
   - component: {fileID: 3187767415685585874}
   m_Layer: 5
   m_Name: UnitCard
@@ -586,6 +542,19 @@ MonoBehaviour:
   _progress: {fileID: 9051964555971390951}
   _progressBar: {fileID: 6682982606028936814}
   _button: {fileID: 1004058209433697478}
+--- !u!114 &660200000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6993229125741468533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66b0000000000000000000000000002, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Game.UnitCardPresenter
+  _view: {fileID: 6172936870883116238}
 --- !u!114 &3187767415685585874
 MonoBehaviour:
   m_ObjectHideFlags: 0

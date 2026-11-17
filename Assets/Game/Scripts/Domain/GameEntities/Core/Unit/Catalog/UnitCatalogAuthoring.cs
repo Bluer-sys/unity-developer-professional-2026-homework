@@ -17,29 +17,12 @@ namespace Game
 
 				DependsOn(authoring._catalog);
 
-				if (authoring._catalog == null || authoring._catalog.Cards == null)
-					return;
-
 				foreach (UnitCardConfig card in authoring._catalog.Cards)
 				{
-					if (card == null || card.Prefab == null || card.Price < 0)
-						continue;
-
 					if (card.UnitType != CombatUnitType.Swordsman && card.UnitType != CombatUnitType.Archer)
 						continue;
 
-					bool duplicate = false;
-
-					for (var i = 0; i < items.Length; i++)
-					{
-						if (items[i].unitType == card.UnitType)
-						{
-							duplicate = true;
-							break;
-						}
-					}
-
-					if (duplicate)
+					if (items.TryGetItem(card.UnitType, out _))
 						continue;
 
 					items.Add(new UnitCatalogItem
