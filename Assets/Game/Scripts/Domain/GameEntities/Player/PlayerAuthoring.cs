@@ -47,6 +47,9 @@ namespace Game
 				AddBuffer<PurchaseUnitRequest>(entity);
 				AddBuffer<SpawnUnitRequest>(entity);
 				AddBuffer<PurchaseUnitEvent>(entity);
+
+				if (authoring._team == TeamType.Red)
+					AddComponent<EnemyAI>(entity);
 			}
 		}
 	}

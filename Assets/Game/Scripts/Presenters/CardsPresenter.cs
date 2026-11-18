@@ -6,7 +6,6 @@ namespace Game
 {
 	public sealed class CardsPresenter : MonoBehaviour
 	{
-		[SerializeField] private TeamType _team;
 		[SerializeField] private UnitCardsCatalog _catalog;
 		[SerializeField] private UnitCardPresenter _cardPrefab;
 		[SerializeField] private Transform _cardsRoot;
@@ -69,7 +68,7 @@ namespace Game
 			}
 
 			EntityManager entityManager = _world.EntityManager;
-			Entity player = _playersQuery.GetEntityByTeam(entityManager, _team);
+			Entity player = _playersQuery.GetEntityByTeam(entityManager, TeamType.Blue);
 			int money = player != Entity.Null ? entityManager.GetComponentData<Money>(player).value : 0;
 			bool isRunning = _gameStateQuery.GetSingleton<GameState>().IsRunning;
 			bool hasCatalog = _catalogQuery.CalculateEntityCount() == 1;
@@ -95,7 +94,7 @@ namespace Game
 				}
 
 				bool canPurchase = isRunning && player != Entity.Null && money >= item.price &&
-					UnitUseCase.CanSpawn(entityManager, _team, playerBase, targetBase);
+					UnitUseCase.CanSpawn(entityManager, TeamType.Blue, playerBase, targetBase);
 
 				card.Refresh(money, item.price, true, canPurchase);
 			}
@@ -152,7 +151,7 @@ namespace Game
 				return;
 
 			EntityManager entityManager = _world.EntityManager;
-			Entity player = _playersQuery.GetEntityByTeam(entityManager, _team);
+			Entity player = _playersQuery.GetEntityByTeam(entityManager, TeamType.Blue);
 
 			if (player == Entity.Null)
 				return;

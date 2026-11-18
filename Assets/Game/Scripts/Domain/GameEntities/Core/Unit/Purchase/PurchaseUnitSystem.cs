@@ -34,25 +34,24 @@ namespace Game
 						 RefRO<Team>>()
 					 .WithAll<Player, UnitSpawnArea, PurchaseUnitEvent>())
 			{
-				for (var i = 0; i < requests.Length; i++)
+				bool canPurchase = isRunning && UnitUseCase.CanSpawn(state.EntityManager,
+					team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value);
+
+				if (canPurchase)
 				{
-					if (!isRunning || !catalog.TryGetItem(requests[i].unitType, out UnitCatalogItem item))
-						continue;
-
-					if (money.ValueRO.value < item.price)
-						continue;
-
-					if (!UnitUseCase.CanSpawn(state.EntityManager,
-							team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value))
-						continue;
-
-					money.ValueRW.value -= item.price;
-					spawnRequests.Add(new SpawnUnitRequest
+					for (var i = 0; i < requests.Length; i++)
 					{
-						unitType = item.unitType,
-						prefab = item.prefab,
-						price = item.price
-					});
+						if (!catalog.TryGetItem(requests[i].unitType, out UnitCatalogItem item) || money.ValueRO.value < item.price)
+							continue;
+
+						money.ValueRW.value -= item.price;
+						spawnRequests.Add(new SpawnUnitRequest
+						{
+							unitType = item.unitType,
+							prefab = item.prefab,
+							price = item.price
+						});
+					}
 				}
 
 				requests.Clear();

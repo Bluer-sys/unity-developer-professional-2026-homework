@@ -574,7 +574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66b0000000000000000000000000005, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Game.CardsPresenter
-  _team: 0
   _catalog: {fileID: 11400000, guid: e7061a0801beab04db9870077ec9a250, type: 2}
   _cardPrefab: {fileID: 660200000000000001, guid: 504ef00ecfcda1f468d6d051259941a7, type: 3}
   _cardsRoot: {fileID: 5591596082014880620}

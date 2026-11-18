@@ -44,26 +44,21 @@ namespace Game
 					 .WithAll<Player, PurchaseUnitEvent>()
 					 .WithEntityAccess())
 			{
+				bool canSpawn = isRunning && UnitUseCase.CanSpawn(state.EntityManager,
+					team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value);
+
 				for (var i = 0; i < requests.Length; i++)
 				{
 					SpawnUnitRequest request = requests[i];
 
-					if (!isRunning || !UnitUseCase.CanSpawn(state.EntityManager,
-							team.ValueRO.value, playerBase.ValueRO.value, enemyBase.ValueRO.value))
+					if (!canSpawn)
 					{
 						money.ValueRW.value += request.price;
 						continue;
 					}
 
-					LocalTransform baseTransform = SystemAPI.GetComponent<LocalTransform>(playerBase.ValueRO.value);
-					LocalTransform transform = SystemAPI.GetComponent<LocalTransform>(request.prefab);
-					float2 offset = _random.NextFloat2Direction() * math.sqrt(_random.NextFloat()) * spawnArea.ValueRO.radius;
-					transform.Position = baseTransform.Position + spawnArea.ValueRO.offset + new float3(offset.x, 0f, offset.y);
-
-					Entity unit = ecb.Instantiate(request.prefab);
-					ecb.SetComponent(unit, transform);
-					ecb.SetComponent(unit, team.ValueRO);
-					ecb.SetComponent(unit, enemyBase.ValueRO);
+					Entity unit = SpawnUnit(state.EntityManager, ecb, request.prefab,
+						playerBase.ValueRO.value, team.ValueRO, enemyBase.ValueRO, spawnArea.ValueRO);
 					ecb.AppendToBuffer(player, new PurchaseUnitEvent
 					{
 						unitType = request.unitType,
@@ -77,6 +72,28 @@ namespace Game
 
 			if (!ecb.IsEmpty)
 				ecb.Playback(state.EntityManager);
+		}
+
+		private Entity SpawnUnit(
+				EntityManager entityManager,
+				EntityCommandBuffer ecb,
+				Entity prefab,
+				Entity playerBase,
+				Team team,
+				EnemyBaseTarget enemyBase,
+				UnitSpawnArea spawnArea
+			)
+		{
+			LocalTransform baseTransform = entityManager.GetComponentData<LocalTransform>(playerBase);
+			LocalTransform transform = entityManager.GetComponentData<LocalTransform>(prefab);
+			float2 offset = _random.NextFloat2Direction() * math.sqrt(_random.NextFloat()) * spawnArea.radius;
+			transform.Position = baseTransform.Position + spawnArea.offset + new float3(offset.x, 0f, offset.y);
+
+			Entity unit = ecb.Instantiate(prefab);
+			ecb.SetComponent(unit, transform);
+			ecb.SetComponent(unit, team);
+			ecb.SetComponent(unit, enemyBase);
+			return unit;
 		}
 	}
 }
