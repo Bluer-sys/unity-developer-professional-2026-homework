@@ -8,6 +8,9 @@ namespace Game
 		[SerializeField]
 		private float _value;
 
+		[SerializeField]
+		private float _cooldown = 1f;
+
 		private sealed class Baker : Baker<DetectionRadiusAuthoring>
 		{
 			public override void Bake(DetectionRadiusAuthoring authoring)
@@ -17,6 +20,11 @@ namespace Game
 				AddComponent(entity, new DetectionRadius
 				{
 					value = authoring._value
+				});
+				AddComponent(entity, new DetectionCooldown
+				{
+					time = 0f,
+					duration = authoring._cooldown
 				});
 			}
 		}

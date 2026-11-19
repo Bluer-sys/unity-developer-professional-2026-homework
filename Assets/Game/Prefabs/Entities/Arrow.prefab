@@ -31,6 +31,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b00000000000000000000000000002, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Game.ProjectileCombatAuthoring
+  _health: 1
   _moveSpeed: 20
   _stoppingDistance: 0.35
   _damage: 3

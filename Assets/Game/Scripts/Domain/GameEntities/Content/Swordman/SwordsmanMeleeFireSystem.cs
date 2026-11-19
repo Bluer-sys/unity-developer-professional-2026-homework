@@ -9,6 +9,7 @@ namespace Game
 	public partial struct SwordsmanMeleeFireSystem : ISystem
 	{
 		private ComponentLookup<Team> _teamLookup;
+		private ComponentLookup<Health> _healthLookup;
 		private ComponentLookup<LocalTransform> _transformLookup;
 		private ComponentLookup<AttackDistance> _attackDistanceLookup;
 		private BufferLookup<TakeDamageRequest> _takeDamageRequests;
@@ -18,6 +19,7 @@ namespace Game
 			state.RequireForUpdate<GameState>();
 
 			_teamLookup = SystemAPI.GetComponentLookup<Team>(true);
+			_healthLookup = SystemAPI.GetComponentLookup<Health>(true);
 			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(false);
 			_attackDistanceLookup = SystemAPI.GetComponentLookup<AttackDistance>(true);
 			_takeDamageRequests = SystemAPI.GetBufferLookup<TakeDamageRequest>(false);
@@ -30,6 +32,7 @@ namespace Game
 				return;
 
 			_teamLookup.Update(ref state);
+			_healthLookup.Update(ref state);
 			_transformLookup.Update(ref state);
 			_attackDistanceLookup.Update(ref state);
 			_takeDamageRequests.Update(ref state);
@@ -67,6 +70,9 @@ namespace Game
 				Entity target = requestValue.ValueRO.target;
 
 				if (target == Entity.Null || !SystemAPI.Exists(target) || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform))
+					continue;
+
+				if (!_healthLookup.TryGetComponent(target, out Health targetHealth) || targetHealth.IsDead())
 					continue;
 
 				TeamType myTeam = team.value;

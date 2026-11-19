@@ -47,9 +47,9 @@ namespace Game
 				if (math.all(direction == float3.zero) || health.IsDead())
 					return;
 
-				MoveUseCase.MoveStep(ref transform, in direction, in moveSpeed, DeltaTime);
+				float distance = MoveUseCase.MoveStep(ref transform, in direction, in moveSpeed, DeltaTime, request.maxDistance);
 				RotationUseCase.RotateStep(ref transform, in direction, in rotationSpeed, DeltaTime);
-				eventEnabled.ValueRW = true;
+				eventEnabled.ValueRW = distance > 0f;
 			}
 		}
 	}

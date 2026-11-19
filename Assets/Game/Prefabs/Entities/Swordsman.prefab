@@ -39,6 +39,7 @@ MonoBehaviour:
   _damage: 4
   _attackDistance: 1.5
   _detectionRadius: 30
+  _detectionCooldown: 0.8
   _fireCooldown: 0.8
   _deathCooldown: 1
   _ammo: 0

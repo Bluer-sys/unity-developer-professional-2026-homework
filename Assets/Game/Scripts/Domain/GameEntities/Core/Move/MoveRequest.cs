@@ -8,5 +8,6 @@ namespace Game
 	public struct MoveRequest : IComponentData, IEnableableComponent
 	{
 		public float3 direction;
+		public float maxDistance;
 	}
 }

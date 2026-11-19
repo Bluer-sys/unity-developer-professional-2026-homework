@@ -49,7 +49,9 @@ namespace Game
 						 .WithPresent<Unit>()
 						 .WithEntityAccess())
 			{
-				// Target
+				moveRequestEnabled.ValueRW = false;
+				fireRequestEnabled.ValueRW = false;
+
 				Entity target = targetRef.ValueRO.value;
 
 				if (target == Entity.Null || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform) || !_healthLookup.TryGetComponent(target, out Health targetHealth) || !targetHealth.IsAlive())
@@ -59,10 +61,13 @@ namespace Game
 				float3 delta = targetTransform.Position - currentPosition;
 
 				float attackRange = attackDistance.ValueRO.value;
+				float distanceSq = math.lengthsq(delta);
 
-				if (math.lengthsq(delta) > attackRange * attackRange)
+				if (distanceSq > attackRange * attackRange)
 				{
-					moveRequestValue.ValueRW.direction = math.normalizesafe(delta);
+					float distance = math.sqrt(distanceSq);
+					moveRequestValue.ValueRW.direction = delta / distance;
+					moveRequestValue.ValueRW.maxDistance = distance - attackRange;
 					moveRequestEnabled.ValueRW = true;
 				}
 				else

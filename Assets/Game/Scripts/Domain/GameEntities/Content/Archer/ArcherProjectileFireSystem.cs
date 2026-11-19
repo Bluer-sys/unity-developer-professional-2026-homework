@@ -5,11 +5,12 @@ using Unity.Transforms;
 
 namespace Game
 {
-	[BurstCompile, UpdateAfter(typeof(AttackTargetSystem))]
+	[BurstCompile, UpdateAfter(typeof(AttackTargetSystem)), UpdateBefore(typeof(TakeDamageSystem))]
 	public partial struct ArcherProjectileFireSystem : ISystem
 	{
 		private ComponentLookup<LocalTransform> _transformLookup;
 		private ComponentLookup<Team> _teamLookup;
+		private ComponentLookup<Health> _healthLookup;
 		private ComponentLookup<AttackDistance> _attackDistanceLookup;
 		private ComponentLookup<ProjectilePrefab> _projectilePrefabLookup;
 		private ComponentLookup<FireOffset> _fireOffsetLookup;
@@ -20,6 +21,7 @@ namespace Game
 			state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
 			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(false);
 			_teamLookup = SystemAPI.GetComponentLookup<Team>(true);
+			_healthLookup = SystemAPI.GetComponentLookup<Health>(true);
 			_attackDistanceLookup = SystemAPI.GetComponentLookup<AttackDistance>(true);
 			_projectilePrefabLookup = SystemAPI.GetComponentLookup<ProjectilePrefab>(true);
 			_fireOffsetLookup = SystemAPI.GetComponentLookup<FireOffset>(true);
@@ -33,6 +35,7 @@ namespace Game
 
 			_transformLookup.Update(ref state);
 			_teamLookup.Update(ref state);
+			_healthLookup.Update(ref state);
 			_attackDistanceLookup.Update(ref state);
 			_projectilePrefabLookup.Update(ref state);
 			_fireOffsetLookup.Update(ref state);
@@ -76,6 +79,9 @@ namespace Game
 				Entity target = requestValue.ValueRO.target;
 
 				if (target == Entity.Null || !SystemAPI.Exists(target) || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform))
+					continue;
+
+				if (!_healthLookup.TryGetComponent(target, out Health targetHealth) || targetHealth.IsDead())
 					continue;
 
 				TeamType myTeam = team.value;

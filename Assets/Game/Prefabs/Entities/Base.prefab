@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15c43cb1cd04754b26207d1b580e60, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Game.ArmorMultiplierAuthoring
-  Value: 0
+  _value: 0
 --- !u!114 &610100000000000105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76ae63fa1c8d408892b39fce18fd402, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DeadCooldownAuthoring
-  Duration: 0
+  _duration: 0
 --- !u!114 &610100000000000108
 MonoBehaviour:
   m_ObjectHideFlags: 0

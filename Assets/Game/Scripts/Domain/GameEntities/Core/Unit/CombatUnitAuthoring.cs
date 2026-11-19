@@ -29,11 +29,14 @@ namespace Game
 			private int _damage = 2;
 		[SerializeField] private float _attackDistance = 1.5f;
 		[SerializeField] private float _detectionRadius = 20f;
+		[SerializeField] private float _detectionCooldown = 1f;
 		[SerializeField] private float _fireCooldown = 1f;
 		[SerializeField] private float _deathCooldown = 1f;
 
 		[Header("Archer"), SerializeField]
-			private int _ammo = 10000;
+			private int _ammo = 5;
+		[SerializeField] private int _maxAmmo = 5;
+		[SerializeField] private float _ammoRecoveryDuration = 2f;
 		[SerializeField] private GameObject _projectilePrefab;
 		[SerializeField] private Vector3 _fireOffset = new(0f, 1f, 0.5f);
 
@@ -58,6 +61,12 @@ namespace Game
 				AddComponent(entity, new DetectionRadius { value = authoring._detectionRadius });
 				AddComponent(entity, new TargetEntity { value = Entity.Null });
 				AddComponent(entity, new EnemyBaseTarget { value = Entity.Null });
+
+				AddComponent(entity, new DetectionCooldown
+				{
+					time = 0f,
+					duration = authoring._detectionCooldown
+				});
 
 				AddComponent(entity, new FireCooldown
 				{
@@ -100,6 +109,12 @@ namespace Game
 
 				AddComponent<Archer>(entity);
 				AddComponent(entity, new Ammo { value = authoring._ammo });
+				AddComponent(entity, new MaxAmmo { value = authoring._maxAmmo });
+				AddComponent(entity, new AmmoRecovery
+				{
+					time = 0f,
+					duration = authoring._ammoRecoveryDuration
+				});
 				AddComponent(entity, new FireOffset { value = authoring._fireOffset });
 
 				AddComponent(entity, new ProjectilePrefab

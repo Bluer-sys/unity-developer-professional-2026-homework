@@ -5,14 +5,15 @@ namespace Game
 {
 	public class DeadCooldownAuthoring : MonoBehaviour
 	{
-		public float Duration;
+		[SerializeField]
+		private float _duration;
 
 		public class DeadCooldownBaker : Baker<DeadCooldownAuthoring>
 		{
 			public override void Bake(DeadCooldownAuthoring authoring)
 			{
 				Entity entity = GetEntity(TransformUsageFlags.None);
-				AddComponent(entity, new DeadCooldown { duration = authoring.Duration });
+				AddComponent(entity, new DeadCooldown { duration = authoring._duration });
 				SetComponentEnabled<DeadCooldown>(entity, false);
 			}
 		}

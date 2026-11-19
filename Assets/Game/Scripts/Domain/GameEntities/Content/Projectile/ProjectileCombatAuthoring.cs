@@ -6,6 +6,7 @@ namespace Game
 	[DisallowMultipleComponent]
 	public sealed class ProjectileCombatAuthoring : MonoBehaviour
 	{
+		[SerializeField] private int _health = 1;
 		[SerializeField] private float _moveSpeed = 20f;
 		[SerializeField] private float _stoppingDistance = 0.35f;
 		[SerializeField] private int _damage = 2;
@@ -19,6 +20,15 @@ namespace Game
 				Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
 				AddComponent<Projectile>(entity);
+				AddComponent(entity, new Health { value = authoring._health });
+				AddComponent(entity, new MaxHealth { value = authoring._health });
+				AddComponent<ArmorMultiplier>(entity);
+				AddBuffer<TakeDamageRequest>(entity);
+				AddBuffer<TakeDamageEvent>(entity);
+				AddComponent<DeadCooldown>(entity);
+				SetComponentEnabled<DeadCooldown>(entity, false);
+				AddComponent<DeathEvent>(entity);
+				SetComponentEnabled<DeathEvent>(entity, false);
 				AddComponent(entity, new Team { value = TeamType.Neutral });
 				AddComponent(entity, new TargetEntity { value = Entity.Null });
 				AddComponent(entity, new Instigator { value = Entity.Null });

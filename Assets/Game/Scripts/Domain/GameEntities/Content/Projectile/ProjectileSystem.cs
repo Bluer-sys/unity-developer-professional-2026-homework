@@ -5,17 +5,18 @@ using Unity.Transforms;
 
 namespace Game
 {
-	[BurstCompile, UpdateAfter(typeof(ArcherProjectileFireSystem))]
+	[BurstCompile, UpdateAfter(typeof(LifetimeSystem))]
 	public partial struct ProjectileSystem : ISystem
 	{
 		private ComponentLookup<LocalTransform> _transformLookup;
+		private ComponentLookup<Health> _healthLookup;
 		private BufferLookup<TakeDamageRequest> _takeDamageRequests;
 
 		public void OnCreate(ref SystemState state)
 		{
 			state.RequireForUpdate<GameState>();
-			state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
 			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true);
+			_healthLookup = SystemAPI.GetComponentLookup<Health>();
 			_takeDamageRequests = SystemAPI.GetBufferLookup<TakeDamageRequest>();
 		}
 
@@ -27,13 +28,10 @@ namespace Game
 
 			state.Dependency.Complete();
 			_transformLookup.Update(ref state);
+			_healthLookup.Update(ref state);
 			_takeDamageRequests.Update(ref state);
 
 			float deltaTime = SystemAPI.Time.DeltaTime;
-
-			EntityCommandBuffer ecb = SystemAPI
-				.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-				.CreateCommandBuffer(state.WorldUnmanaged);
 
 			foreach ((
 						 RefRW<LocalTransform> transform,
@@ -52,9 +50,14 @@ namespace Game
 							 RefRO<Damage>,
 							 RefRO<TargetOffset>,
 							 RefRO<Instigator>>()
-						 .WithAll<Projectile>()
+						 .WithAll<Projectile, Health>()
 						 .WithEntityAccess())
 			{
+				Health health = _healthLookup[entity];
+
+				if (health.IsDead())
+					continue;
+
 				Entity target = targetRef.ValueRO.value;
 
 				if (target == Entity.Null || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform))
@@ -70,13 +73,19 @@ namespace Game
 				float3 targetPosition = targetTransform.Position + math.rotate(targetTransform.Rotation, offset.ValueRO.value);
 				float3 delta = targetPosition - transform.ValueRO.Position;
 				float stoppingDistance = stoppingDistanceRef.ValueRO.value;
+				float distanceSq = math.lengthsq(delta);
 
-				if (math.lengthsq(delta) > stoppingDistance * stoppingDistance)
+				if (distanceSq > stoppingDistance * stoppingDistance)
 				{
-					float3 direction = math.normalizesafe(delta);
-					MoveUseCase.MoveStep(ref transform.ValueRW, direction, in moveSpeed.ValueRO, deltaTime);
+					float distance = math.sqrt(distanceSq);
+					float remainingDistance = distance - stoppingDistance;
+					float3 direction = delta / distance;
+					float movedDistance = MoveUseCase.MoveStep(ref transform.ValueRW, direction, in moveSpeed.ValueRO,
+						deltaTime, remainingDistance);
 					transform.ValueRW.Rotation = quaternion.LookRotationSafe(direction, math.up());
-					continue;
+
+					if (movedDistance < remainingDistance)
+						continue;
 				}
 
 				if (_takeDamageRequests.TryGetBuffer(target, out DynamicBuffer<TakeDamageRequest> damageRequests))
@@ -86,7 +95,8 @@ namespace Game
 						instigator = instigator.ValueRO.value
 					});
 
-				ecb.DestroyEntity(entity);
+				health.value = 0;
+				_healthLookup[entity] = health;
 			}
 		}
 	}
