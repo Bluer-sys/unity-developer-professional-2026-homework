@@ -5,7 +5,8 @@ using Unity.Transforms;
 
 namespace Game
 {
-	[BurstCompile, UpdateAfter(typeof(AttackTargetSystem)), UpdateBefore(typeof(TakeDamageSystem))]
+	[BurstCompile]
+	[UpdateAfter(typeof(AttackTargetSystem)), UpdateAfter(typeof(AmmoRecoverySystem)), UpdateBefore(typeof(TakeDamageSystem))]
 	public partial struct ArcherProjectileFireSystem : ISystem
 	{
 		private ComponentLookup<LocalTransform> _transformLookup;

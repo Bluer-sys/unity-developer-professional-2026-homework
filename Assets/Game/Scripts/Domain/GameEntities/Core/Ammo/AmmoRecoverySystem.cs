@@ -4,7 +4,7 @@ using Unity.Mathematics;
 
 namespace Game
 {
-	[BurstCompile, UpdateBefore(typeof(ArcherProjectileFireSystem))]
+	[BurstCompile]
 	public partial struct AmmoRecoverySystem : ISystem
 	{
 		public void OnCreate(ref SystemState state)
