@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: UnitCardsCatalog
   m_EditorClassIdentifier: 
   _cards:
-  - <UnitType>k__BackingField: 0
+  - <UnitType>k__BackingField: 1
     <Name>k__BackingField: Swordman
     <Icon>k__BackingField: {fileID: 21300000, guid: 560c46b53b7160f4486f3a311dac0a6a,
       type: 3}
     <Prefab>k__BackingField: {fileID: 8692576747330127513, guid: 672d95e5eaa94fe4c890e0965e4ea820,
       type: 3}
     <Price>k__BackingField: 5
-  - <UnitType>k__BackingField: 1
+  - <UnitType>k__BackingField: 2
     <Name>k__BackingField: Archer
     <Icon>k__BackingField: {fileID: 21300000, guid: fb2a35ff6389e9a4c9a481866412d46c,
       type: 3}

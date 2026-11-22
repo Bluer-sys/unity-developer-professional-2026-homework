@@ -6,11 +6,16 @@ namespace Game
 {
 	public static class ProjectileUseCase
 	{
+		public static quaternion GetRotation(float3 direction)
+		{
+			float3 up = math.abs(direction.y) < 0.999f ? math.up() : math.forward();
+			return quaternion.LookRotationSafe(direction, up);
+		}
+
 		public static void SpawnProjectile(
 				ref EntityCommandBuffer ecb,
 				ProjectilePrefab projectilePrefab,
 				LocalTransform transform,
-				FireOffset fireOffset,
 				Team team,
 				Entity target,
 				Entity instigator
@@ -18,10 +23,7 @@ namespace Game
 		{
 			Entity projectile = ecb.Instantiate(projectilePrefab.value);
 
-			float3 spawnPosition = FireUseCase.GetFirePoint(transform, fireOffset);
-			quaternion spawnRotation = transform.Rotation;
-
-			ecb.SetComponent(projectile, LocalTransform.FromPositionRotation(spawnPosition, spawnRotation));
+			ecb.SetComponent(projectile, transform);
 			ecb.SetComponent(projectile, team);
 
 			ecb.SetComponent(projectile, new TargetEntity

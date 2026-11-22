@@ -19,7 +19,7 @@ namespace Game
 
 				foreach (UnitCardConfig card in authoring._catalog.Cards)
 				{
-					if (card.UnitType != CombatUnitType.Swordsman && card.UnitType != CombatUnitType.Archer)
+					if (card.UnitType == UnitType.None)
 						continue;
 
 					if (items.TryGetItem(card.UnitType, out _))

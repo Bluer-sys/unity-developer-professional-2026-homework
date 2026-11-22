@@ -6,7 +6,7 @@ namespace Game
 	[Serializable]
 	public sealed class UnitCardConfig
 	{
-		[field: SerializeField] public CombatUnitType UnitType { get; private set; }
+		[field: SerializeField] public UnitType UnitType { get; private set; }
 		[field: SerializeField] public string Name { get; private set; }
 		[field: SerializeField] public Sprite Icon { get; private set; }
 		[field: SerializeField] public GameObject Prefab { get; private set; }

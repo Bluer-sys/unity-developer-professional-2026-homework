@@ -22,7 +22,7 @@ namespace Game
 
 		public static float3 GetFirePoint(in LocalTransform transform, in FireOffset fireOffset)
 		{
-			return transform.Position + math.rotate(transform.Rotation, fireOffset.value);
+			return transform.TransformPoint(fireOffset.value);
 		}
 	}
 }

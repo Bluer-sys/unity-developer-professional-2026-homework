@@ -19,7 +19,7 @@ namespace Game
 			return Entity.Null;
 		}
 
-		public static bool TryGetItem(this DynamicBuffer<UnitCatalogItem> catalog, CombatUnitType unitType, out UnitCatalogItem item)
+		public static bool TryGetItem(this DynamicBuffer<UnitCatalogItem> catalog, UnitType unitType, out UnitCatalogItem item)
 		{
 			for (var i = 0; i < catalog.Length; i++)
 			{

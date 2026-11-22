@@ -1,10 +1,8 @@
 using Unity.Entities;
-using UnityEngine;
 
 namespace Game
 {
-	[RequireComponent(typeof(UnitAuthoring)), RequireComponent(typeof(MoveRequestAuthoring)), RequireComponent(typeof(MoveEventAuthoring)), RequireComponent(typeof(HealthAuthoring))]
-	public sealed class SwordsmanAuthoring : MonoBehaviour
+	public sealed class SwordsmanAuthoring : CombatUnitAuthoring
 	{
 		private sealed class Baker : Baker<SwordsmanAuthoring>
 		{

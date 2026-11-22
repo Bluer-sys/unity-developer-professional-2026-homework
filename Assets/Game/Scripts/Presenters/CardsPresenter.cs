@@ -18,7 +18,7 @@ namespace Game
 
 		private void Awake()
 		{
-			var unitTypes = new HashSet<CombatUnitType>();
+			var unitTypes = new HashSet<UnitType>();
 
 			foreach (UnitCardConfig config in _catalog.Cards)
 			{
@@ -142,7 +142,7 @@ namespace Game
 			_catalogQuery = default;
 		}
 
-		private void RequestPurchase(CombatUnitType unitType)
+		private void RequestPurchase(UnitType unitType)
 		{
 			if (!isActiveAndEnabled || !TryConnect() || _gameStateQuery.CalculateEntityCount() != 1)
 				return;

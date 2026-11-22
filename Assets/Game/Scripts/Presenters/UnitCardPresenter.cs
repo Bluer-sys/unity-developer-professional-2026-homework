@@ -7,15 +7,15 @@ namespace Game
 	{
 		[SerializeField] private UnitCardView _view;
 
-		private Action<CombatUnitType> _purchase;
+		private Action<UnitType> _purchase;
 		private bool _canPurchase;
 		private int _money = -1;
 		private int _price = -1;
 
-		public CombatUnitType UnitType { get; private set; }
+		public UnitType UnitType { get; private set; }
 		public int ConfiguredPrice { get; private set; }
 
-		public void Initialize(UnitCardConfig config, Action<CombatUnitType> purchase)
+		public void Initialize(UnitCardConfig config, Action<UnitType> purchase)
 		{
 			_purchase = purchase;
 			UnitType = config.UnitType;

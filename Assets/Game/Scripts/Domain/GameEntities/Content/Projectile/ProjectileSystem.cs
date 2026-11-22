@@ -70,7 +70,7 @@ namespace Game
 					continue;
 				}
 
-				float3 targetPosition = targetTransform.Position + math.rotate(targetTransform.Rotation, offset.ValueRO.value);
+				float3 targetPosition = targetTransform.TransformPoint(offset.ValueRO.value);
 				float3 delta = targetPosition - transform.ValueRO.Position;
 				float stoppingDistance = stoppingDistanceRef.ValueRO.value;
 				float distanceSq = math.lengthsq(delta);
@@ -82,7 +82,7 @@ namespace Game
 					float3 direction = delta / distance;
 					float movedDistance = MoveUseCase.MoveStep(ref transform.ValueRW, direction, in moveSpeed.ValueRO,
 						deltaTime, remainingDistance);
-					transform.ValueRW.Rotation = quaternion.LookRotationSafe(direction, math.up());
+					transform.ValueRW.Rotation = ProjectileUseCase.GetRotation(direction);
 
 					if (movedDistance < remainingDistance)
 						continue;

@@ -96,13 +96,20 @@ namespace Game
 				if (math.lengthsq(delta) > distance * distance)
 					continue;
 
-				transform.Rotation = quaternion.LookRotationSafe(math.normalizesafe(delta), math.up());
+				if (math.lengthsq(delta.xz) > 0f)
+					transform.Rotation = quaternion.LookRotationSafe(math.normalize(new float3(delta.x, 0f, delta.z)), math.up());
 				_transformLookup[entity] = transform;
+
+				float3 firePoint = FireUseCase.GetFirePoint(transform, fireOffset);
+				TargetOffset aim = SystemAPI.GetComponent<TargetOffset>(projectilePrefab.value);
+				float3 direction = math.normalizesafe(targetTransform.TransformPoint(aim.value) - firePoint, transform.Forward());
+				LocalTransform projectileTransform = _transformLookup[projectilePrefab.value];
+				projectileTransform.Position = firePoint;
+				projectileTransform.Rotation = ProjectileUseCase.GetRotation(direction);
 
 				ProjectileUseCase.SpawnProjectile(ref ecb,
 					projectilePrefab,
-					transform,
-					fireOffset,
+					projectileTransform,
 					team,
 					target,
 					entity);

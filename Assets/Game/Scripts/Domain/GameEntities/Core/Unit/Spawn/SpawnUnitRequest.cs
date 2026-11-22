@@ -6,7 +6,7 @@ namespace Game
 	[Serializable, InternalBufferCapacity(4)]
 	public struct SpawnUnitRequest : IBufferElementData
 	{
-		public CombatUnitType unitType;
+		public UnitType unitType;
 		public Entity prefab;
 		public int price;
 	}
