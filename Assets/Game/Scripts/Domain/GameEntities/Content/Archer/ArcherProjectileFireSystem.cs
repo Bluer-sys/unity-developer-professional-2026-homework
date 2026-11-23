@@ -5,27 +5,16 @@ using Unity.Transforms;
 
 namespace Game
 {
-	[BurstCompile]
-	[UpdateAfter(typeof(AttackTargetSystem)), UpdateAfter(typeof(AmmoRecoverySystem)), UpdateBefore(typeof(TakeDamageSystem))]
+	[BurstCompile, UpdateAfter(typeof(AttackWindupSystem)), UpdateBefore(typeof(TakeDamageSystem))]
 	public partial struct ArcherProjectileFireSystem : ISystem
 	{
 		private ComponentLookup<LocalTransform> _transformLookup;
-		private ComponentLookup<Team> _teamLookup;
-		private ComponentLookup<Health> _healthLookup;
-		private ComponentLookup<AttackDistance> _attackDistanceLookup;
-		private ComponentLookup<ProjectilePrefab> _projectilePrefabLookup;
-		private ComponentLookup<FireOffset> _fireOffsetLookup;
 
 		public void OnCreate(ref SystemState state)
 		{
 			state.RequireForUpdate<GameState>();
-			state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
-			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(false);
-			_teamLookup = SystemAPI.GetComponentLookup<Team>(true);
-			_healthLookup = SystemAPI.GetComponentLookup<Health>(true);
-			_attackDistanceLookup = SystemAPI.GetComponentLookup<AttackDistance>(true);
-			_projectilePrefabLookup = SystemAPI.GetComponentLookup<ProjectilePrefab>(true);
-			_fireOffsetLookup = SystemAPI.GetComponentLookup<FireOffset>(true);
+			state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true);
 		}
 
 		[BurstCompile]
@@ -35,88 +24,31 @@ namespace Game
 				return;
 
 			_transformLookup.Update(ref state);
-			_teamLookup.Update(ref state);
-			_healthLookup.Update(ref state);
-			_attackDistanceLookup.Update(ref state);
-			_projectilePrefabLookup.Update(ref state);
-			_fireOffsetLookup.Update(ref state);
-
-			EntityCommandBuffer ecb = SystemAPI
-				.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
+			EntityCommandBuffer ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
 				.CreateCommandBuffer(state.WorldUnmanaged);
 
-			foreach ((
-						 EnabledRefRW<FireRequest> requestEnabled,
-						 RefRO<FireRequest> requestValue,
-						 RefRW<FireCooldown> cooldown,
-						 RefRW<Ammo> ammo,
-						 RefRO<Health> health,
-						 EnabledRefRW<FireEvent> fireEvent,
-						 Entity entity
-					 ) in SystemAPI.Query<
-							 EnabledRefRW<FireRequest>,
-							 RefRO<FireRequest>,
-							 RefRW<FireCooldown>,
-							 RefRW<Ammo>,
-							 RefRO<Health>,
-							 EnabledRefRW<FireEvent>>()
+			foreach (var (request, ammo, team, transform, offset, prefab, entity) in
+					 SystemAPI.Query<RefRO<AttackReadyRequest>, RefRW<Ammo>, RefRO<Team>,
+						 RefRO<LocalTransform>, RefRO<FireOffset>, RefRO<ProjectilePrefab>>()
 						 .WithAll<Archer>()
-						 .WithAll<Team>()
-						 .WithAll<AttackDistance>()
-						 .WithAll<LocalTransform>()
-						 .WithAll<ProjectilePrefab>()
-						 .WithAll<FireOffset>()
-						 .WithPresent<FireEvent>()
 						 .WithEntityAccess())
 			{
-				requestEnabled.ValueRW = false;
+				Entity target = request.ValueRO.target;
+				SystemAPI.SetComponentEnabled<AttackReadyRequest>(entity, false);
 
-				if (cooldown.ValueRO.IsPlaying() || health.ValueRO.IsDead() || ammo.ValueRO.value <= 0)
+				if (ammo.ValueRO.value <= 0 || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform))
 					continue;
 
-				if (!_teamLookup.TryGetComponent(entity, out Team team) || !_attackDistanceLookup.TryGetComponent(entity, out AttackDistance attackDistance) || !_transformLookup.TryGetComponent(entity, out LocalTransform transform) || !_projectilePrefabLookup.TryGetComponent(entity, out ProjectilePrefab projectilePrefab) || !_fireOffsetLookup.TryGetComponent(entity, out FireOffset fireOffset))
-					continue;
-
-				Entity target = requestValue.ValueRO.target;
-
-				if (target == Entity.Null || !SystemAPI.Exists(target) || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform))
-					continue;
-
-				if (!_healthLookup.TryGetComponent(target, out Health targetHealth) || targetHealth.IsDead())
-					continue;
-
-				TeamType myTeam = team.value;
-
-				if (!_teamLookup.TryGetComponent(target, out Team targetTeam) || targetTeam.value == myTeam)
-					continue;
-
-				float3 delta = targetTransform.Position - transform.Position;
-				float distance = attackDistance.value;
-
-				if (math.lengthsq(delta) > distance * distance)
-					continue;
-
-				if (math.lengthsq(delta.xz) > 0f)
-					transform.Rotation = quaternion.LookRotationSafe(math.normalize(new float3(delta.x, 0f, delta.z)), math.up());
-				_transformLookup[entity] = transform;
-
-				float3 firePoint = FireUseCase.GetFirePoint(transform, fireOffset);
-				TargetOffset aim = SystemAPI.GetComponent<TargetOffset>(projectilePrefab.value);
-				float3 direction = math.normalizesafe(targetTransform.TransformPoint(aim.value) - firePoint, transform.Forward());
-				LocalTransform projectileTransform = _transformLookup[projectilePrefab.value];
+				float3 firePoint = FireUseCase.GetFirePoint(transform.ValueRO, offset.ValueRO);
+				TargetOffset aim = SystemAPI.GetComponent<TargetOffset>(prefab.ValueRO.value);
+				float3 direction = math.normalizesafe(targetTransform.TransformPoint(aim.value) - firePoint, transform.ValueRO.Forward());
+				LocalTransform projectileTransform = _transformLookup[prefab.ValueRO.value];
 				projectileTransform.Position = firePoint;
 				projectileTransform.Rotation = ProjectileUseCase.GetRotation(direction);
 
-				ProjectileUseCase.SpawnProjectile(ref ecb,
-					projectilePrefab,
-					projectileTransform,
-					team,
-					target,
-					entity);
-
-				cooldown.ValueRW.ResetTime();
+				ProjectileUseCase.SpawnProjectile(ref ecb, prefab.ValueRO, projectileTransform, team.ValueRO, target, entity);
 				ammo.ValueRW.value--;
-				fireEvent.ValueRW = true;
+				SystemAPI.SetComponentEnabled<FireEvent>(entity, true);
 			}
 		}
 	}

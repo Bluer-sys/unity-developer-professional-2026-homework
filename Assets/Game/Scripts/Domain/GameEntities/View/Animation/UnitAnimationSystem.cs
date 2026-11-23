@@ -15,6 +15,8 @@ namespace Game
 			state.Dependency = new AnimationJob
 			{
 				MoveEvents = SystemAPI.GetComponentLookup<MoveEvent>(true),
+				AttackStarts = SystemAPI.GetComponentLookup<AttackStartedEvent>(true),
+				Windups = SystemAPI.GetComponentLookup<AttackWindup>(true),
 				FireEvents = SystemAPI.GetComponentLookup<FireEvent>(true),
 				DamageEvents = SystemAPI.GetBufferLookup<TakeDamageEvent>(true),
 				DeathEvents = SystemAPI.GetComponentLookup<DeathEvent>(true),
@@ -26,6 +28,8 @@ namespace Game
 		private partial struct AnimationJob : IJobEntity
 		{
 			[ReadOnly] public ComponentLookup<MoveEvent> MoveEvents;
+			[ReadOnly] public ComponentLookup<AttackStartedEvent> AttackStarts;
+			[ReadOnly] public ComponentLookup<AttackWindup> Windups;
 			[ReadOnly] public ComponentLookup<FireEvent> FireEvents;
 			[ReadOnly] public BufferLookup<TakeDamageEvent> DamageEvents;
 			[ReadOnly] public ComponentLookup<DeathEvent> DeathEvents;
@@ -48,13 +52,18 @@ namespace Game
 
 				animation.isMoving.Value(MoveEvents.IsComponentEnabled(unit) ? 1 : 0).Apply(parameters);
 
-				if (FireEvents.IsComponentEnabled(unit))
+				if (AttackStarts.IsComponentEnabled(unit))
 				{
 					animation.takeDamage.Value(0).Apply(parameters);
 					animation.fire.Value(1).Apply(parameters);
 				}
 				else if (!DamageEvents[unit].IsEmpty && parameters[animation.fire].Value == 0)
+				{
+					if (Windups.IsComponentEnabled(unit) || FireEvents.IsComponentEnabled(unit))
+						return;
+
 					animation.takeDamage.Value(1).Apply(parameters);
+				}
 			}
 		}
 	}

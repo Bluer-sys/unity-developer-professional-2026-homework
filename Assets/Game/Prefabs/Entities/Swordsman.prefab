@@ -64,6 +64,7 @@ MonoBehaviour:
     _bank: {fileID: 11400000, guid: c0a00000000000000000000000000001, type: 2}
     _event: SwordsmanAttack
     _key: Combat.SwordsmanAttack
+  _meleeHitDelay: 0.4
 --- !u!114 &610100000000000002
 MonoBehaviour:
   m_ObjectHideFlags: 0

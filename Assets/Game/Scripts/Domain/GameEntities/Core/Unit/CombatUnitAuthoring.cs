@@ -72,6 +72,10 @@ namespace Game
 				SetComponentEnabled<MoveEvent>(entity, false);
 				AddComponent<FireRequest>(entity);
 				SetComponentEnabled<FireRequest>(entity, false);
+				AddComponent<AttackReadyRequest>(entity);
+				SetComponentEnabled<AttackReadyRequest>(entity, false);
+				AddComponent<AttackStartedEvent>(entity);
+				SetComponentEnabled<AttackStartedEvent>(entity, false);
 				AddComponent<FireEvent>(entity);
 				SetComponentEnabled<FireEvent>(entity, false);
 				AddComponent<DeathEvent>(entity);

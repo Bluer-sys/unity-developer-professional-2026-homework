@@ -1,28 +1,17 @@
 using Unity.Burst;
 using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Transforms;
 
 namespace Game
 {
-	[BurstCompile, UpdateAfter(typeof(AttackTargetSystem))]
+	[BurstCompile, UpdateAfter(typeof(AttackWindupSystem))]
 	public partial struct SwordsmanMeleeFireSystem : ISystem
 	{
-		private ComponentLookup<Team> _teamLookup;
-		private ComponentLookup<Health> _healthLookup;
-		private ComponentLookup<LocalTransform> _transformLookup;
-		private ComponentLookup<AttackDistance> _attackDistanceLookup;
 		private BufferLookup<TakeDamageRequest> _takeDamageRequests;
 
 		public void OnCreate(ref SystemState state)
 		{
 			state.RequireForUpdate<GameState>();
-
-			_teamLookup = SystemAPI.GetComponentLookup<Team>(true);
-			_healthLookup = SystemAPI.GetComponentLookup<Health>(true);
-			_transformLookup = SystemAPI.GetComponentLookup<LocalTransform>(false);
-			_attackDistanceLookup = SystemAPI.GetComponentLookup<AttackDistance>(true);
-			_takeDamageRequests = SystemAPI.GetBufferLookup<TakeDamageRequest>(false);
+			_takeDamageRequests = SystemAPI.GetBufferLookup<TakeDamageRequest>();
 		}
 
 		[BurstCompile]
@@ -31,75 +20,25 @@ namespace Game
 			if (!SystemAPI.GetSingleton<GameState>().IsRunning)
 				return;
 
-			_teamLookup.Update(ref state);
-			_healthLookup.Update(ref state);
-			_transformLookup.Update(ref state);
-			_attackDistanceLookup.Update(ref state);
 			_takeDamageRequests.Update(ref state);
 
-			foreach ((
-						 EnabledRefRW<FireRequest> requestEnabled,
-						 RefRO<FireRequest> requestValue,
-						 RefRW<FireCooldown> cooldown,
-						 RefRO<Health> health,
-						 RefRO<Damage> damage,
-						 EnabledRefRW<FireEvent> fireEvent,
-						 Entity entity
-					 ) in SystemAPI.Query<
-							 EnabledRefRW<FireRequest>,
-							 RefRO<FireRequest>,
-							 RefRW<FireCooldown>,
-							 RefRO<Health>,
-							 RefRO<Damage>,
-							 EnabledRefRW<FireEvent>>()
+			foreach (var (request, damage, entity) in
+					 SystemAPI.Query<RefRO<AttackReadyRequest>, RefRO<Damage>>()
 						 .WithAll<Swordsman>()
-						 .WithAll<Team>()
-						 .WithAll<AttackDistance>()
-						 .WithAll<LocalTransform>()
-						 .WithPresent<FireEvent>()
 						 .WithEntityAccess())
 			{
-				requestEnabled.ValueRW = false;
-
-				if (cooldown.ValueRO.IsPlaying() || health.ValueRO.IsDead())
-					continue;
-
-				if (!_teamLookup.TryGetComponent(entity, out Team team) || !_attackDistanceLookup.TryGetComponent(entity, out AttackDistance attackDistance) || !_transformLookup.TryGetComponent(entity, out LocalTransform transform))
-					continue;
-
-				Entity target = requestValue.ValueRO.target;
-
-				if (target == Entity.Null || !SystemAPI.Exists(target) || !_transformLookup.TryGetComponent(target, out LocalTransform targetTransform))
-					continue;
-
-				if (!_healthLookup.TryGetComponent(target, out Health targetHealth) || targetHealth.IsDead())
-					continue;
-
-				TeamType myTeam = team.value;
-
-				if (!_teamLookup.TryGetComponent(target, out Team targetTeam) || targetTeam.value == myTeam)
-					continue;
-
-				float3 delta = targetTransform.Position - transform.Position;
-				float distance = attackDistance.value;
-
-				if (math.lengthsq(delta) > distance * distance)
-					continue;
+				Entity target = request.ValueRO.target;
+				SystemAPI.SetComponentEnabled<AttackReadyRequest>(entity, false);
 
 				if (!_takeDamageRequests.TryGetBuffer(target, out DynamicBuffer<TakeDamageRequest> requests))
 					continue;
-
-				transform.Rotation = quaternion.LookRotationSafe(math.normalizesafe(delta), math.up());
-				_transformLookup[entity] = transform;
 
 				requests.Add(new TakeDamageRequest
 				{
 					damage = damage.ValueRO.value,
 					instigator = entity
 				});
-
-				cooldown.ValueRW.ResetTime();
-				fireEvent.ValueRW = true;
+				SystemAPI.SetComponentEnabled<FireEvent>(entity, true);
 			}
 		}
 	}

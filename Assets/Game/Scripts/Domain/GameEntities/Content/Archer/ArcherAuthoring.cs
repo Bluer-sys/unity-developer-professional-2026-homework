@@ -9,6 +9,7 @@ namespace Game
 		[SerializeField] private int _ammo = 5;
 		[SerializeField] private int _maxAmmo = 5;
 		[SerializeField] private float _ammoRecoveryDuration = 2f;
+		[SerializeField] private float _arrowReleaseDelay = 0.65f;
 		[SerializeField] private GameObject _projectilePrefab;
 		[SerializeField] private Vector3 _fireOffset = new(0f, 1f, 0.5f);
 
@@ -18,6 +19,8 @@ namespace Game
 			{
 				Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 				AddComponent<Archer>(entity);
+				AddComponent(entity, new AttackWindup { delay = authoring._arrowReleaseDelay });
+				SetComponentEnabled<AttackWindup>(entity, false);
 				AddComponent(entity, new Ammo { value = authoring._ammo });
 				AddComponent(entity, new MaxAmmo { value = authoring._maxAmmo });
 				AddComponent(entity, new AmmoRecovery
