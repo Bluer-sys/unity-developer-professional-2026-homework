@@ -12,6 +12,12 @@ namespace Game
 		private TeamType _team;
 
 		[SerializeField]
+		private Transform _playerBase;
+
+		[SerializeField]
+		private Transform _enemyBase;
+
+		[SerializeField]
 		private int _initialMoney;
 
 		[SerializeField]
@@ -31,8 +37,8 @@ namespace Game
 
 				AddComponent<Player>(entity);
 				AddComponent(entity, new Team { value = authoring._team });
-				AddComponent(entity, new PlayerBase { value = Entity.Null });
-				AddComponent(entity, new EnemyBaseTarget { value = Entity.Null });
+				AddComponent(entity, new PlayerBase { value = GetEntity(authoring._playerBase, TransformUsageFlags.Dynamic) });
+				AddComponent(entity, new EnemyBaseTarget { value = GetEntity(authoring._enemyBase, TransformUsageFlags.Dynamic) });
 				AddComponent(entity, new Money { value = math.max(authoring._initialMoney, 0) });
 				AddComponent(entity, new MoneyIncome
 				{
